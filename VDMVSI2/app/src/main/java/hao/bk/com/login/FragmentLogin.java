@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,6 +91,8 @@ public class FragmentLogin extends Fragment {
         isHidePassword = true;
         edtUserName = (AutoCompleteTextView)view.findViewById(R.id.edt_username);
         edtPassword = (EditText)view.findViewById(R.id.edt_password);
+        edtPassword.requestFocus();
+//        InputMethodManager imm = (InputMethodManager) getSystemService(getContext().INPUT_METHOD_SERVICE);
         username = dataStoreApp.getUserName();
         pasword = dataStoreApp.getPassword();
         if(!TextUtils.isEmpty(username)) {

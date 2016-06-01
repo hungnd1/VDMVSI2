@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="hao.bk.com.login.LoginActivity">
+        <activity android:name="hao.bk.com.login.LoginActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
