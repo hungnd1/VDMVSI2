@@ -2,7 +2,10 @@ package hao.bk.com.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.common.DataStoreApp;
@@ -28,6 +32,9 @@ import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
 import hao.bk.com.vdmvsi.R;
+
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,6 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Url;
 
 /**
  * Created by T430 on 4/22/2016.
@@ -47,7 +55,8 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
     DataStoreApp dataStoreApp;
     public Context context;
     ToastUtil toastUtil;
-    public NewChanceNewsAdapter(FragmentCoporateNew frmContainer, ArrayList<NewsObj> listNews){
+
+    public NewChanceNewsAdapter(FragmentCoporateNew frmContainer, ArrayList<NewsObj> listNews) {
         this.listNews = listNews;
         this.frmContainer = frmContainer;
         context = frmContainer.getContext();
@@ -57,15 +66,20 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
 
     @Override
     public int getItemCount() {
-        if(listNews != null)
+        if (listNews != null)
             return listNews.size();
         return 0;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
-        holder.imageNews.setImageResource(R.drawable.ic_avatar);
+
         CoporateNewsObj obj = (CoporateNewsObj) listNews.get(i);
+        if (obj.getUrlAvar() == null || obj.getUrlAvar() == "") {
+            Picasso.with(context.getApplicationContext()).load(R.drawable.icon_user).transform(new CircleTransform()).into(holder.imageNews);
+        } else {
+            Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
+        }
         holder.tvName.setText(obj.getTitle());
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = i;
@@ -81,7 +95,7 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
         return viewHolder;
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView tvTitle;
         TextView tvName;
@@ -93,20 +107,20 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
 
         ViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv_news);
-            imageNews = (CircleImageView)itemView.findViewById(R.id.imv_profile);
-            tvName = (TextView)itemView.findViewById(R.id.tv_name_user);
-            tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
+            cv = (CardView) itemView.findViewById(R.id.cv_news);
+            imageNews = (CircleImageView) itemView.findViewById(R.id.imv_profile);
+            tvName = (TextView) itemView.findViewById(R.id.tv_name_user);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-            tvDescription = (TextView)itemView.findViewById(R.id.tv_descript);
-            btnCare = (Button)itemView.findViewById(R.id.btn_like);
+            tvDescription = (TextView) itemView.findViewById(R.id.tv_descript);
+            btnCare = (Button) itemView.findViewById(R.id.btn_like);
             btnCare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     setCareNews();
                 }
             });
-            btnComment = (Button)itemView.findViewById(R.id.btn_comment);
+            btnComment = (Button) itemView.findViewById(R.id.btn_comment);
             //hungnd invisiable button comment
             btnComment.setVisibility(View.GONE);
 //            btnComment.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +129,7 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
 //                    toastUtil.showToast("Chức năng này sẽ ra mắt trong thời gian tới");
 //                }
 //            });
-            btnCall = (Button)itemView.findViewById(R.id.btn_call);
+            btnCall = (Button) itemView.findViewById(R.id.btn_call);
             btnCall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,25 +137,28 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
                 }
             });
         }
-        public void setCareNews(){
-            if(context.getString(R.string.txt_care).equals(btnCare.getText().toString())) {
+
+        public void setCareNews() {
+            if (context.getString(R.string.txt_care).equals(btnCare.getText().toString())) {
                 btnCare.setText(context.getString(R.string.txt_ingnore_care));
                 btnCare.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
                 // run code xử lý quan tâm tin này ở đây
-                runCareProject((CoporateNewsObj)listNews.get(index), true);
+                runCareProject((CoporateNewsObj) listNews.get(index), true);
             } else {
                 btnCare.setText(context.getString(R.string.txt_care));
                 btnCare.setTextColor(context.getResources().getColor(R.color.dark_ness_hint));
-                runCareProject((CoporateNewsObj)listNews.get(index), false);
+                runCareProject((CoporateNewsObj) listNews.get(index), false);
             }
         }
-        public void delNews(int index){
+
+        public void delNews(int index) {
             listNews.remove(index);
             frmContainer.adapter.notifyDataSetChanged();
             // run code xử lý Hủy tin này ở đây
         }
-        public void runCareProject(CoporateNewsObj obj, boolean flag){
-            if(!UtilNetwork.checkInternet(context,context.getString(R.string.txt_check_internet))){
+
+        public void runCareProject(CoporateNewsObj obj, boolean flag) {
+            if (!UtilNetwork.checkInternet(context, context.getString(R.string.txt_check_internet))) {
                 return;
             }
             Retrofit retrofit = new Retrofit.Builder()
@@ -151,13 +168,13 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
             // Khởi tạo các cuộc gọi cho Retrofit 2.0
             NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("publicKey",Config.PUBLIC_KEY);
-            if(flag) {
+            hashMap.put("publicKey", Config.PUBLIC_KEY);
+            if (flag) {
                 hashMap.put("action", Config.careProject);
-            }else {
+            } else {
                 hashMap.put("action", Config.cancelCareProject);
             }
-            hashMap.put(" project_id", obj.getId()+"");
+            hashMap.put(" project_id", obj.getId() + "");
             hashMap.put("username", dataStoreApp.getUserName());
 
             Call<JsonObject> call = stackOverflowAPI.runCareProject(hashMap);
@@ -174,10 +191,11 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
                 }
             });
         }
-        public void callOwnerNews(int index){
+
+        public void callOwnerNews(int index) {
             // Xử lý goi ng dang tin
-            CoporateNewsObj obj = (CoporateNewsObj)listNews.get(index);
-            if(TextUtils.isEmpty(obj.getPhoneNumber())){
+            CoporateNewsObj obj = (CoporateNewsObj) listNews.get(index);
+            if (TextUtils.isEmpty(obj.getPhoneNumber())) {
                 toastUtil.showToast(context.getString(R.string.txt_not_phone_owner));
             } else {
                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
