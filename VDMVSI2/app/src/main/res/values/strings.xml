@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">VDM VSI</string>
+
+    <!-- Login -->
+    <string name="txt_login">Đăng nhập</string>
+    <string name="txt_register">Đăng ký</string>
+    <string name="hint_email_login">Email đăng nhập</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="re_password_error">Mật khẩu xác nhận không trùng khớp!</string>
+    <string name="txt_update">Cập nhật</string>
+    <string name="hint_full_name">Họ và tên?</string>
+    <string name="hint_phone_number">Số điện thoại?</string>
+    <string name="txt_update_info">Cập nhật thông tin</string>
+    <string name="txt_fogot_pass">Quên mật khẩu</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+    <string name="txt_error_common">Có lỗi xẩy ra, vui lòng thử lại!</string>
+    <string name="txt_server_not_data">Chưa có dữ liệu mới!</string>
+    <string name="txt_login_not_success">Đăng nhập không thành công, kiểm tra lại tài khoản, mật khẩu!</string>
+    <string name="txt_register_not_success">Đăng ký tài khoản không thành công!</string>
+    <string name="txt_change_pass_not_success">Thay đổi mật khẩu không thành công!</string>
+    <!-- Register -->
+    <string name="txt_username_hint">User name</string>
+    <string name="txt_email_register_hint">User đăng ký</string>
+    <string name="txt_password_hint">Mật khẩu</string>
+    <string name="txt_repass_hint">Nhập lại mật khẩu</string>
+    <string name="txt_success_register">Đăng ký tài khoản thành công!</string>
+
+    <!-- Fogorpast -->
+    <string name="txt_email_recerive_pass_hint">Email</string>
+    <string name="txt_phone_recerive_pass_hint">Số điện thoại</string>
+    <string name="txt_send_pass_via">Gửi lại mật khẩu qua:</string>
+    <string name="txt_accept_forgot_pass">Thực hiện</string>
+
+    <!-- More function -->
+    <string name="txt_change_pass">Đổi mật khẩu</string>
+    <string name="txt_logout">Đăng xuất</string>
+    <!-- network -->
+    <string name="check_internet">Vui lòng kiểm tra kết nối mạng</string>
+    <string name="error_no_network">Vui lòng kiểm tra kết nối mạng</string>
+    <string name="txt_loading">Đang tải dữ liệu..</string>
+    <string name="txt_login_process">Đang đăng nhập..</string>
+    <string name="txt_process">Đang xử lý dữ liệu..</string>
+    <!-- Bottom bar -->
+    <string name="tab_coporate">Hợp tác</string>
+    <string name="tab_chat">Tin nhắn</string>
+    <string name="tab_news">Bản tin</string>
+    <string name="tab_trade">Giao thương</string>
+    <string name="txt_back">Trở lại</string>
+    <string name="tab_more">Thêm</string>
+
+    <!-- Coporate tab -->
+    <string name="txt_new_chance">Cơ hội mới</string>
+    <string name="txt_care_ing">Đang quan tâm</string>
+    <string name="txt_ingnore_care">Bỏ quan tâm</string>
+    <string name="txt_my_project">Dự án của tôi</string>
+
+    <!--Chat tab -->
+    <string name="txt_new_message">Tin nhắn</string>
+    <string name="txt_contacts">Danh bạ</string>
+
+    <!-- News tab -->
+    <string name="txt_darshboard">Bản tin</string>
+    <string name="txt_vsi_news">Tin VSI</string>
+    <string name="txt_major_news">Chuyên ngành</string>
+    <string name="txt_vip_news">VIP</string>
+
+
+    <!-- Delivery tab -->
+    <string name="txt_need_support">Yêu cầu hỗ trợ</string>
+    <string name="txt_fair_goods">Hội chợ sản phẩm</string>
+    <string name="txt_search">Tìm kiếm</string>
+    <!-- BUtton -->
+    <string name="btn_ok">OK</string>
+    <string name="btn_ok_vn">Đồng ý</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_cancel_en">Cancel</string>
+    <string name="btn_cancel_vn">Hủy</string>
+    <string name="txt_continue">Tiếp tục</string>
+    <string name="txt_care">Quan tâm</string>
+    <string name="txt_like">Thích</string>
+    <string name="txt_liked">Đã thích</string>
+    <string name="txt_not_like">Bỏ thích</string>
+    <string name="txt_comment">Bình luận</string>
+    <string name="txt_call">Gọi</string>
+    <string name="txt_not_interest">Bỏ quan tâm</string>
+
+    <string name="txt_show">Hiển thị</string>
+    <string name="txt_edit">Sửa</string>
+    <string name="txt_delete">Xóa</string>
+    <string name="txt_comming_soon">Chức năng này sẽ ra mắt trong thời gian tới!</string>
+    <!-- internet -->
+    <string name="txt_check_internet">Vui lòng kiểm tra lại kết nối mạng!</string>
+
+    <string name="txt_retry">Tải lại!</string>
+
+    <string name="txt_not_phone_owner">Không có số điện thoại của chủ dự án!</string>
+    <string name="txt_finish_app_confirm">Bạn muốn thoát ứng dụng!</string>
+
+    <!-- Create project -->
+    <string name="txt_add_new_project">Thêm mới dự án</string>
+    <string name="txt_tile_project">Tiêu đề dự án</string>
+    <string name="txt_major">Lĩnh vực</string>
+    <string name="txt_start_date_pro">Ngày bắt đầu dự án</string>
+    <string name="txt_end_date_pro">Ngày kết thúc dự án</string>
+    <string name="txt_c_date_pro">Ngày tạo dự án</string>
+    <string name="txt_content">Nội dung</string>
+    <string name="txt_create_new">Tạo mới dự án</string>
+
+    <string name="txt_old_password">Mật khẩu cũ</string>
+    <string name="txt_password_incorrect">Mật khẩu không đúng</string>
+    <string name="txt_new_password">Mật khẩu mới</string>
+    <string name="txt_renew_password">Nhập lại mật khẩu mới</string>
+    <string name="txt_change_pass_success">Thay đổi mật khẩu thành công!</string>
+    <string name="txt_success_add_project">Tạo dự án thành công</string>
+</resources>

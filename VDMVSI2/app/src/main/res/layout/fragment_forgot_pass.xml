@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/PrimaryColor"
+    android:layout_height="match_parent">
+
+    <!-- input email - pass -->
+    <LinearLayout
+        android:id="@+id/ll_input_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:text="@string/txt_send_pass_via"
+            android:textColor="@color/white_full"
+            android:textSize="@dimen/font_normal" />
+
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:layout_marginBottom="@dimen/padding_item"
+            android:drawableLeft="@drawable/ic_email_2"
+            android:drawablePadding="@dimen/padding_item"
+            android:hint="@string/txt_email_recerive_pass_hint"
+            android:textColorHint="@color/text_color_hint"
+            android:layout_marginTop="@dimen/padding_item"
+            android:textSize="@dimen/font_normal"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:textCursorDrawable="@drawable/cursor_edittext"
+            android:background="@null"
+            android:textColor="@color/white_full" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:layout_marginBottom="@dimen/padding_item"
+            android:background="@color/white_full"/>
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:layout_marginBottom="@dimen/padding_item"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/white_full"
+            android:hint="@string/txt_phone_recerive_pass_hint"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:textColorHint="@color/text_color_hint"
+            android:drawableLeft="@drawable/ic_lock_q"
+            android:background="@null"
+            android:textCursorDrawable="@drawable/cursor_edittext"
+            android:drawablePadding="@dimen/padding_item" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:layout_marginBottom="@dimen/padding_item"
+            android:background="@color/white_full"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_forgot_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_item"
+        android:text="@string/txt_accept_forgot_pass"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/white_full"
+        android:background="@drawable/btn_selector_blue_bkg"/>
+</LinearLayout>

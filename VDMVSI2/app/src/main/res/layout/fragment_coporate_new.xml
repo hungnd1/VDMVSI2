@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:id="@+id/lnl_main"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_add_new_project"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/padding_item_half"
+        android:layout_gravity="right"
+        android:textColor="@color/PrimaryColor"
+        android:textSize="@dimen/font_small"
+        android:textAllCaps="false"
+        android:paddingLeft="@dimen/padding_item_half"
+        android:paddingRight="@dimen/padding_item_half"
+        android:text="@string/txt_add_new_project"
+        android:visibility="gone"
+        android:background="@drawable/btn_selector_blue_border_bkg"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/lnl_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_item"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/font_normal"/>
+
+        <Button
+            android:id="@+id/btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/heigh_view_nomaless"
+            android:text="@string/txt_retry"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_selector_blue_border_bkg"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/font_normal"/>
+    </LinearLayout>
+</LinearLayout>

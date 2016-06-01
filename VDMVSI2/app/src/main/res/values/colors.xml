@@ -1,0 +1,30 @@
+<resources>
+    <!-- Cac mau nay khong duoc cho thuoc tinh alpha, tren android 5.0 se loi  -->
+    <color name="PrimaryColor">#0F8FCC</color>
+    <color name="PrimaryDarkColor">#127CA3</color>
+    <color name="colorAccent">#BB127CA3</color>
+    <!-- Tab color -->
+    <color name="tabsScrollColor">#FFFFFF</color>
+    <color name="tab_no_focused">#AFDAEE</color>
+
+    <color name="button_alert_dialog">#127CA3</color>
+
+    <!--color for  -->
+    <color name="football_dark_green">#DD224A16</color>
+    <color name="football_green">#BB4F862B</color>
+    <color name="football_yellow">#F4E101</color>
+    <color name="football_red">#CF002E</color>
+    <color name="white_full">#FFFFFF</color>
+    <color name="black_full">#FF000000</color>
+    <color name="brown_color">#FF757575</color>
+    <color name="dark_ness">#FF666666</color>
+    <color name="dark_ness_text">#8A8A8A</color>
+    <color name="dark_ness_hint">#AA8A8A8A</color>
+    <color name="bkg_main">#F5F5F5</color>
+    <color name="white_text">#F5F5F5</color>
+    <color name="transparent">#00000000</color>
+    <!-- Mau sac cho text-->
+    <color name="text_color_hint">#f5f5f5</color>
+    <color name="text_color_2">#FF232323</color>
+    <color name="text_color_3">#FF212121</color>
+</resources>

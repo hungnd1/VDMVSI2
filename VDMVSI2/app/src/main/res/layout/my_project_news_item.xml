@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white_full"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_news"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_cviews"
+        cv:cardElevation = "4dp"
+        android:background="@color/bkg_main"
+        cv:cardCornerRadius="3dp"
+        cv:cardUseCompatPadding="true"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        > <!-- hieu ung khi click vao cardview -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_cardview"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/imv_profile"
+                    android:layout_width="@dimen/diameter_avar"
+                    android:layout_height="@dimen/diameter_avar"
+                    android:src="@drawable/ic_avatar_default"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/padding_item"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/white_text"/>
+
+                <TextView
+                    android:id="@+id/tv_name_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="Tuyền Nguyễn Xuân"
+                    android:textColor="@color/PrimaryDarkColor"
+                    android:textSize="@dimen/font_large"
+                    android:layout_toRightOf="@+id/imv_profile"/>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_name_user"
+                    android:layout_marginTop="@dimen/padding_item_half"
+                    android:textColor="@color/dark_ness_text"
+                    android:textSize="@dimen/font_normal"
+                    android:layout_toRightOf="@+id/imv_profile"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textColor="@color/black_full"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_normal"/>
+
+                <TextView
+                    android:id="@+id/tv_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:layout_marginTop="@dimen/padding_item_half"
+                    android:textColor="@color/dark_ness_text"
+                    android:textSize="@dimen/font_normaless"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="0.6">
+
+                <Button
+                    android:id="@+id/btn_show"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_show_24"
+                    android:paddingLeft="@dimen/padding_item"
+                    android:drawablePadding="@dimen/padding_item_half"
+                    android:gravity="center_vertical|left"
+                    android:textColor="@color/dark_ness_hint"
+                    android:textSize="@dimen/font_normaless"
+                    android:background="@drawable/btn_selector_transperent_bkg"
+                    android:textAllCaps="false"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_show" />
+
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_edit_24"
+                    android:paddingLeft="@dimen/padding_item"
+                    android:drawablePadding="@dimen/padding_item_half"
+                    android:gravity="center_vertical|left"
+                    android:background="@drawable/btn_selector_transperent_bkg"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/font_normaless"
+                    android:textColor="@color/dark_ness_hint"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_edit" />
+
+
+                <Button
+                    android:id="@+id/btn_del"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector_transperent_bkg"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_delete_24"
+                    android:paddingLeft="@dimen/padding_item"
+                    android:drawablePadding="@dimen/padding_item_half"
+                    android:gravity="center_vertical|left"
+                    android:textSize="@dimen/font_normaless"
+                    android:textColor="@color/dark_ness_hint"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_delete" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white_full"
+    android:paddingBottom="@dimen/padding_item"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_full"
+        android:layout_margin="@dimen/padding_item"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_back"
+        android:textSize="@dimen/font_larger"/>
+
+    <!-- input email - pass -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btn_back"
+        android:layout_above="@+id/btn_ok">
+
+        <LinearLayout
+            android:id="@+id/ll_input_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/heigh_width_card_news"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/txt_change_pass"
+                android:textColor="@color/PrimaryDarkColor"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:paddingBottom="@dimen/heigh_view_nomal"/>
+            <EditText
+                android:id="@+id/edt_old_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:drawableLeft="@drawable/ic_title_project_blue"
+                android:drawablePadding="@dimen/padding_item"
+                android:hint="@string/txt_old_password"
+                android:textColorHint="@color/dark_ness_hint"
+                android:layout_marginTop="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:gravity="center_vertical"
+                android:inputType="textPassword"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:imeOptions="actionNext"
+                android:background="@null"
+                android:textColor="@color/PrimaryColor" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:background="@color/PrimaryColor"/>
+
+            <EditText
+                android:id="@+id/edt_new_pass"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:drawableLeft="@drawable/ic_title_project_blue"
+                android:drawablePadding="@dimen/padding_item"
+                android:hint="@string/txt_new_password"
+                android:textColorHint="@color/dark_ness_hint"
+                android:layout_marginTop="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:gravity="center_vertical"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:imeOptions="actionNext"
+                android:background="@null"
+                android:textColor="@color/PrimaryColor" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:background="@color/PrimaryColor"/>
+
+            <EditText
+                android:id="@+id/edt_renew_pass"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:drawableLeft="@drawable/ic_title_project_blue"
+                android:drawablePadding="@dimen/padding_item"
+                android:hint="@string/txt_renew_password"
+                android:textColorHint="@color/dark_ness_hint"
+                android:layout_marginTop="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:gravity="center_vertical"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:background="@null"
+                android:textColor="@color/PrimaryColor" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:background="@color/PrimaryColor"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_selector_blue_border_bkg"
+        android:text="@string/btn_ok_vn"
+        android:textColor="@color/PrimaryColor"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/padding_item_half"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding_item_half"
+        android:layout_marginBottom="@dimen/padding_item"
+        android:textSize="@dimen/font_normal"/>
+</RelativeLayout>

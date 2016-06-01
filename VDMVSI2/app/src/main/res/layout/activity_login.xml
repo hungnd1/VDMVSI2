@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/PrimaryColor"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/frm_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/divider" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_small"
+        android:layout_above="@+id/lnl_bottom"
+        android:background="@color/white_full"/>
+
+    <LinearLayout
+        android:id="@+id/lnl_bottom"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/heigh_view_nomal">
+
+        <Button
+            android:id="@+id/btn_fogot_pass"
+            android:layout_width="0dp"
+            android:background="@drawable/btn_focused_blue_solid_bkg"
+            android:layout_weight="1"
+            android:textColor="@color/white_full"
+            android:text="@string/txt_fogot_pass"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_normal"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="@dimen/divider_small"
+            android:layout_height="match_parent"
+            android:background="@color/white_full"/>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="0dp"
+            android:background="@drawable/btn_focused_blue_solid_bkg"
+            android:layout_weight="1"
+            android:textColor="@color/white_full"
+            android:text="@string/txt_register"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_normal"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

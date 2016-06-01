@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/PrimaryColor"
+    android:layout_height="match_parent">
+
+    <!-- input email - pass -->
+    <LinearLayout
+        android:id="@+id/ll_input_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <AutoCompleteTextView
+            android:id="@+id/edt_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:layout_marginBottom="@dimen/padding_item"
+            android:drawableLeft="@drawable/ic_email_2"
+            android:drawablePadding="@dimen/padding_item"
+            android:hint="@string/hint_email_login"
+            android:textColorHint="@color/text_color_hint"
+            android:layout_marginTop="@dimen/padding_item"
+            android:textSize="@dimen/font_normal"
+            android:inputType="textEmailAddress"
+            android:textCursorDrawable="@drawable/cursor_edittext"
+            android:imeOptions="actionNext"
+            android:background="@null"
+            android:textColor="@color/white_full" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:layout_marginBottom="@dimen/padding_item"
+            android:background="@color/white_full"/>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginTop="@dimen/padding_item"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/white_full"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                android:textColorHint="@color/text_color_hint"
+                android:drawableLeft="@drawable/ic_lock"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:drawablePadding="@dimen/padding_item" />
+
+            <ImageButton
+                android:id="@+id/btn_show_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_item"
+                android:src="@drawable/ic_eye"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/padding_item"
+            android:layout_marginRight="@dimen/padding_item"
+            android:layout_marginBottom="@dimen/padding_item"
+            android:background="@color/white_full"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_item"
+        android:text="@string/txt_login"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/white_full"
+        android:background="@drawable/btn_selector_blue_bkg"/>
+</LinearLayout>

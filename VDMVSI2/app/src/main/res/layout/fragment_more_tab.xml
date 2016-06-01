@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white_full"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rlt_header"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_header_info_user">
+
+        <ImageView
+            android:id="@+id/iv_user_bkg"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/nom"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_blur_bkg"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_blur_bkg"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="@dimen/diameter_avar_large"
+            android:layout_height="@dimen/diameter_avar_large"
+            android:src="@drawable/ic_avatar"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/padding_large"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/bkg_main"/>
+
+        <TextView
+            android:id="@+id/tv_name_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_full"
+            android:textSize="@dimen/font_large"
+            android:layout_marginTop="@dimen/padding_item"
+            android:layout_below="@+id/iv_user_avatar"
+            android:layout_centerHorizontal="true"
+            android:text="Admin"
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_ness"
+            android:textSize="@dimen/font_normaless"
+            android:layout_marginTop="@dimen/padding_item_half"
+            android:layout_below="@+id/tv_name_user"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlt_header"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/btn_change_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_lock_blue"
+                android:drawablePadding="@dimen/padding_item"
+                android:padding="@dimen/padding_item"
+                android:background="@drawable/btn_selector_transperent_bkg"
+                android:text="@string/txt_change_pass"
+                android:textColor="@color/PrimaryColor"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:textSize="@dimen/font_normal" />
+
+            <TextView
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_logout"
+                android:drawablePadding="@dimen/padding_item"
+                android:padding="@dimen/padding_item"
+                android:background="@drawable/btn_selector_transperent_bkg"
+                android:text="@string/txt_logout"
+                android:textColor="@color/PrimaryColor"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:textSize="@dimen/font_normal" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

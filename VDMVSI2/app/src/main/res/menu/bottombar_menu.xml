@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bt_bar_coporate"
+        android:icon="@drawable/ic_cooperate_tab"
+        android:title="@string/tab_coporate" />
+    <item
+        android:id="@+id/bt_bar_chat"
+        android:icon="@drawable/ic_chat_tab"
+        android:title="@string/tab_chat"  />
+    <item
+        android:id="@+id/bt_bar_news"
+        android:icon="@drawable/ic_news_tab"
+        android:title="@string/tab_news"  />
+    <item
+        android:id="@+id/bt_bar_delivery"
+        android:icon="@drawable/ic_trade_tab"
+        android:title="@string/tab_trade"  />
+    <item
+        android:id="@+id/bt_bar_more"
+        android:icon="@drawable/ic_more_tab"
+        android:title="@string/tab_more"  />
+</menu>
