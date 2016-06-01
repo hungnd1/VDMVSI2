@@ -113,4 +113,9 @@
     <string name="txt_renew_password">Nhập lại mật khẩu mới</string>
     <string name="txt_change_pass_success">Thay đổi mật khẩu thành công!</string>
     <string name="txt_success_add_project">Tạo dự án thành công</string>
+
+    <!-- dialog call-->
+    <string name="txt_message">Bạn có muốn gọi </string>
+    <string name="txt_yes">Có</string>
+    <string name="txt_no">không</string>
 </resources>

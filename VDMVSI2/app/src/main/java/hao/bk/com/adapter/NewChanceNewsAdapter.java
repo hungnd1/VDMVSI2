@@ -1,10 +1,16 @@
 package hao.bk.com.adapter;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -198,10 +204,30 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
             if (TextUtils.isEmpty(obj.getPhoneNumber())) {
                 toastUtil.showToast(context.getString(R.string.txt_not_phone_owner));
             } else {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                //Intent callIntent = new Intent(Intent.ACTION_CALL);c
-                callIntent.setData(Uri.parse("tel:" + obj.getPhoneNumber()));
-                context.startActivity(callIntent);
+                final String x = obj.getPhoneNumber();
+                AlertDialog.Builder alBuilder = new AlertDialog.Builder(
+                        context);
+                alBuilder.setMessage(context.getString(R.string.txt_message) + " " + obj.getPhoneNumber() + " " + context.getString(R.string.txt_no) + " ?");
+                final AlertDialog.Builder builder = alBuilder.setPositiveButton(R.string.txt_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:" + x));
+                        context.startActivity(callIntent);
+                    }
+                });
+                alBuilder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = alBuilder.create();
+                alertDialog.show();
+//                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+//                //Intent callIntent = new Intent(Intent.ACTION_CALL);c
+//                callIntent.setData(Uri.parse("tel:" + obj.getPhoneNumber()));
+//                context.startActivity(callIntent);
             }
         }
     }
