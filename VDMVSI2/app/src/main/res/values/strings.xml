@@ -4,7 +4,7 @@
     <!-- Login -->
     <string name="txt_login">Đăng nhập</string>
     <string name="txt_register">Đăng ký</string>
-    <string name="hint_email_login">Email đăng nhập</string>
+    <string name="hint_email_login">User đăng nhập</string>
     <string name="hint_password">Mật khẩu</string>
     <string name="re_password_error">Mật khẩu xác nhận không trùng khớp!</string>
     <string name="txt_update">Cập nhật</string>
@@ -21,7 +21,7 @@
     <string name="txt_change_pass_not_success">Thay đổi mật khẩu không thành công!</string>
     <!-- Register -->
     <string name="txt_username_hint">User name</string>
-    <string name="txt_email_register_hint">User đăng ký</string>
+    <string name="txt_email_register_hint">Email đăng ký</string>
     <string name="txt_password_hint">Mật khẩu</string>
     <string name="txt_repass_hint">Nhập lại mật khẩu</string>
     <string name="txt_success_register">Đăng ký tài khoản thành công!</string>
