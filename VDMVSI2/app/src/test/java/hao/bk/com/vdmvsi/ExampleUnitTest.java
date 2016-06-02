@@ -2,6 +2,8 @@ package hao.bk.com.vdmvsi;
 
 import org.junit.Test;
 
+import hao.bk.com.utils.TextUtils;
+
 import static org.junit.Assert.*;
 
 /**
@@ -10,6 +12,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        assertEquals(TextUtils.equalTime("2016-06-12 02:37:04", "2016-06-12 02:37:04"),true);
     }
 }

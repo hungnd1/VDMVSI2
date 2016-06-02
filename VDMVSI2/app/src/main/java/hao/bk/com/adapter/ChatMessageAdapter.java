@@ -48,13 +48,9 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         if(obj.isItsMe()){
             holder.tvMyChat.setText(obj.getContent());
             holder.tvMyChat.setVisibility(View.VISIBLE);
+            holder.myAvatar.setVisibility(View.INVISIBLE);
             if (lastObj == null || !lastObj.isItsMe()) {
                 holder.myAvatar.setVisibility(View.VISIBLE);
-            } else{
-                holder.myAvatar.setVisibility(View.INVISIBLE);
-            }
-            if (position == 0){
-                holder.tvMyChat.setText(Html.fromHtml(obj.getContent()+"<br><font size=\"5\" color=#e1e1e1>"+obj.getCdate()+"</font>"), TextView.BufferType.SPANNABLE);
             }
             holder.yourAvatar.setVisibility(View.INVISIBLE);
             holder.tvYourChat.setVisibility(View.INVISIBLE);
@@ -65,15 +61,11 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         }else {
             holder.tvMyChat.setVisibility(View.INVISIBLE);
             holder.myAvatar.setVisibility(View.INVISIBLE);
+            holder.yourAvatar.setVisibility(View.INVISIBLE);
             if (lastObj == null || lastObj.isItsMe()) {
                 holder.yourAvatar.setVisibility(View.VISIBLE);
-            }else{
-                holder.yourAvatar.setVisibility(View.INVISIBLE);
             }
             holder.tvYourChat.setText(obj.getContent());
-            if (position == 0){
-                holder.tvYourChat.setText(Html.fromHtml("<font color=#cc0029>hello</font> <font color=#ffcc00>world</font>"), TextView.BufferType.SPANNABLE);
-            }
             holder.tvYourChat.setVisibility(View.VISIBLE);
             if(obj.getBmpAvatar() != null)
                 holder.yourAvatar.setImageBitmap(obj.getBmpAvatar());

@@ -64,18 +64,16 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.imageNews.setImageResource(R.drawable.ic_avatar);
         CoporateNewsObj obj = (CoporateNewsObj) listNews.get(position);
-        holder.tvName.setText(obj.getTitle());
+        holder.tvName.setText(obj.getNameUser()+" > "+obj.getTitle());
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = position;
-        holder.tvTitle.setText(obj.getTitle());
-        //holder.tvDescription.setText(obj.getDescription());
+        holder.tvTitle.setVisibility(View.GONE);
+        holder.tvDescription.setText(obj.getContent());
     }
 
     @Override
     public int getItemCount() {
-        if(listNews != null)
-            return listNews.size();
-        return 0;
+            return listNews != null ? listNews.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -136,12 +134,8 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
             NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("publicKey",Config.PUBLIC_KEY);
-            if(flag) {
-                hashMap.put("action", Config.careProject);
-            }else {
-                hashMap.put("action", Config.cancelCareProject);
-            }
-            hashMap.put(" project_id", obj.getId()+"");
+            hashMap.put("action", flag ? Config.careProject :Config.cancelCareProject);
+            hashMap.put("project_id", obj.getId()+"");
             hashMap.put("username", dataStoreApp.getUserName());
 
             Call<JsonObject> call = stackOverflowAPI.runCareProject(hashMap);

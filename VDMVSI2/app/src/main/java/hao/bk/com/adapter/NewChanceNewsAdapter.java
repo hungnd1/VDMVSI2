@@ -72,9 +72,7 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
 
     @Override
     public int getItemCount() {
-        if (listNews != null)
-            return listNews.size();
-        return 0;
+        return listNews != null ? listNews.size() : 0;
     }
 
     @Override
@@ -86,10 +84,10 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
         } else {
             Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
         }
-        holder.tvName.setText(obj.getTitle());
+        holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = i;
-        holder.tvTitle.setText(obj.getTitle());
+        holder.tvTitle.setVisibility(View.GONE);
         holder.tvDescription.setText(obj.getContent());
     }
 

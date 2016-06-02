@@ -41,9 +41,9 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.imageNews.setImageResource(R.drawable.ic_avatar);
         CoporateNewsObj obj = (CoporateNewsObj) listNews.get(position);
-        holder.tvName.setText(obj.getNameUser());
+        holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
-        holder.tvTitle.setText(obj.getTitle());
+        holder.tvTitle.setVisibility(View.GONE);
         holder.index = position;
         holder.tvDescription.setText(obj.getContent());
     }
@@ -58,9 +58,7 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
 
     @Override
     public int getItemCount() {
-        if(listNews != null)
-            return listNews.size();
-        return 0;
+        return listNews != null ? listNews.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

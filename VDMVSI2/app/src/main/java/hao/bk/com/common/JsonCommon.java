@@ -260,6 +260,13 @@ public class JsonCommon {
             }else{
                 newsObj.setItsMe(false);
             }
+            if (list.size()>0){
+                ChatObj lastObj = list.get(list.size()-1);
+                if (newsObj.isItsMe() == lastObj.isItsMe() && TextUtils.equalTime(newsObj.getCdate(),lastObj.getCdate())){
+                    lastObj.setContent(lastObj.getContent()+"\n"+newsObj.getContent());
+                    continue;
+                }
+            }
             list.add(newsObj);
         }
         return list;

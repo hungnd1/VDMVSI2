@@ -102,7 +102,6 @@ public class Util {
 	}
 
 	public static String zenMoney(String money) {
-//		return String.format("%,d", Long.parseLong(money)).replace(",", ".");
 		return String.format("%,d", Long.parseLong(money)).replace(".", ",");
 	}
 

@@ -28,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,10 +150,15 @@ public class ChatActivity extends AppCompatActivity {
                 obj.setContent(edtMsg.getText().toString());
                 obj.setBmpAvatar(bmpAvatar);
                 obj.setItsMe(true);
-                edtMsg.setText("");
-                listChat.add(0, obj);
-                chatMessageAdapter.notifyDataSetChanged();
+                obj.setCdate(TextUtils.dateToString(new Date()));
                 publish(obj.getContent());
+                edtMsg.setText("");
+                if (listChat.size()>0 && listChat.get(0).isItsMe() && TextUtils.equalTime(obj.getCdate(),listChat.get(0).getCdate())){
+                    obj.setContent(listChat.get(0).getContent()+"\n"+obj.getContent());
+                    listChat.set(0, obj);
+                }
+                else listChat.add(0, obj);
+                chatMessageAdapter.notifyDataSetChanged();
                 recyclerView.smoothScrollToPosition(0);
             }
         });
@@ -173,7 +179,12 @@ public class ChatActivity extends AppCompatActivity {
             ChatObj chatObj = new ChatObj();
             chatObj.setItsMe(false);
             chatObj.setContent(chatMsg.getMess());
-            listChat.add(0, chatObj);
+            chatObj.setCdate(TextUtils.dateToString(new Date()));
+            if (listChat.size()>0 && !listChat.get(0).isItsMe()){
+                chatObj.setContent(listChat.get(0).getContent()+"\n"+chatObj.getContent());
+                listChat.set(0, chatObj);
+            }
+            else listChat.add(0, chatObj);
             chatMessageAdapter.notifyDataSetChanged();
         }
     };
