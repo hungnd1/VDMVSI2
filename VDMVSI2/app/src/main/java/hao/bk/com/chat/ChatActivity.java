@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -119,11 +120,24 @@ public class ChatActivity extends AppCompatActivity {
         manager= new LinearLayoutManager(this);
         manager.setStackFromEnd(true);
         manager.setReverseLayout(true);
+        //manager.scrollToPosition(0);
         recyclerView.setLayoutManager(manager);
         chatMessageAdapter = new ChatMessageAdapter(this, listChat);
         recyclerView.setAdapter(chatMessageAdapter);
         imgSend = (ImageButton)findViewById(R.id.imb_send);
         edtMsg = (EditText)findViewById(R.id.edt_chat);
+        edtMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                }, 100);
+            }
+        });
         imgSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +153,7 @@ public class ChatActivity extends AppCompatActivity {
                 listChat.add(0, obj);
                 chatMessageAdapter.notifyDataSetChanged();
                 publish(obj.getContent());
+                recyclerView.smoothScrollToPosition(0);
             }
         });
         imgSend = (ImageButton)findViewById(R.id.imb_send);
@@ -229,6 +244,12 @@ public class ChatActivity extends AppCompatActivity {
                         listChat.add(chatObjLastest);
                     listChat.addAll(JsonCommon.getChatTwoUser(dataStoreApp.getUserName(),response.body().getAsJsonArray("data")));
                     chatMessageAdapter.notifyDataSetChanged();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.scrollToPosition(0);
+                        }
+                    });
                 }catch (Exception e){
                 }
             }

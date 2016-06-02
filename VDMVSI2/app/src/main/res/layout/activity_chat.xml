@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:background="@color/white_full"
     android:id="@+id/container"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:transcriptMode="normal">
 
     <include
         android:id="@+id/toolbar"
@@ -32,12 +33,13 @@
         <EditText
             android:id="@+id/edt_chat"
             android:background="@null"
-            android:hint="nhập tin nhắn vào đây"
+            android:hint="Nhập tin nhắn"
             android:layout_width="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/imb_send"
             android:layout_height="match_parent" />
     </RelativeLayout>
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -49,10 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_full"
-        android:paddingLeft="@dimen/padding_item"
-        android:paddingRight="@dimen/padding_item"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="?attr/actionBarSize"
+        android:paddingBottom="10dp"
         android:layout_above="@+id/divider"
         android:id="@+id/rv_chat" />
 </RelativeLayout>

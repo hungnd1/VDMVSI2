@@ -22,6 +22,6 @@ public class HViewUtils {
     }
 
     public static String getTimeViaMiliseconds(long miliseconds){
-        return DateFormat.getDateInstance(DateFormat.SHORT).format(miliseconds);
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(miliseconds*1000);
     }
 }

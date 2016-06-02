@@ -9,8 +9,8 @@
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imv_profile"
-        android:layout_width="@dimen/diameter_avar"
-        android:layout_height="@dimen/diameter_avar"
+        android:layout_width="@dimen/diameter_avar_medium"
+        android:layout_height="@dimen/diameter_avar_medium"
         android:src="@drawable/ic_avatar_default"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="@dimen/padding_item"
@@ -24,14 +24,7 @@
         android:layout_centerVertical="true"
         android:textColor="@color/PrimaryDarkColor"
         android:textSize="@dimen/font_large"
+        android:text="sdsad"
         android:layout_toRightOf="@+id/imv_profile"/>
 
-    <TextView
-        android:id="@+id/tv_phone"
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/black_full"
-        android:textSize="@dimen/font_small" />
 </RelativeLayout>

@@ -111,11 +111,11 @@ public class ChatItemAdapter extends  RecyclerView.Adapter<ChatItemAdapter.ViewH
     public void onBindViewHolder(ViewHolder holder, int position) {
         MemberVsiObj obj = listChat.get(position);
         holder.tvEmail.setText(obj.getUserName());
-        holder.tvPhone.setText(obj.getPhone());
         holder.index = position;
-        holder.avatarUser.setImageResource(R.drawable.ic_avatar_default);
         try {
-            Picasso.with(context).load(obj.getUrlThumnails()).resize(120, 60).into(holder.avatarUser);
+            Picasso.with(context).load(obj.getUrlThumnails())
+                    .placeholder(R.drawable.ic_avatar_default).error(R.drawable.ic_avatar_default)
+                    .into(holder.avatarUser);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -155,7 +155,6 @@ public class ChatItemAdapter extends  RecyclerView.Adapter<ChatItemAdapter.ViewH
             });
             avatarUser = (CircleImageView)itemView.findViewById(R.id.imv_profile);
             tvEmail = (TextView)itemView.findViewById(R.id.tv_name_user);
-            tvPhone = (TextView)itemView.findViewById(R.id.tv_phone);
         }
 
     }

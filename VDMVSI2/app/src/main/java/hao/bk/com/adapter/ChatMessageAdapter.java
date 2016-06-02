@@ -4,12 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.models.ChatObj;
@@ -38,25 +41,44 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.avatarUser.setImageResource(R.drawable.ic_avatar);
+        holder.yourAvatar.setImageResource(R.drawable.ic_avatar);
         ChatObj obj = listChat.get(position);
-
+        ChatObj lastObj = position < listChat.size()-1 ? listChat.get(position+1) : null;
         holder.index = position;
         if(obj.isItsMe()){
             holder.tvMyChat.setText(obj.getContent());
             holder.tvMyChat.setVisibility(View.VISIBLE);
-            holder.avatarUser.setVisibility(View.GONE);
-            holder.tvYourChat.setVisibility(View.GONE);
-
-        }else {
-            holder.tvMyChat.setVisibility(View.GONE);
-            holder.avatarUser.setVisibility(View.VISIBLE);
-            holder.tvYourChat.setVisibility(View.VISIBLE);
-            holder.tvYourChat.setText(obj.getContent());
+            if (lastObj == null || !lastObj.isItsMe()) {
+                holder.myAvatar.setVisibility(View.VISIBLE);
+            } else{
+                holder.myAvatar.setVisibility(View.INVISIBLE);
+            }
+            if (position == 0){
+                holder.tvMyChat.setText(Html.fromHtml(obj.getContent()+"<br><font size=\"5\" color=#e1e1e1>"+obj.getCdate()+"</font>"), TextView.BufferType.SPANNABLE);
+            }
+            holder.yourAvatar.setVisibility(View.INVISIBLE);
+            holder.tvYourChat.setVisibility(View.INVISIBLE);
             if(obj.getBmpAvatar() != null)
-                holder.avatarUser.setImageBitmap(obj.getBmpAvatar());
+                holder.myAvatar.setImageBitmap(obj.getBmpAvatar());
             else
-                holder.avatarUser.setImageBitmap(getDefaultAvar());
+                holder.myAvatar.setImageBitmap(getDefaultAvar());
+        }else {
+            holder.tvMyChat.setVisibility(View.INVISIBLE);
+            holder.myAvatar.setVisibility(View.INVISIBLE);
+            if (lastObj == null || lastObj.isItsMe()) {
+                holder.yourAvatar.setVisibility(View.VISIBLE);
+            }else{
+                holder.yourAvatar.setVisibility(View.INVISIBLE);
+            }
+            holder.tvYourChat.setText(obj.getContent());
+            if (position == 0){
+                holder.tvYourChat.setText(Html.fromHtml("<font color=#cc0029>hello</font> <font color=#ffcc00>world</font>"), TextView.BufferType.SPANNABLE);
+            }
+            holder.tvYourChat.setVisibility(View.VISIBLE);
+            if(obj.getBmpAvatar() != null)
+                holder.yourAvatar.setImageBitmap(obj.getBmpAvatar());
+            else
+                holder.yourAvatar.setImageBitmap(getDefaultAvar());
         }
     }
     @Override
@@ -70,11 +92,13 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         TextView tvYourChat;
         TextView tvMyChat;
         int index;
-        CircleImageView avatarUser;
+        CircleImageView yourAvatar;
+        CircleImageView myAvatar;
 
         ViewHolder(View itemView) {
             super(itemView);
-            avatarUser = (CircleImageView)itemView.findViewById(R.id.imv_profile);
+            yourAvatar = (CircleImageView)itemView.findViewById(R.id.imv_profile);
+            myAvatar = (CircleImageView)itemView.findViewById(R.id.imv_my_profile);
             tvYourChat = (TextView)itemView.findViewById(R.id.tv_your_chat);
             tvMyChat = (TextView)itemView.findViewById(R.id.tv_my_chat);
         }

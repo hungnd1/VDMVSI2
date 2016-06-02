@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_marginRight="@dimen/padding_item"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:id="@+id/lnl_root"
-    android:background="@color/white_full"
+    android:background="@color/message_background"
     android:minHeight="@dimen/diameter_avar"
     android:layout_height="wrap_content">
 
@@ -11,11 +11,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imv_profile"
         android:layout_width="@dimen/diameter_avar"
-        android:layout_height="64dp"
+        android:layout_height="@dimen/diameter_avar"
         android:layout_marginBottom="@dimen/padding_cardview"
         android:layout_marginTop="@dimen/padding_cardview"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="@dimen/padding_item"
+        android:layout_marginRight="@dimen/padding_message"
         app:civ_border_width="1dp"
         app:civ_border_color="#e5e5e5"/>
 
@@ -27,22 +27,36 @@
         android:background="@drawable/btn_your_chat_bkg"
         android:textColor="@color/black_full"
         android:padding="@dimen/padding_item_half"
-        android:minWidth="@dimen/heigh_width_card_news"
-        android:gravity="left|center_vertical"
+        android:minWidth="@dimen/min_width_message"
+        android:maxWidth="@dimen/max_width_message"
+        android:gravity="center_vertical"
         android:textSize="@dimen/font_normal"
         android:layout_toRightOf="@+id/imv_profile"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imv_my_profile"
+        android:layout_width="@dimen/diameter_avar"
+        android:layout_height="@dimen/diameter_avar"
+        android:layout_marginBottom="@dimen/padding_cardview"
+        android:layout_marginTop="@dimen/padding_cardview"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/padding_message"
+        app:civ_border_width="1dp"
+        app:civ_border_color="#e5e5e5"/>
 
     <TextView
         android:id="@+id/tv_my_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:minWidth="@dimen/heigh_width_card_news"
+        android:minWidth="@dimen/min_width_message"
+        android:maxWidth="@dimen/max_width_message"
         android:background="@drawable/btn_my_chat_bkg"
-        android:textColor="@color/white_full"
+        android:layout_toLeftOf="@id/imv_my_profile"
+        android:textColor="@color/black_full"
         android:textSize="@dimen/font_normal"
-        android:gravity="left|center_vertical"
-        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
         android:padding="@dimen/padding_item_half"
        />
 

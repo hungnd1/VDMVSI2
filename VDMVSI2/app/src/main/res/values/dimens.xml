@@ -2,13 +2,16 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="padding_item_half">4dp</dimen>
+    <dimen name="padding_item_half">3dp</dimen>
     <dimen name="padding_cardview">5dp</dimen>
     <dimen name="padding_item">16dp</dimen>
+    <dimen name="padding_message">4dp</dimen>
     <dimen name="padding_large">25dp</dimen>
     <dimen name="heigh_view_nomal">50dp</dimen>
     <dimen name="heigh_view_nomaless">40dp</dimen>
     <dimen name="heigh_width_card_news">100dp</dimen>
+    <dimen name="min_width_message">100dp</dimen>
+    <dimen name="max_width_message">200dp</dimen>
     <dimen name="width_btn_standard">150dp</dimen>
     <dimen name="divider_small">1px</dimen>
     <dimen name="height_header_info_user">200dp</dimen>
@@ -25,7 +28,7 @@
 
     <!-- dimen -->
     <dimen name="height_cviews">210dp</dimen>
-    <dimen name="diameter_avar">50dp</dimen>
+    <dimen name="diameter_avar">25dp</dimen>
     <dimen name="diameter_avar_large">70dp</dimen>
     <dimen name="height_thumnails">164dp</dimen>
 </resources>
