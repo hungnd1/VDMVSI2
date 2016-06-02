@@ -30,8 +30,8 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/imv_profile"
-                    android:layout_width="@dimen/diameter_avar"
-                    android:layout_height="@dimen/diameter_avar"
+                    android:layout_width="@dimen/diameter_avar_medium"
+                    android:layout_height="@dimen/diameter_avar_medium"
                     android:src="@drawable/ic_avatar_default"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="@dimen/padding_item"

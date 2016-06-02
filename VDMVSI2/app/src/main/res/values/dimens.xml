@@ -10,8 +10,8 @@
     <dimen name="heigh_view_nomal">50dp</dimen>
     <dimen name="heigh_view_nomaless">40dp</dimen>
     <dimen name="heigh_width_card_news">100dp</dimen>
-    <dimen name="min_width_message">100dp</dimen>
-    <dimen name="max_width_message">200dp</dimen>
+    <dimen name="min_width_message">120dp</dimen>
+    <dimen name="max_width_message">250dp</dimen>
     <dimen name="width_btn_standard">150dp</dimen>
     <dimen name="divider_small">1px</dimen>
     <dimen name="height_header_info_user">200dp</dimen>
@@ -28,7 +28,7 @@
 
     <!-- dimen -->
     <dimen name="height_cviews">210dp</dimen>
-    <dimen name="diameter_avar">50dp</dimen>
+    <dimen name="diameter_avar">25dp</dimen>
 	<dimen name="diameter_avar_medium">45dp</dimen>
     <dimen name="diameter_avar_large">70dp</dimen>
     <dimen name="height_thumnails">164dp</dimen>

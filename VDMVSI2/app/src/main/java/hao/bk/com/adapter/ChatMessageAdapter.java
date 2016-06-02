@@ -23,9 +23,13 @@ import hao.bk.com.models.ChatObj;
 public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.ViewHolder>{
      ArrayList<ChatObj> listChat;
     Context context;
-    public ChatMessageAdapter( Context context, ArrayList<ChatObj> listChat){
+    Bitmap myAvatar,yourAvatar;
+
+    public ChatMessageAdapter(Context context, ArrayList<ChatObj> listChat, Bitmap myAvatar, Bitmap yourAvatar){
         this.listChat = listChat;
         this.context = context;
+        this.myAvatar = myAvatar;
+        this.yourAvatar = yourAvatar;
     }
 
     @Override
@@ -33,18 +37,15 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         ViewHolder viewHolder = null;
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_friend_chat, parent, false);
         viewHolder = new ViewHolder(view);
+        viewHolder.myAvatar.setImageBitmap(myAvatar);
+        viewHolder.yourAvatar.setImageBitmap(yourAvatar);
         return viewHolder;
     }
-    public Bitmap getDefaultAvar(){
-        return BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.ic_avatar);
-    }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.yourAvatar.setImageResource(R.drawable.ic_avatar);
         ChatObj obj = listChat.get(position);
         ChatObj lastObj = position < listChat.size()-1 ? listChat.get(position+1) : null;
-        holder.index = position;
         if(obj.isItsMe()){
             holder.tvMyChat.setText(obj.getContent());
             holder.tvMyChat.setVisibility(View.VISIBLE);
@@ -54,10 +55,6 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
             }
             holder.yourAvatar.setVisibility(View.INVISIBLE);
             holder.tvYourChat.setVisibility(View.INVISIBLE);
-            if(obj.getBmpAvatar() != null)
-                holder.myAvatar.setImageBitmap(obj.getBmpAvatar());
-            else
-                holder.myAvatar.setImageBitmap(getDefaultAvar());
         }else {
             holder.tvMyChat.setVisibility(View.INVISIBLE);
             holder.myAvatar.setVisibility(View.INVISIBLE);
@@ -67,23 +64,16 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
             }
             holder.tvYourChat.setText(obj.getContent());
             holder.tvYourChat.setVisibility(View.VISIBLE);
-            if(obj.getBmpAvatar() != null)
-                holder.yourAvatar.setImageBitmap(obj.getBmpAvatar());
-            else
-                holder.yourAvatar.setImageBitmap(getDefaultAvar());
         }
     }
     @Override
     public int getItemCount() {
-        if(listChat != null)
-            return listChat.size();
-        return 0;
+        return listChat != null ? listChat.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvYourChat;
         TextView tvMyChat;
-        int index;
         CircleImageView yourAvatar;
         CircleImageView myAvatar;
 

@@ -16,10 +16,15 @@ import android.view.ViewGroup;
 
 import com.google.gson.JsonObject;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
-import hao.bk.com.adapter.ChatItemAdapter;
+import hao.bk.com.adapter.ContactItemAdapter;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.JsonCommon;
 import hao.bk.com.common.NetWorkServerApi;
@@ -37,21 +42,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by T430 on 4/23/2016.
  */
-public class FragmentChatPage extends Fragment {
+public class FragmentContactPage extends Fragment {
 
     public RecyclerView recyclerView;
     // adapterLv cho recycleView
-    private ChatItemAdapter adapter;
+    private ContactItemAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager llm;
-    // lay ve activity
     public MainActivity main;
     public String curTabName = "";
     ToastUtil toastUtil;
     DataStoreApp dataStoreApp;
     MyProgressDialog mpdl;
     ArrayList<MemberVsiObj> listMemberChat =  new ArrayList<>();
-    public FragmentChatPage(){
+    public FragmentContactPage(){
 
     }
     @Override
@@ -69,6 +73,7 @@ public class FragmentChatPage extends Fragment {
         Bundle bundle = this.getArguments();
         curTabName = bundle.getString(Config.NAME_BUNDLE, Config.LAST_MSG_TAB);
     }
+
     public void setupFilter(){
         main.edtSearch.addTextChangedListener(new TextWatcher() {
 
@@ -110,7 +115,7 @@ public class FragmentChatPage extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        adapter = new ChatItemAdapter(this, listMemberChat);
+        adapter = new ContactItemAdapter(this, listMemberChat);
         recyclerView.setAdapter(adapter);
         getAllUser();
         setupFilter();
@@ -150,6 +155,12 @@ public class FragmentChatPage extends Fragment {
                 }
                 listMemberChat.clear();
                 listMemberChat.addAll(JsonCommon.getAllUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data")));
+                Collections.sort(listMemberChat, new Comparator<MemberVsiObj>() {
+                    @Override
+                    public int compare(MemberVsiObj lhs, MemberVsiObj rhs) {
+                        return lhs.getUserName().compareToIgnoreCase(rhs.getUserName());
+                    }
+                });
                 adapter.updateFilter();
                 adapter.notifyDataSetChanged();
             }

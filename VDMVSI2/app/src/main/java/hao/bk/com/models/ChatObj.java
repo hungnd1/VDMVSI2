@@ -13,7 +13,6 @@ public class ChatObj {
     private String cdate;
     private boolean itsMe;
     private int isRun;
-    private Bitmap bmpAvatar;
     public void setId(int id) {
         this.id = id;
     }
@@ -70,11 +69,4 @@ public class ChatObj {
         return isRun;
     }
 
-    public void setBmpAvatar(Bitmap bmpAvatar) {
-        this.bmpAvatar = bmpAvatar;
-    }
-
-    public Bitmap getBmpAvatar() {
-        return bmpAvatar;
-    }
 }

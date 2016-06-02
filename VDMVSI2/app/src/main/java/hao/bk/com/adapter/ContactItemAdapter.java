@@ -20,21 +20,21 @@ import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
 import hao.bk.com.models.MemberVsiObj;
 import hao.bk.com.utils.Util;
-import hao.bk.com.vdmvsi.FragmentChatPage;
+import hao.bk.com.vdmvsi.FragmentContactPage;
 import hao.bk.com.vdmvsi.R;
 
 /**
  * Created by T430 on 4/23/2016.
  */
-public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHolder> {
+public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.ViewHolder> {
 
     public ArrayList<MemberVsiObj> listChat;
     ChatFilter filter;
-    FragmentChatPage frmContainter;
+    FragmentContactPage frmContainter;
     Context context;
     ToastUtil toastUtil;
 
-    public ChatItemAdapter(FragmentChatPage frmContainter, ArrayList<MemberVsiObj> listChat) {
+    public ContactItemAdapter(FragmentContactPage frmContainter, ArrayList<MemberVsiObj> listChat) {
         this.listChat = listChat;
         this.filter = new ChatFilter(listChat);
         this.frmContainter = frmContainter;
@@ -78,8 +78,6 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         return listChat != null ? listChat.size() : 0;
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout lnlRoot;
         TextView tvEmail;
@@ -98,7 +96,7 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
                         intent.putExtra(Config.USER_NAME_PUT, obj.getUserName());
                         intent.putExtra(Config.URL_THUMNAILS_PUT, obj.getUrlThumnails());
                         context.startActivity(intent);
-                   } catch (Exception e) {
+                    } catch (Exception e) {
 
                     }
 

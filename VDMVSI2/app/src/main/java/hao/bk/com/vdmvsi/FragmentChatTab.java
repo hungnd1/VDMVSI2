@@ -27,8 +27,9 @@ public class FragmentChatTab  extends Fragment{
     ChatPagerAdapter adapter;
     public CharSequence titlesTab[] = new String[2];
     MainActivity main;
-    FragmentChatPage frmNewMessage, frmContacts;
-    ArrayList<FragmentChatPage> listFrmTab;
+    FragmentChatPage frmNewMessage;
+    FragmentContactPage frmContacts;
+    ArrayList<Fragment> listFrmTab;
     public FragmentChatTab(){
 
     }
@@ -60,7 +61,7 @@ public class FragmentChatTab  extends Fragment{
         bundle1.putString(Config.NAME_BUNDLE, Config.LAST_MSG_TAB);
         frmNewMessage.setArguments(bundle1);
         listFrmTab.add(frmNewMessage);
-        frmContacts = new FragmentChatPage();
+        frmContacts = new FragmentContactPage();
         Bundle bundle2 = new Bundle();
         bundle2.putString(Config.NAME_BUNDLE, Config.CONTACTS_TAB);
         frmContacts.setArguments(bundle2);

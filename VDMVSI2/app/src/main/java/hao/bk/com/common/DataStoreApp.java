@@ -16,6 +16,7 @@ public class DataStoreApp {
 
     private String USER_NAME="USER_NAME";
     private String PASSWORDS="PASSWORDS";
+    private String AVATAR_URL="AVATAR";
     private String CHAT_ACTIVITY_SHOW="CHAT_ACTIVITY_SHOW";
 
     public DataStoreApp(Context context) {

@@ -16,8 +16,8 @@ public class ChatPagerAdapter extends FragmentStatePagerAdapter {
 
     private CharSequence Titles[];
     private int numTab;
-    ArrayList<FragmentChatPage> listFrmTab;
-    public ChatPagerAdapter (FragmentManager fm, ArrayList<FragmentChatPage> listFrmTab, CharSequence mTitles[], int mNumbOfTab) {
+    ArrayList<Fragment> listFrmTab;
+    public ChatPagerAdapter (FragmentManager fm, ArrayList<Fragment> listFrmTab, CharSequence mTitles[], int mNumbOfTab) {
         super(fm);
         this.Titles = mTitles;
         this.numTab = mNumbOfTab;
