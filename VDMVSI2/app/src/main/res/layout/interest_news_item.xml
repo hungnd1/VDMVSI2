@@ -78,12 +78,13 @@
                 <TextView
                     android:id="@+id/tv_descript"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="Hhiiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai"
                     android:maxLines="2"
                     android:layout_marginTop="@dimen/padding_item_half"
                     android:textColor="@color/dark_ness_text"
-                    android:textSize="@dimen/font_normal"/>
+                    android:textSize="@dimen/font_normal"
+                    android:paddingTop="10dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,7 +97,7 @@
                 <Button
                     android:id="@+id/btn_like"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:drawableLeft="@drawable/ic_like_24"
                     android:paddingLeft="@dimen/padding_item"
                     android:drawablePadding="@dimen/padding_item_half"
@@ -127,7 +128,7 @@
                 <Button
                     android:id="@+id/btn_call"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.8"
                     android:background="@drawable/btn_selector_transperent_bkg"
                     android:textAllCaps="false"
                     android:drawableLeft="@drawable/ic_phone_24"

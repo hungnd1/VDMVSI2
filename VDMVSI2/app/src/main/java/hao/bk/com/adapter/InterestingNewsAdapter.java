@@ -1,6 +1,8 @@
 package hao.bk.com.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,8 +65,19 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.imageNews.setImageResource(R.drawable.ic_avatar);
         CoporateNewsObj obj = (CoporateNewsObj) listNews.get(position);
+        if (obj.getUrlAvar() == null || obj.getUrlAvar() == "") {
+            Picasso.with(context.getApplicationContext()).load(R.drawable.icon_user).transform(new CircleTransform()).into(holder.imageNews);
+        } else {
+            Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
+        }
+        if(obj.getStatus() == 1){
+            holder.btnLike.setText(context.getString(R.string.txt_ingnore_care));
+            holder.btnLike.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
+        }else{
+            holder.btnLike.setText(context.getString(R.string.txt_ingnore_care));
+            holder.btnLike.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
+        }
         holder.tvName.setText(obj.getNameUser()+" > "+obj.getTitle());
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = position;
@@ -176,14 +190,34 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
         }
         public void callOwnerNews(int index){
             // Xử lý goi ng dang tin
-            CoporateNewsObj obj = (CoporateNewsObj)listNews.get(index);
-            if(TextUtils.isEmpty(obj.getPhoneNumber())){
+            CoporateNewsObj obj = (CoporateNewsObj) listNews.get(index);
+            if (TextUtils.isEmpty(obj.getPhoneNumber())) {
                 toastUtil.showToast(context.getString(R.string.txt_not_phone_owner));
             } else {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-			    //Intent callIntent = new Intent(Intent.ACTION_CALL);c
-                callIntent.setData(Uri.parse("tel:" + obj.getPhoneNumber()));
-                context.startActivity(callIntent);
+                final String x = obj.getPhoneNumber();
+                AlertDialog.Builder alBuilder = new AlertDialog.Builder(
+                        context);
+                alBuilder.setMessage(context.getString(R.string.txt_message) + " " + obj.getPhoneNumber() + " " + context.getString(R.string.txt_no) + " ?");
+                final AlertDialog.Builder builder = alBuilder.setPositiveButton(R.string.txt_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        callIntent.setData(Uri.parse("tel:" + x));
+                        context.startActivity(callIntent);
+                    }
+                });
+                alBuilder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = alBuilder.create();
+                alertDialog.show();
+//                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+//                //Intent callIntent = new Intent(Intent.ACTION_CALL);c
+//                callIntent.setData(Uri.parse("tel:" + obj.getPhoneNumber()));
+//                context.startActivity(callIntent);
             }
         }
     }

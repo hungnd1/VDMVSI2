@@ -84,6 +84,13 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
         } else {
             Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
         }
+        if(obj.getStatus() == 1){
+            holder.btnCare.setText(context.getString(R.string.txt_ingnore_care));
+            holder.btnCare.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
+        }else{
+            holder.btnCare.setText(context.getString(R.string.txt_ingnore_care));
+            holder.btnCare.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
+        }
         holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = i;
@@ -209,7 +216,7 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
                 final AlertDialog.Builder builder = alBuilder.setPositiveButton(R.string.txt_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
                         callIntent.setData(Uri.parse("tel:" + x));
                         context.startActivity(callIntent);
                     }
