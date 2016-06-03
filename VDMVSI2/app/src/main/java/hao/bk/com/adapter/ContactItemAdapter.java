@@ -45,7 +45,7 @@ public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = null;
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_chat_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_contact_item, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
     }

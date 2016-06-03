@@ -14,6 +14,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -192,6 +193,8 @@ public class ChatActivity extends AppCompatActivity {
     };
 
     public void getAvatarYourFriend() {
+        myAvatar = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_avatar_default);
         yourAvatar = BitmapFactory.decodeResource(getResources(),
                 R.drawable.ic_avatar_default);
         try {
@@ -212,7 +215,26 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     });
         } catch (Exception e) {
-            e.printStackTrace();
+        }
+
+        try {
+            Picasso.with(this)
+                    .load(dataStoreApp.getAvatar())
+                    .into(new Target() {
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Drawable errorDrawable) {
+                        }
+
+                        @Override
+                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                            myAvatar = bitmap;
+                        }
+                    });
+        } catch (Exception e) {
         }
 
     }
@@ -237,6 +259,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 mpDl.hideLoading();
                 try {
+                    Log.d("body",response.body().toString());
                     boolean status = response.body().get(Config.status_response).getAsBoolean();
                     if (!status) {
                         return;

@@ -19,6 +19,7 @@ import hao.bk.com.common.ChatFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
 import hao.bk.com.models.MemberVsiObj;
+import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.FragmentChatPage;
 import hao.bk.com.vdmvsi.R;
@@ -65,6 +66,8 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         MemberVsiObj obj = listChat.get(position);
         holder.tvEmail.setText(obj.getUserName());
         holder.index = position;
+        holder.tvLastMes.setText(obj.getLastMessage().getContent());
+        holder.tvLastDate.setText(TextUtils.toSimpleDate(obj.getLastMessage().getCdate()));
         try {
             Picasso.with(context).load(obj.getUrlThumnails())
                     .placeholder(R.drawable.ic_avatar_default).error(R.drawable.ic_avatar_default)
@@ -83,6 +86,8 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout lnlRoot;
         TextView tvEmail;
+        TextView tvLastMes;
+        TextView tvLastDate;
         int index;
         CircleImageView avatarUser;
 
@@ -106,6 +111,8 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
             });
             avatarUser = (CircleImageView) itemView.findViewById(R.id.imv_profile);
             tvEmail = (TextView) itemView.findViewById(R.id.tv_name_user);
+            tvLastMes = (TextView) itemView.findViewById(R.id.tv_last_mes);
+            tvLastDate = (TextView) itemView.findViewById(R.id.tv_last_date);
         }
 
     }

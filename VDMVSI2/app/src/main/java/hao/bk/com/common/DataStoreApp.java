@@ -40,6 +40,16 @@ public class DataStoreApp {
     public String getPassword(){
         return prefs.getString(PASSWORDS, "");
     }
+
+    public void createAvatar(String password){
+        editor = prefs.edit();
+        editor.putString(AVATAR_URL, password);
+        editor.commit();
+    }
+
+    public String getAvatar(){
+        return prefs.getString(AVATAR_URL, "");
+    }
     public void setChatActivityShowing(boolean flag){
         editor = prefs.edit();
         editor.putBoolean(CHAT_ACTIVITY_SHOW, flag);

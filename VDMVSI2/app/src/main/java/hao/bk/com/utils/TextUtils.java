@@ -1,5 +1,6 @@
 package hao.bk.com.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 public class TextUtils {
 
     final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    final static SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM");
 
     public static boolean isEmpty(String str){
         if(str == null || str.equals(""))
@@ -24,5 +26,16 @@ public class TextUtils {
         return sdf.format(date);
     }
 
+    public static Date stringToDate(String s){
+        try {
+            return sdf.parse(s);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
 
+
+    public static String toSimpleDate(String cdate) {
+        return sdf2.format(stringToDate(cdate));
+    }
 }

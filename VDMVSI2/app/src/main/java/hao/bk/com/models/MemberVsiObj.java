@@ -8,6 +8,7 @@ public class MemberVsiObj {
     private String urlThumnails;
     private String userName;
     private String phone;
+    private ChatObj lastMessage;
 
     public void setPhone(String phone) {
         this.phone = phone;
@@ -41,4 +42,11 @@ public class MemberVsiObj {
         return userName;
     }
 
+    public ChatObj getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(ChatObj lastMessage) {
+        this.lastMessage = lastMessage;
+    }
 }

@@ -2,6 +2,7 @@ package hao.bk.com.vdmvsi;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,11 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 
 import hao.bk.com.adapter.ChatItemAdapter;
 import hao.bk.com.common.DataStoreApp;
@@ -27,7 +33,10 @@ import hao.bk.com.common.ToastUtil;
 import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
 import hao.bk.com.customview.MyProgressDialog;
+import hao.bk.com.models.ChatObj;
 import hao.bk.com.models.MemberVsiObj;
+import hao.bk.com.utils.TextUtils;
+import hao.bk.com.utils.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,6 +57,7 @@ public class FragmentChatPage extends Fragment {
     public MainActivity main;
     public String curTabName = "";
     ToastUtil toastUtil;
+    int dem = 0;
     DataStoreApp dataStoreApp;
     MyProgressDialog mpdl;
     ArrayList<MemberVsiObj> listMemberChat =  new ArrayList<>();
@@ -149,9 +159,68 @@ public class FragmentChatPage extends Fragment {
                     return;
                 }
                 listMemberChat.clear();
-                listMemberChat.addAll(JsonCommon.getAllUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data")));
-                adapter.updateFilter();
-                adapter.notifyDataSetChanged();
+                //listMemberChat.addAll(JsonCommon.getAllUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data")));
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Config.BASE_URL_REGISTER)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
+                ArrayList<MemberVsiObj> tmp = JsonCommon.getAllUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data"));
+                dem = tmp.size();
+                for (final MemberVsiObj obj: tmp) {
+                    Map users = new HashMap();
+                    users.put("from_user", dataStoreApp.getUserName());
+                    users.put("to_user", obj.getUserName());
+                    Call<JsonObject> call2 = serverNetWorkAPI.getChatMessageTwoUser(users);
+                    call2.enqueue(new Callback<JsonObject>() {
+                        @Override
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                            try {
+                                boolean status = response.body().get(Config.status_response).getAsBoolean();
+                                if (!status) {
+                                    return;
+                                }
+                            } catch (Exception e) {
+                                return;
+                            }
+                            try {
+                                ChatObj chatObj = JsonCommon.getLastChatTwoUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data"));
+                                if (chatObj != null) {
+                                    Log.d(obj.getUserName(), chatObj.getContent());
+                                    obj.setLastMessage(chatObj);
+                                    listMemberChat.add(obj);
+                                }
+                            } catch (Exception e) {
+                            }
+                            dem--;
+                        }
+
+                        @Override
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
+                            dem--;
+                        }
+                    });
+                }
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (dem <= 0) {
+                            Collections.sort(listMemberChat, new Comparator<MemberVsiObj>() {
+                                @Override
+                                public int compare(MemberVsiObj lhs, MemberVsiObj rhs) {
+
+                                    return (int) (TextUtils.stringToDate(rhs.getLastMessage().getCdate()).getTime()-TextUtils.stringToDate(lhs.getLastMessage().getCdate()).getTime());
+                                }
+                            });
+                            adapter.updateFilter();
+                            adapter.notifyDataSetChanged();
+                        }else{
+                            handler.postDelayed(this,100);
+                        }
+                    }
+                }, 100);
             }
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
@@ -161,6 +230,8 @@ public class FragmentChatPage extends Fragment {
                     toastUtil.showToast(getString(R.string.txt_error_common));
             }
         });
+
+
     }
 
 }

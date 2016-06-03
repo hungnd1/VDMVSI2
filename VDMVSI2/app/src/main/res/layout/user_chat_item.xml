@@ -1,30 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="@dimen/padding_item_half"
     android:id="@+id/lnl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/btn_selector_transperent_bkg"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:padding="@dimen/padding_item_half">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imv_profile"
         android:layout_width="@dimen/diameter_avar_medium"
         android:layout_height="@dimen/diameter_avar_medium"
-        android:src="@drawable/ic_avatar_default"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="@dimen/padding_item"
-        app:civ_border_width="1dp"
-        app:civ_border_color="@color/white_text"/>
+        android:src="@drawable/ic_avatar_default"
+        app:civ_border_color="@color/white_text"
+        app:civ_border_width="1dp" />
 
-    <TextView
-        android:id="@+id/tv_name_user"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:textColor="@color/PrimaryDarkColor"
-        android:textSize="@dimen/font_large"
-        android:text="sdsad"
-        android:layout_toRightOf="@+id/imv_profile"/>
+        android:layout_marginRight="40dp"
+        android:layout_toRightOf="@+id/imv_profile"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_name_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="sdsad"
+            android:textColor="@color/PrimaryDarkColor"
+            android:textSize="@dimen/font_large" />
+
+        <TextView
+            android:id="@+id/tv_last_mes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:text="sdsad2323"
+            android:textColor="@color/dark_ness_text"
+            android:textSize="@dimen/font_small" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_last_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="18/03"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/dark_ness_text"
+        android:textSize="@dimen/font_small" />
+
+
+
+    </RelativeLayout>

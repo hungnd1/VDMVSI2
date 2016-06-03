@@ -263,13 +263,69 @@ public class JsonCommon {
             if (list.size()>0){
                 ChatObj lastObj = list.get(list.size()-1);
                 if (newsObj.isItsMe() == lastObj.isItsMe() && TextUtils.equalTime(newsObj.getCdate(),lastObj.getCdate())){
-                    lastObj.setContent(lastObj.getContent()+"\n"+newsObj.getContent());
+                    lastObj.setContent(newsObj.getContent()+"\n"+lastObj.getContent());
                     continue;
                 }
             }
             list.add(newsObj);
         }
         return list;
+    }
+
+    public static ChatObj getLastChatTwoUser(String userName, JsonArray jsonArray) {
+        if (jsonArray == null)
+            return null;
+        ChatObj newsObj = null;
+        for (int i = 0; i < 1; i++) {
+            JsonObject object = (JsonObject) jsonArray.get(i);
+            if(object == null)
+                continue;
+            newsObj = new ChatObj();
+            if (object.has("id")) {
+                try {
+                    newsObj.setId(object.get("id").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("from")) {
+                try {
+                    newsObj.setFrom(object.get("from").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("to")) {
+                try {
+                    newsObj.setTo(object.get("to").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("content")) {
+                try {
+                    newsObj.setContent(object.get("content").getAsString());
+                }catch (Exception e){
+
+                }
+            }
+            if (object.has("cdate")){
+                try {
+                    newsObj.setCdate(object.get("cdate").getAsString());
+                }catch (Exception e){
+
+                }
+            }
+            if (object.has("isrun")) {
+                try {
+                    newsObj.setIsRun(object.get("isrun").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if(userName.equals(newsObj.getFrom())){
+                newsObj.setItsMe(true);
+            }else{
+                newsObj.setItsMe(false);
+            }
+        }
+        return newsObj;
     }
     public static UserObj getUserInfo(JsonArray jsonArray) {
         UserObj userObj = new UserObj();
