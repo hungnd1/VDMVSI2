@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="@dimen/padding_item_half"
+    android:padding="@dimen/padding_item_small"
     android:id="@+id/lnl_root"
     android:background="@drawable/btn_selector_transperent_bkg"
     android:layout_height="wrap_content">
@@ -17,6 +17,13 @@
         app:civ_border_width="1dp"
         app:civ_border_color="@color/white_text"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imv_profile"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical">
+
     <TextView
         android:id="@+id/tv_name_user"
         android:layout_width="match_parent"
@@ -26,5 +33,35 @@
         android:textSize="@dimen/font_large"
         android:text="sdsad"
         android:layout_toRightOf="@+id/imv_profile"/>
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:maxLines="1"
+        android:text="01239763709"
+        android:textColor="@color/dark_ness_text"
+        android:textSize="@dimen/font_small" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_call"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_selector_transperent_bkg"
+        android:src="@drawable/ic_phone_24" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_small"
+        android:layout_marginTop="@dimen/padding_item_small"
+        android:background="@color/divider_color"
+        android:layout_below="@+id/imv_profile"/>
 
 </RelativeLayout>

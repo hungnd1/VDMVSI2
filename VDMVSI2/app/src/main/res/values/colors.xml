@@ -21,6 +21,7 @@
     <color name="dark_ness_text">#8A8A8A</color>
     <color name="dark_ness_hint">#AAAAAAAA</color>
     <color name="message_background">#aae1e1e1</color>
+    <color name="divider_color">#aae9e9e9</color>
     <color name="bkg_main">#F5F5F5</color>
     <color name="white_text">#F5F5F5</color>
     <color name="transparent">#00000000</color>

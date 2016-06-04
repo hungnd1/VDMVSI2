@@ -95,6 +95,7 @@
     <string name="txt_retry">Tải lại!</string>
 
     <string name="txt_not_phone_owner">Không có số điện thoại của chủ dự án!</string>
+    <string name="txt_not_phone">Không có số điện thoại !</string>
     <string name="txt_finish_app_confirm">Bạn muốn thoát ứng dụng!</string>
 
     <!-- Create project -->

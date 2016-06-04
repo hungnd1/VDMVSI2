@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:id="@+id/lnl_root"
-    android:padding="@dimen/padding_item_half"
+    android:padding="@dimen/padding_item_small"
     android:minHeight="@dimen/diameter_avar"
     android:layout_height="wrap_content">
 
