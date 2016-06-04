@@ -145,4 +145,10 @@ public class Config {
 
     public static String NAME_BROAD_CAST_FROM_MAIN_TO_CHAT_ACTIVITY = "hao.bk.com.vdmvsi.main.to.chat";
     public static String BROAD_CASS_MSG_MAIN_TO_CHAT_FILTER = "MSG_MAP_TO_CHAT";
+
+    //news detail
+    public static final String NEWS_TITLE = "newsTitle";
+    public static final String NEWS_INTRO = "newsIntro";
+    public static final String NEWS_CONTENT = "newsContent";
+    public static final String NEWS_IMG = "newsImg";
 }

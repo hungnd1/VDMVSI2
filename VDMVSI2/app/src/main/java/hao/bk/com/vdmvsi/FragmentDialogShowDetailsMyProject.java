@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,12 @@ public class FragmentDialogShowDetailsMyProject extends DialogFragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(main.getWindow().getDecorView().getWidth(),main.getWindow().getDecorView().getHeight()-200);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,14 +86,11 @@ public class FragmentDialogShowDetailsMyProject extends DialogFragment {
         showData();
     }
     private void showData(){
-        tvTitle.setText(getString(R.string.txt_tile_project) + "\n" + myProjectObj.getTitle());
-        tvContent.setText(getString(R.string.txt_content) + "\n" + myProjectObj.getContent());
-        tvCdate.setText(getString(R.string.txt_c_date_pro) + "\n"
-                + HViewUtils.getTimeViaMiliseconds(myProjectObj.getcDate()));
-        tvFromDate.setText(getString(R.string.txt_start_date_pro) + "\n" +
-                HViewUtils.getTimeViaMiliseconds(myProjectObj.getFromDate()));
-        tvEndate.setText(getString(R.string.txt_end_date_pro) + "\n" +
-                HViewUtils.getTimeViaMiliseconds(myProjectObj.getEndDate()));
+        tvTitle.setText(Html.fromHtml(getString(R.string.txt_tile_project) + "<br><font color='black'>"+myProjectObj.getTitle()+"</font>"));
+        tvContent.setText(Html.fromHtml(getString(R.string.txt_content) + "<br><font color='black'>"+myProjectObj.getContent()+"</font>"));
+        tvCdate.setText(Html.fromHtml(getString(R.string.txt_c_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getcDate())+"</font>"));
+        tvFromDate.setText(Html.fromHtml(getString(R.string.txt_start_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getFromDate())+"</font>"));
+        tvEndate.setText(Html.fromHtml(getString(R.string.txt_end_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getEndDate())+"</font>"));
     }
 }
 

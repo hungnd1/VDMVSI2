@@ -62,15 +62,17 @@ public class FragmentNews extends Fragment {
     Button btnRetry;
     private String curgetAction;
     DataStoreApp dataStoreApp;
-    ArrayList<NewsObj> listNews =  new ArrayList<>();
+    ArrayList<NewsObj> listNews = new ArrayList<>();
     MyProgressDialog mPdl;
-    public FragmentNews(){
+
+    public FragmentNews() {
 
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        main = (MainActivity)context;
+        main = (MainActivity) context;
         toastUtil = new ToastUtil(context);
         dataStoreApp = main.dataStoreApp;
         mPdl = new MyProgressDialog(context);
@@ -91,18 +93,19 @@ public class FragmentNews extends Fragment {
         initViews(content);
         return content;
     }
-    public void initViews(View v){
-        if(dataStoreApp == null){
+
+    public void initViews(View v) {
+        if (dataStoreApp == null) {
             dataStoreApp = new DataStoreApp(getContext());
         }
-        lnlError = (LinearLayout)v.findViewById(R.id.lnl_error);
-        tvErrorMsg = (TextView)v.findViewById(R.id.tv_error);
+        lnlError = (LinearLayout) v.findViewById(R.id.lnl_error);
+        tvErrorMsg = (TextView) v.findViewById(R.id.tv_error);
         btnRetry = (Button) v.findViewById(R.id.btn_retry);
         lnlError.setVisibility(View.GONE);
         lnlError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(HViewUtils.isFastDoubleClick())
+                if (HViewUtils.isFastDoubleClick())
                     return;
                 runGetNews(curgetAction);
             }
@@ -110,7 +113,7 @@ public class FragmentNews extends Fragment {
         btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(HViewUtils.isFastDoubleClick())
+                if (HViewUtils.isFastDoubleClick())
                     return;
                 runGetNews(curgetAction);
             }
@@ -128,33 +131,39 @@ public class FragmentNews extends Fragment {
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.PrimaryDarkColor);
-        if(Config.DARSH_BOARD_TAB.equals(curTabName)){
+        if (Config.DARSH_BOARD_TAB.equals(curTabName)) {
             curgetAction = Config.getNewsChuyenNganh;
             runGetNews(curgetAction);
             adapter = new NewsItemAdapter(this, listNews);
             recyclerView.setAdapter(adapter);
-        } else if(Config.VSI_NEWS_TAB.equals(curTabName)){
+        } else if (Config.VSI_NEWS_TAB.equals(curTabName)) {
             curgetAction = Config.getNewsVsi;
             runGetNews(curgetAction);
-            adapter = new NewsItemAdapter(this,listNews);
+            adapter = new NewsItemAdapter(this, listNews);
             recyclerView.setAdapter(adapter);
-        } else if(Config.MAJOR_NEWS_TAB.equals(curTabName)){
+        } else if (Config.MAJOR_NEWS_TAB.equals(curTabName)) {
             curgetAction = Config.getNewsChuyenNganh;
             runGetNews(curgetAction);
-            adapter = new NewsItemAdapter(this,listNews);
+            adapter = new NewsItemAdapter(this, listNews);
             recyclerView.setAdapter(adapter);
-        }
-        else if(Config.VIP_NEWS_TAB.equals(curTabName)){
-            curgetAction = Config.getNewsVip;
-            runGetNews(curgetAction);
-            adapter = new NewsItemAdapter(this,listNews);
-            recyclerView.setAdapter(adapter);
+        } else if (Config.VIP_NEWS_TAB.equals(curTabName)) {
+            if (dataStoreApp.isVip()) {
+                curgetAction = Config.getNewsVip;
+                runGetNews(curgetAction);
+                adapter = new NewsItemAdapter(this, listNews);
+                recyclerView.setAdapter(adapter);
+            } else {
+                lnlError.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
+                btnRetry.setVisibility(View.INVISIBLE);
+                tvErrorMsg.setText("Bạn phải đăng kí VIP để có thể xem được nội dung này");
+            }
         }
 
     }
 
-    public void runGetNews(String action){
-        if(!UtilNetwork.checkInternet(main,getString(R.string.txt_check_internet))){
+    public void runGetNews(String action) {
+        if (!UtilNetwork.checkInternet(main, getString(R.string.txt_check_internet))) {
             showBtnRetry(getString(R.string.txt_check_internet));
             return;
         }
@@ -167,7 +176,7 @@ public class FragmentNews extends Fragment {
         // Khởi tạo các cuộc gọi cho Retrofit 2.0
         NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("publicKey",Config.PUBLIC_KEY);
+        hashMap.put("publicKey", Config.PUBLIC_KEY);
         hashMap.put("action", action);
         hashMap.put("username", dataStoreApp.getUserName());
         mPdl.showLoading(getString(R.string.txt_loading));
@@ -178,22 +187,22 @@ public class FragmentNews extends Fragment {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 listNews.clear();
                 mPdl.hideLoading();
-                try{
-                    if(response.body().has(Config.status_response)){
-                        boolean status =response.body().get(Config.status_response).getAsBoolean();
+                try {
+                    if (response.body().has(Config.status_response)) {
+                        boolean status = response.body().get(Config.status_response).getAsBoolean();
                         if (!status) {
                             notifyDataSetChanged();
                             return;
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     toastUtil.showToast(getString(R.string.txt_error_common));
                     notifyDataSetChanged();
                     return;
                 }
                 try {
                     listNews.addAll(JsonCommon.getNewsVsi(response.body().getAsJsonArray("data")));
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 notifyDataSetChanged();
@@ -201,20 +210,22 @@ public class FragmentNews extends Fragment {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("CallBack", " Throwable is " +t);
+                Log.d("CallBack", " Throwable is " + t);
                 mPdl.hideLoading();
-              notifyDataSetChanged();
+                notifyDataSetChanged();
             }
         });
     }
-    public void notifyDataSetChanged(){
+
+    public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
-        if(listNews.size() == 0){
+        if (listNews.size() == 0) {
             showBtnRetry(getString(R.string.txt_server_not_data));
         }
     }
-    public void showBtnRetry(String message){
-        if(listNews.size() == 0) {
+
+    public void showBtnRetry(String message) {
+        if (listNews.size() == 0) {
             lnlError.setVisibility(View.VISIBLE);
             swipeRefreshLayout.setVisibility(View.GONE);
             tvErrorMsg.setText(message);

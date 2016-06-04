@@ -26,6 +26,7 @@ import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import hao.bk.com.chat.NewsDetailActivity;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.JsonCommon;
 import hao.bk.com.common.NetWorkServerApi;
@@ -37,6 +38,7 @@ import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
+import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
 import hao.bk.com.vdmvsi.R;
 
 import java.io.InputStream;
@@ -106,7 +108,7 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
         return viewHolder;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CardView cv;
         TextView tvTitle;
         TextView tvName;
@@ -119,6 +121,7 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
         ViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv_news);
+            cv.setOnClickListener(this);
             imageNews = (CircleImageView) itemView.findViewById(R.id.imv_profile);
             tvName = (TextView) itemView.findViewById(R.id.tv_name_user);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
@@ -147,6 +150,26 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
                     callOwnerNews(index);
                 }
             });
+        }
+
+        @Override
+        public void onClick(View v) {
+            NewsObj pb = listNews.get(index);
+            // run code xử lý show news details here
+            FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+            // show tin tuc chi tiet
+//            try {
+//                Intent intent = new Intent(context, NewsDetailActivity.class);
+//                NewsObj obj = listNews.get(index);
+//                intent.putExtra(Config.NEWS_TITLE, obj.getTitle());
+//                intent.putExtra(Config.NEWS_INTRO, obj.getIntros());
+//                intent.putExtra(Config.NEWS_CONTENT, obj.getContent());
+//                intent.putExtra(Config.NEWS_IMG, obj.getSetUrlNew());
+//                context.startActivity(intent);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
 
         public void setCareNews() {

@@ -93,14 +93,12 @@ public class FragmentCreateMyProject extends DialogFragment {
         listCareObjs = new ArrayList<>();
     }
     public void getTimePicker(final TextView tv){
-        // TODO Auto-generated method stub
         final Calendar myCalendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 tv.setText(dayOfMonth+"/"+monthOfYear+"/" + year);
             }
         };

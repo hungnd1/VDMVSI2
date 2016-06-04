@@ -18,6 +18,7 @@ public class DataStoreApp {
     private String PASSWORDS="PASSWORDS";
     private String AVATAR_URL="AVATAR";
     private String CHAT_ACTIVITY_SHOW="CHAT_ACTIVITY_SHOW";
+    private String VIP="VIP";
 
     public DataStoreApp(Context context) {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -49,6 +50,16 @@ public class DataStoreApp {
 
     public String getAvatar(){
         return prefs.getString(AVATAR_URL, "");
+    }
+
+    public void createVip(boolean isVip){
+        editor = prefs.edit();
+        editor.putBoolean(VIP, isVip);
+        editor.commit();
+    }
+
+    public boolean isVip(){
+        return prefs.getBoolean(VIP, false);
     }
     public void setChatActivityShowing(boolean flag){
         editor = prefs.edit();

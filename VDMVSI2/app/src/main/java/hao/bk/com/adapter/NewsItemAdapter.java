@@ -1,21 +1,21 @@
 package hao.bk.com.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+
+import hao.bk.com.chat.NewsDetailActivity;
+import hao.bk.com.config.Config;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.models.NewsVsiObj;
-import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
-import hao.bk.com.vdmvsi.FragmentDialogShowNewsDetails;
 import hao.bk.com.vdmvsi.FragmentNews;
 import hao.bk.com.vdmvsi.R;
 
@@ -66,13 +66,13 @@ public class NewsItemAdapter extends  RecyclerView.Adapter<NewsItemAdapter.ViewH
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.imageNews.setImageResource(R.drawable.ic_avatar);
         NewsVsiObj obj = (NewsVsiObj) listNews.get(position);
         holder.tvTitle.setText(obj.getTitle());
         holder.tvPubdate.setText(obj.getcDate());
         holder.index = position;
+
         try {
-            Picasso.with(context).load(obj.getUrlThumnails()).resize(120, 60).into(holder.imageNews);
+            Picasso.with(context).load(obj.getSetUrlNew()).into(holder.imageNews);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -97,9 +97,17 @@ public class NewsItemAdapter extends  RecyclerView.Adapter<NewsItemAdapter.ViewH
         @Override
         public void onClick(View v) {
             // show tin tuc chi tiet
-            FragmentDialogShowNewsDetails frm =
-                    FragmentDialogShowNewsDetails.newInstance(listNews.get(index));
-            frm.show(frmContainer.getActivity().getFragmentManager(), "");
+            try {
+                Intent intent = new Intent(context, NewsDetailActivity.class);
+                NewsObj obj = listNews.get(index);
+                intent.putExtra(Config.NEWS_TITLE, obj.getTitle());
+                intent.putExtra(Config.NEWS_INTRO, obj.getIntros());
+                intent.putExtra(Config.NEWS_CONTENT, obj.getContent());
+                intent.putExtra(Config.NEWS_IMG, obj.getSetUrlNew());
+                context.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }

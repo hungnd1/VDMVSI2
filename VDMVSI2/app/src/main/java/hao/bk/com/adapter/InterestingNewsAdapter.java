@@ -31,6 +31,7 @@ import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
+import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
 import hao.bk.com.vdmvsi.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,6 +104,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
         ViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv_news);
+            cv.setOnClickListener(this);
             imageNews = (CircleImageView)itemView.findViewById(R.id.imv_profile);
             tvName = (TextView)itemView.findViewById(R.id.tv_name_user);
             tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
@@ -169,6 +171,10 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
         @Override
         public void onClick(View v) {
             // show tin tuc chi tiet
+            NewsObj pb = listNews.get(index);
+            // run code xử lý show news details here
+            FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
         }
         public void likeNews(int index){
             CoporateNewsObj obj = (CoporateNewsObj)listNews.get(index);
