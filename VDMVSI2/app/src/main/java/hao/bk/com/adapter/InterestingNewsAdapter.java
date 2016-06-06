@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import hao.bk.com.comment.CommentActivity;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.NetWorkServerApi;
 import hao.bk.com.common.ToastUtil;
@@ -125,7 +126,9 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                 public void onClick(View v) {
                     if(HViewUtils.isFastDoubleClick())
                         return;
-                    commentNews(index);
+                    Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
+                    intent.putExtra("id",index);
+                    context.startActivity(intent);
                 }
             });
             btnCall = (Button)itemView.findViewById(R.id.btn_call);
