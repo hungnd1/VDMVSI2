@@ -24,14 +24,13 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/imv_profile"
-                    android:layout_width="@dimen/diameter_avar"
-                    android:layout_height="@dimen/diameter_avar"
+                    android:layout_width="@dimen/diameter_avar_medium"
+                    android:layout_height="@dimen/diameter_avar_medium"
                     android:src="@drawable/ic_avatar_default"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="@dimen/padding_item"
@@ -77,11 +76,12 @@
                 <TextView
                     android:id="@+id/tv_descript"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:maxLines="2"
                     android:layout_marginTop="@dimen/padding_item_half"
                     android:textColor="@color/dark_ness_text"
-                    android:textSize="@dimen/font_normaless"/>
+                    android:paddingTop="10dp"
+                    android:textSize="@dimen/font_normal"/>
             </LinearLayout>
 
             <LinearLayout
@@ -89,12 +89,12 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_weight="0.6">
+                android:layout_weight="0.4">
 
                 <Button
                     android:id="@+id/btn_show"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:drawableLeft="@drawable/ic_show_24"
                     android:paddingLeft="@dimen/padding_item"
                     android:drawablePadding="@dimen/padding_item_half"
