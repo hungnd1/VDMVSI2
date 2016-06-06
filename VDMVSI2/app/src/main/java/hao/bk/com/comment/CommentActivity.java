@@ -92,18 +92,26 @@ public class CommentActivity extends AppCompatActivity {
                         mUserAdapter.notifyItemRemoved(mUsers.size());
 
                         //Load data
-                        int index = mUsers.size();
-                        int end = index + 20;
+//                        int index = mUsers.size();
+//                        mUsers.size() = 30;
+
+                        int index = 15;
+                        int j = index;
+                        int end = index + 5;
                         for (int i = index; i < end; i++) {
                             User user = new User();
                             user.setName("Name " + i);
-                            user.setEmail("alibaba" + i + "@gmail.com");
+                            user.setEmail("mkkkkkk" + i + "@gmail.com");
                             mUsers.add(user);
+                            j++;
                         }
-                        mUserAdapter.notifyDataSetChanged();
-                        mUserAdapter.setLoaded();
+                        if(j == end){
+                        }else {
+                            mUserAdapter.notifyDataSetChanged();
+                            mUserAdapter.setLoaded();
+                        }
                     }
-                }, 5000);
+                }, 2000);
             }
         });
         ImageButton btn_comment = (ImageButton) findViewById(R.id.imb_send);
