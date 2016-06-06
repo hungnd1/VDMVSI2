@@ -1,5 +1,6 @@
 package hao.bk.com.chat;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +35,7 @@ import com.squareup.picasso.Target;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import hao.bk.com.adapter.ChatMessageAdapter;
@@ -59,13 +63,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by T430 on 4/22/2016.
  */
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
     private final String tag = "ChatActivity";
     MemberVsiObj friend;
     ToastUtil toastUtil;
     ViewToolBar vToolBar;
     DataStoreApp dataStoreApp;
     View viewRoot;
+    private TextToSpeech engine;
 
     RecyclerView recyclerView;
     LinearLayoutManager manager;
@@ -81,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        engine = new TextToSpeech(this, this);
         setContentView(R.layout.activity_chat);
         viewRoot = (View) findViewById(R.id.container);
         vToolBar = new ViewToolBar(this, viewRoot);
@@ -147,6 +153,7 @@ public class ChatActivity extends AppCompatActivity {
                     return;
                 if (TextUtils.isEmpty(edtMsg.getText().toString()))
                     return;
+                speech(edtMsg.getText().toString());
                 ChatObj obj = new ChatObj();
                 obj.setContent(edtMsg.getText().toString());
                 obj.setItsMe(true);
@@ -194,7 +201,7 @@ public class ChatActivity extends AppCompatActivity {
 
     public void getAvatarYourFriend() {
         myAvatar = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_avatar_default);
+                R.drawable.icon_user);
         yourAvatar = BitmapFactory.decodeResource(getResources(),
                 R.drawable.ic_avatar_default);
         try {
@@ -354,4 +361,33 @@ public class ChatActivity extends AppCompatActivity {
         return jsonObject;
     }
 
+    @Override
+    public void onInit(int status) {
+        Log.d("Speech", "OnInit - Status ["+status+"]");
+
+        if (status == TextToSpeech.SUCCESS) {
+            Log.d("Speech", "Success!");
+            engine.setLanguage(Locale.UK);
+            engine.setPitch((float) 0);
+            engine.setSpeechRate((float) 0);
+        }
+    }
+
+    private void speech(String s) {
+        Log.d("version",Build.VERSION.SDK_INT+"");
+        if (Build.VERSION.SDK_INT>=21){
+            speechOver21(s);
+        }else{
+            speechBelow21(s);
+        }
+    }
+
+    private void speechBelow21(String s) {
+        engine.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void speechOver21(String s) {
+        engine.speak(s, TextToSpeech.QUEUE_FLUSH, null,null);
+    }
 }

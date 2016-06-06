@@ -107,6 +107,7 @@
     <string name="txt_c_date_pro">Ngày tạo dự án</string>
     <string name="txt_content">Nội dung</string>
     <string name="txt_create_new">Tạo mới dự án</string>
+    <string name="txt_edit_proj">Hoàn tất sửa</string>
 
     <string name="txt_old_password">Mật khẩu cũ</string>
     <string name="txt_password_incorrect">Mật khẩu không đúng</string>

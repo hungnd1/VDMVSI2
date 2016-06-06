@@ -49,4 +49,8 @@ public class LCareObj {
     public int getIsActive() {
         return isActive;
     }
+
+    public String toString(){
+        return name;
+    }
 }

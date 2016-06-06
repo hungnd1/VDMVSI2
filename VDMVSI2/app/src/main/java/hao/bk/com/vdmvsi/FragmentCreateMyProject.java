@@ -37,8 +37,10 @@ import hao.bk.com.common.ToastUtil;
 import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
 import hao.bk.com.customview.MyProgressDialog;
+import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.LCareObj;
 import hao.bk.com.models.MyProjectObj;
+import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
@@ -53,25 +55,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class FragmentCreateMyProject extends DialogFragment {
 
-    private CreateProjectSuccessItf mCallback;
     MainActivity main;
     EditText edtTitleProject, edtContent;
-    String startDate;
-    String endDate;
     Button btnCreateNew;
     TextView btnStartDate, btnEndate;
-    MyProjectObj myProjectObj;
     DataStoreApp dataStoreApp;
     ToastUtil toastUtil;
-    MyProgressDialog mpdl;
+    static CoporateNewsObj myObj = null;
     ArrayList<LCareObj> listCareObjs;
     AppCompatSpinner spnCare;
-    String myCarePush;
-    int careIdPus;
     ImageView btnBack;
-    public interface CreateProjectSuccessItf {
-        void onCreateSuccess(MyProjectObj myProjectObj);
-    }
 
     public static FragmentCreateMyProject newInstance() {
         FragmentCreateMyProject fragmentCreateMyProject = new FragmentCreateMyProject();
@@ -79,13 +72,21 @@ public class FragmentCreateMyProject extends DialogFragment {
         fragmentCreateMyProject.setArguments(args);
         return fragmentCreateMyProject;
     }
+
+    public static FragmentCreateMyProject newInstance(NewsObj mp) {
+        FragmentCreateMyProject fragmentCreateMyProject = new FragmentCreateMyProject();
+        Bundle args = new Bundle();
+        fragmentCreateMyProject.setArguments(args);
+        myObj = (CoporateNewsObj) mp;
+        return fragmentCreateMyProject;
+    }
+
     @Override
     public void onAttach(Activity context) {
         super.onAttach(context);
         main = (MainActivity) context;
         dataStoreApp = new DataStoreApp(context);
         toastUtil = new ToastUtil(context);
-        mpdl = new MyProgressDialog(context);
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,18 +115,20 @@ public class FragmentCreateMyProject extends DialogFragment {
         initViews(v);
         return v;
     }
-    // get chuyen nganh
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(main.getWindow().getDecorView().getWidth(),main.getWindow().getDecorView().getHeight()-200);
+    }
     public void runGetListCare(){
         if(!UtilNetwork.checkInternet(main,getString(R.string.txt_check_internet))){
             toastUtil.showToast(getString(R.string.txt_check_internet));
             return;
         }
-        mpdl.showLoading("");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_GET)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        // Khởi tạo các cuộc gọi cho Retrofit 2.0
         NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("publicKey",Config.PUBLIC_KEY);
@@ -133,11 +136,9 @@ public class FragmentCreateMyProject extends DialogFragment {
         hashMap.put("username", dataStoreApp.getUserName());
 
         Call<JsonObject> call = stackOverflowAPI.getNews(hashMap);
-        // Cuộc gọi bất đồng bọ (chạy dưới background)
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                mpdl.hideLoading();
                 try{
                     if(response.body().has(Config.status_response)){
                         boolean status =response.body().get(Config.status_response).getAsBoolean();
@@ -153,7 +154,7 @@ public class FragmentCreateMyProject extends DialogFragment {
                 try {
                     listCareObjs.clear();
                     listCareObjs.addAll(JsonCommon.getListCare(response.body().getAsJsonArray("data")));
-                    setDataSpinnerCar(listCareObjs);
+                    setDataSpinnerCar();
                 }catch (Exception e){
                 }
                 if(listCareObjs.size() == 0){
@@ -164,45 +165,20 @@ public class FragmentCreateMyProject extends DialogFragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d("CallBack", " Throwable is " +t);
-                mpdl.hideLoading();
                 if(listCareObjs.size() == 0){
                     toastUtil.showToast(getString(R.string.txt_server_not_data));
                 }
             }
         });
     }
-    public void setDataSpinnerCar(final ArrayList<LCareObj> listCareObjs){
-        ArrayList<String> list = new ArrayList<>();
-        for(LCareObj obj : listCareObjs){
-            list.add(obj.getName());
-            Util.LOGD("20-5: " + obj.getName(), obj.getId()+"");
-        }
-        ArrayAdapter<String> adp= new ArrayAdapter<String>(main,
-                android.R.layout.simple_list_item_1,list);
+
+    public void setDataSpinnerCar(){
+        ArrayAdapter<LCareObj> adp= new ArrayAdapter<LCareObj>(main,
+                android.R.layout.simple_list_item_1,listCareObjs);
         adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCare.setAdapter(adp);
-
-        spnCare.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0,
-                                       View arg1, int pos, long arg3) {
-                //---save the values in the EditText view to preferences---
-                myCarePush = spnCare.getSelectedItem().toString();
-                for(LCareObj obj : listCareObjs){
-                    if(obj.getName().equals(myCarePush)) {
-                        careIdPus = obj.getId();
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
     }
+
     public void initViews(View v){
         spnCare = (AppCompatSpinner)v.findViewById(R.id.spn_major);
         edtTitleProject = (EditText)v.findViewById(R.id.edt_title_project);
@@ -238,11 +214,34 @@ public class FragmentCreateMyProject extends DialogFragment {
             public void onClick(View v) {
                 if(HViewUtils.isFastDoubleClick())
                     return;
-                createNewProject();
+                Map users = new HashMap();
+                if (myObj != null){
+                    users.put("txt_id",myObj.getId());
+                }
+                createNewProject(users);
             }
         });
         runGetListCare();
+        showInfo();
     }
+
+    private void showInfo() {
+        if (myObj != null){
+            btnCreateNew.setText(getString(R.string.txt_edit_proj));
+            edtTitleProject.setText(myObj.getTitle());
+            edtContent.setText(myObj.getContent());
+            btnStartDate.setText(HViewUtils.getTimeViaMiliseconds(myObj.getFromDate()));
+            btnEndate.setText(HViewUtils.getTimeViaMiliseconds(myObj.getEndDate()));
+            for (int i=0;i < listCareObjs.size();i++){
+                if (listCareObjs.get(i).getId() ==  myObj.getCarId()){
+                    spnCare.setSelection(i);
+                    return;
+                }
+            }
+        }
+    }
+
+
     public boolean validate(){
         if(TextUtils.isEmpty(edtTitleProject.getText().toString())){
             edtTitleProject.setError(getString(R.string.txt_tile_project));
@@ -263,15 +262,9 @@ public class FragmentCreateMyProject extends DialogFragment {
         return true;
     }
 
-    public void createNewProject(){
+    public void createNewProject(Map users){
         if(!validate())
             return;
-        NewProjectObj obj = new NewProjectObj();
-        obj.setTitle(edtTitleProject.getText().toString());
-        obj.setCare(myCarePush);
-        obj.setFromDate(btnStartDate.getText().toString());
-        obj.setEndDate(btnEndate.getText().toString());
-        obj.setContent(edtContent.getText().toString());
         if(!UtilNetwork.checkInternet(main, getString(R.string.check_internet))){
             return;
         }
@@ -279,19 +272,14 @@ public class FragmentCreateMyProject extends DialogFragment {
                 .baseUrl(Config.BASE_URL_REGISTER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        // Khởi tạo các cuộc gọi cho Retrofit 2.0
         NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
-        mpdl.showLoading("");
-        Map users = new HashMap();
-        users.put(" txt_username", dataStoreApp.getUserName());
-        users.put("txt_carid", careIdPus+"");
-        users.put("txt_title", obj.getTitle());
-        users.put("txt_content", obj.getContent());
-        Util.LOGD("20_5", careIdPus + "");
-        users.put("txt_fdate", obj.getFromDate());
-        users.put("txt_edate", obj.getEndDate());
+        users.put("txt_username", dataStoreApp.getUserName());
+        users.put("txt_carid", ((LCareObj) spnCare.getSelectedItem()).getId());
+        users.put("txt_title", edtTitleProject.getText().toString());
+        users.put("txt_content", edtContent.getText().toString());
+        users.put("txt_fdate", btnStartDate.getText().toString());
+        users.put("txt_edate", btnEndate.getText().toString());
         Call<JsonObject> call = serverNetWorkAPI.addNewProject(users);
-        // Cuộc gọi bất đồng bọ (chạy dưới background)
         call.enqueue(new Callback<JsonObject>(){
 
             @Override
@@ -314,10 +302,8 @@ public class FragmentCreateMyProject extends DialogFragment {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                mpdl.hideLoading();
-                Util.LOGD("20_5_a", t.toString());
-               // toastUtil.showToast(getString(R.string.txt_error_common));
-                addMyProjectSuccess();
+                toastUtil.showToast(getString(R.string.txt_error_common));
+                return;
             }
         });
     }
@@ -325,57 +311,6 @@ public class FragmentCreateMyProject extends DialogFragment {
         toastUtil.showToast(getString(R.string.txt_success_add_project));
         dismiss();
     }
-    private class NewProjectObj{
-        private String title;
-        private String care;
-        private String fromDate;
-        private String endDate;
-        private String content;
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setCare(String care) {
-            this.care = care;
-        }
-
-        public String getCare() {
-            return care;
-        }
-
-        public void setFromDate(String fromDate) {
-            this.fromDate = fromDate;
-        }
-
-        public String getFromDate() {
-            return fromDate;
-        }
-
-        public void setEndDate(String endDate) {
-            this.endDate = endDate;
-        }
-
-        public String getEndDate() {
-            return endDate;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        @Override
-        public String toString() {
-            return title + "\n" + care + "\n" + fromDate + "\n" + endDate + "\n" + content;
-        }
-    }
 }
 

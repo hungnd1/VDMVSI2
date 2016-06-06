@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.models.CoporateNewsObj;
-import hao.bk.com.models.MyProjectObj;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
 import hao.bk.com.vdmvsi.FragmentCreateMyProject;
 import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
-import hao.bk.com.vdmvsi.FragmentDialogShowEditDetailsMyProject;
 import hao.bk.com.vdmvsi.R;
 
 /**
@@ -119,9 +117,8 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
         public void editNews(int index){
             NewsObj pb = listNews.get(index);
 
-            FragmentDialogShowEditDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowEditDetailsMyProject.newInstance(pb);
-            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(),"");
-            // run code xử lý edit news here
+            FragmentCreateMyProject fragmentCreateMyProject =  FragmentCreateMyProject.newInstance(pb);
+            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
         }
         public void deleteNews(int index){
             listNews.remove(index);
