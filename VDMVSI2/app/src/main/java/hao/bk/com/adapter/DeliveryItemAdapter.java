@@ -24,18 +24,20 @@ import hao.bk.com.vdmvsi.R;
 /**
  * Created by T430 on 4/23/2016.
  */
-public class DeliveryItemAdapter extends  RecyclerView.Adapter<DeliveryItemAdapter.ViewHolder> {
+public class DeliveryItemAdapter extends RecyclerView.Adapter<DeliveryItemAdapter.ViewHolder> {
 
     ArrayList<NewsObj> listNews;
     FragmentDelivery frmContainer;
     Context context;
     ToastUtil toastUtil;
-    public DeliveryItemAdapter(FragmentDelivery frmContainer, ArrayList<NewsObj> listNews){
+
+    public DeliveryItemAdapter(FragmentDelivery frmContainer, ArrayList<NewsObj> listNews) {
         this.listNews = listNews;
         this.frmContainer = frmContainer;
         this.context = frmContainer.getContext();
         toastUtil = frmContainer.toastUtil;
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = null;
@@ -58,12 +60,12 @@ public class DeliveryItemAdapter extends  RecyclerView.Adapter<DeliveryItemAdapt
 
     @Override
     public int getItemCount() {
-        if(listNews != null)
+        if (listNews != null)
             return listNews.size();
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         CircleImageView ivAvatar;
         TextView tvUserName;
@@ -76,20 +78,20 @@ public class DeliveryItemAdapter extends  RecyclerView.Adapter<DeliveryItemAdapt
 
         ViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv_news);
-            ivAvatar = (CircleImageView)itemView.findViewById(R.id.imv_profile);
-            tvUserName = (TextView)itemView.findViewById(R.id.tv_name_user);
-            tvTime = (TextView)itemView.findViewById(R.id.tv_time);
-            tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
+            cv = (CardView) itemView.findViewById(R.id.cv_news);
+            ivAvatar = (CircleImageView) itemView.findViewById(R.id.imv_profile);
+            tvUserName = (TextView) itemView.findViewById(R.id.tv_name_user);
+            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvDescription = (TextView) itemView.findViewById(R.id.tv_descript);
-            ivNews = (ImageView)itemView.findViewById(R.id.imv_thumbnails);
-            btnShow = (Button)itemView.findViewById(R.id.btn_show);
-            btnEdit = (Button)itemView.findViewById(R.id.btn_edit);
-            btnDel = (Button)itemView.findViewById(R.id.btn_del);
+            ivNews = (ImageView) itemView.findViewById(R.id.imv_thumbnails);
+            btnShow = (Button) itemView.findViewById(R.id.btn_show);
+            btnEdit = (Button) itemView.findViewById(R.id.btn_edit);
+            btnDel = (Button) itemView.findViewById(R.id.btn_del);
             btnShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(HViewUtils.isFastDoubleClick())
+                    if (HViewUtils.isFastDoubleClick())
                         return;
                     showNews(index);
                 }
@@ -97,7 +99,7 @@ public class DeliveryItemAdapter extends  RecyclerView.Adapter<DeliveryItemAdapt
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(HViewUtils.isFastDoubleClick())
+                    if (HViewUtils.isFastDoubleClick())
                         return;
                     editNews(index);
                 }
@@ -105,19 +107,23 @@ public class DeliveryItemAdapter extends  RecyclerView.Adapter<DeliveryItemAdapt
             btnDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(HViewUtils.isFastDoubleClick())
+                    if (HViewUtils.isFastDoubleClick())
                         return;
                     delNews(index);
                 }
             });
         }
-        public void showNews(int index){
+
+        public void showNews(int index) {
+
             toastUtil.showToast("Hiển thị chi tiết!");
         }
-        public void editNews(int index){
+
+        public void editNews(int index) {
             toastUtil.showToast("Sửa thông tin!");
         }
-        public void delNews(int index){
+
+        public void delNews(int index) {
             listNews.remove(index);
             frmContainer.adapter.notifyDataSetChanged();
         }
