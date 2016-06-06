@@ -20,6 +20,7 @@ import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
 import hao.bk.com.vdmvsi.FragmentCreateMyProject;
 import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
+import hao.bk.com.vdmvsi.FragmentDialogShowEditDetailsMyProject;
 import hao.bk.com.vdmvsi.R;
 
 /**
@@ -116,7 +117,10 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
         }
         public void editNews(int index){
-            toastUtil.showToast("Chức năng này sẽ ra mắt trong thời gian tới");
+            NewsObj pb = listNews.get(index);
+
+            FragmentDialogShowEditDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowEditDetailsMyProject.newInstance(pb);
+            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(),"");
             // run code xử lý edit news here
         }
         public void deleteNews(int index){
@@ -124,5 +128,6 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             frmContainer.adapter.notifyDataSetChanged();
             // run code xử lý del này ở đây
         }
+
     }
 }
