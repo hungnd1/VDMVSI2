@@ -21,10 +21,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.ProjectDetailActivity;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.NetWorkServerApi;
+import hao.bk.com.common.NewsFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
 import hao.bk.com.models.CoporateNewsObj;
+import hao.bk.com.models.IFilter;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
@@ -44,9 +46,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by T430 on 4/22/2016.
  */
-public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdapter.ViewHolder> {
+public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdapter.ViewHolder> implements IFilter{
     ArrayList<NewsObj> listNews;
     public FragmentCoporateNew frmContainer;
+    NewsFilter filter;
     DataStoreApp dataStoreApp;
     public Context context;
     ToastUtil toastUtil;
@@ -94,6 +97,18 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.interest_news_item, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
+    }
+
+    @Override
+    public void filter(CharSequence cs) {
+        listNews.clear();
+        listNews.addAll(filter.filter(cs));
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateFilter() {
+        this.filter = new NewsFilter(listNews);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

@@ -17,9 +17,11 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.CreateProjectActivity;
 import hao.bk.com.chat.ProjectDetailActivity;
+import hao.bk.com.common.NewsFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
 import hao.bk.com.models.CoporateNewsObj;
+import hao.bk.com.models.IFilter;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
@@ -28,9 +30,10 @@ import hao.bk.com.vdmvsi.R;
 /**
  * Created by T430 on 4/23/2016.
  */
-public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAdapter.ViewHolder>  {
+public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAdapter.ViewHolder> implements IFilter {
     static ArrayList<NewsObj> listNews;
     public FragmentCoporateNew frmContainer;
+    NewsFilter filter;
     public Context context;
     ToastUtil toastUtil;
     public MyProjectNewsAdapter(FragmentCoporateNew frmContainer, ArrayList<NewsObj> listNews){
@@ -67,6 +70,18 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
     @Override
     public int getItemCount() {
         return listNews != null ? listNews.size() : 0;
+    }
+
+    @Override
+    public void filter(CharSequence cs) {
+        listNews.clear();
+        listNews.addAll(filter.filter(cs));
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateFilter() {
+        filter = new NewsFilter(listNews);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

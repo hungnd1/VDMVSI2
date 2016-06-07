@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
 import hao.bk.com.customview.MyProgressDialog;
 import hao.bk.com.models.CoporateNewsObj;
+import hao.bk.com.models.IFilter;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.Util;
@@ -137,13 +140,6 @@ public class FragmentCoporateNew extends Fragment{
         recyclerView.setLayoutManager(llm);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeResources(R.color.PrimaryDarkColor);
-//        swipeRefreshLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                runGetNews(curgetAction);
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -169,6 +165,7 @@ public class FragmentCoporateNew extends Fragment{
             adapter = new MyProjectNewsAdapter(this, listNews);
             recyclerView.setAdapter(adapter);
         }
+        setupFilter();
     }
 
     public void runGetNews(String action){
@@ -226,6 +223,7 @@ public class FragmentCoporateNew extends Fragment{
         });
     }
     public void notifyDataSetChanged(){
+        ((IFilter)adapter).updateFilter();
         adapter.notifyDataSetChanged();
         if(listNews.size() == 0){
             showBtnRetry(getString(R.string.txt_server_not_data));
@@ -238,5 +236,26 @@ public class FragmentCoporateNew extends Fragment{
             swipeRefreshLayout.setVisibility(View.GONE);
             tvErrorMsg.setText(message);
         }
+    }
+
+    public void setupFilter(){
+        main.edtSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                ((IFilter)adapter).filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
     }
 }

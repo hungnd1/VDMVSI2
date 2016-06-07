@@ -22,12 +22,15 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.ProjectDetailActivity;
 import hao.bk.com.comment.CommentActivity;
+import hao.bk.com.common.ChatFilter;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.NetWorkServerApi;
+import hao.bk.com.common.NewsFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
 import hao.bk.com.models.CoporateNewsObj;
+import hao.bk.com.models.IFilter;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
@@ -43,11 +46,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by T430 on 4/23/2016.
  */
-public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNewsAdapter.ViewHolder>  {
+public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNewsAdapter.ViewHolder> implements IFilter{
 
     static ArrayList<NewsObj> listNews;
     public  FragmentCoporateNew frmContainer;
     public  Context context;
+    NewsFilter filter;
     ToastUtil toastUtil;
     DataStoreApp dataStoreApp;
     public InterestingNewsAdapter(FragmentCoporateNew frmContainer, ArrayList<NewsObj> listNews){
@@ -90,6 +94,18 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
     @Override
     public int getItemCount() {
             return listNews != null ? listNews.size() : 0;
+    }
+
+    @Override
+    public void filter(CharSequence cs) {
+        listNews.clear();
+        listNews.addAll(filter.filter(cs));
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateFilter() {
+        this.filter = new NewsFilter(listNews);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

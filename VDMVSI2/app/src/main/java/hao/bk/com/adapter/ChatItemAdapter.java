@@ -18,6 +18,7 @@ import hao.bk.com.chat.ChatActivity;
 import hao.bk.com.common.ChatFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
+import hao.bk.com.models.IFilter;
 import hao.bk.com.models.MemberVsiObj;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
@@ -27,7 +28,7 @@ import hao.bk.com.vdmvsi.R;
 /**
  * Created by T430 on 4/23/2016.
  */
-public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHolder> {
+public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHolder> implements IFilter{
 
     public ArrayList<MemberVsiObj> listChat;
     ChatFilter filter;
@@ -51,12 +52,14 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         return viewHolder;
     }
 
+    @Override
     public void filter(CharSequence cs) {
         listChat.clear();
         listChat.addAll(filter.filter(cs));
         notifyDataSetChanged();
     }
 
+    @Override
     public void updateFilter() {
         this.filter = new ChatFilter(listChat);
     }
