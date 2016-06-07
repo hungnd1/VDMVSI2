@@ -26,6 +26,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden|stateUnchanged|adjustResize"></activity>
         <activity
             android:name="hao.bk.com.chat.ChatActivity"

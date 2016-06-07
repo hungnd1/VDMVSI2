@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,10 +40,14 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.imageNews.setImageResource(R.drawable.ic_avatar);
         CoporateNewsObj obj = (CoporateNewsObj) listNews.get(position);
+        if (obj.getUrlAvar() == null || obj.getUrlAvar() == "") {
+            Picasso.with(context.getApplicationContext()).load(R.drawable.icon_user).transform(new CircleTransform()).into(holder.imageNews);
+        } else {
+            Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
+        }
         holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
-        holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText("Ngày: "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
         holder.index = position;
         holder.tvDescription.setText(obj.getContent());
@@ -81,6 +87,25 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             btnShow = (Button)itemView.findViewById(R.id.btn_show);
             btnEdit = (Button)itemView.findViewById(R.id.btn_edit);
             btnDel = (Button)itemView.findViewById(R.id.btn_del);
+            btnShow.setVisibility(View.INVISIBLE);
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsObj pb = listNews.get(index);
+                    // run code xử lý show news details here
+                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+                }
+            });
+            tvDescription.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    NewsObj pb = listNews.get(index);
+                    // run code xử lý show news details here
+                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+                }
+            });
             btnShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

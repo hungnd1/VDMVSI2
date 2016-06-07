@@ -77,11 +77,11 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
             holder.btnLike.setText(context.getString(R.string.txt_ingnore_care));
             holder.btnLike.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
         }else{
-            holder.btnLike.setText(context.getString(R.string.txt_ingnore_care));
-            holder.btnLike.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
+            holder.btnLike.setText(context.getString(R.string.txt_care));
+            holder.btnLike.setTextColor(context.getResources().getColor(R.color.dark_ness_hint));
         }
         holder.tvName.setText(obj.getNameUser()+" > "+obj.getTitle());
-        holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText("Ngày: "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = position;
         holder.tvTitle.setVisibility(View.GONE);
         holder.tvDescription.setText(obj.getContent());
@@ -104,14 +104,32 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
 
         ViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv_news);
-            cv.setOnClickListener(this);
+//            cv = (CardView)itemView.findViewById(R.id.cv_news);
+//            cv.setOnClickListener(this);
             imageNews = (CircleImageView)itemView.findViewById(R.id.imv_profile);
             tvName = (TextView)itemView.findViewById(R.id.tv_name_user);
             tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDescription = (TextView)itemView.findViewById(R.id.tv_descript);
             btnLike = (Button)itemView.findViewById(R.id.btn_like);
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsObj pb = listNews.get(index);
+                    // run code xử lý show news details here
+                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+                }
+            });
+            tvDescription.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    NewsObj pb = listNews.get(index);
+                    // run code xử lý show news details here
+                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+                }
+            });
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,8 +170,8 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
             // Khởi tạo các cuộc gọi cho Retrofit 2.0
             NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("publicKey",Config.PUBLIC_KEY);
-            hashMap.put("action", flag ? Config.careProject :Config.cancelCareProject);
+            hashMap.put("publicKey", Config.PUBLIC_KEY);
+            hashMap.put("action", flag ? Config.careProject : Config.cancelCareProject);
             hashMap.put("project_id", obj.getId()+"");
             hashMap.put("username", dataStoreApp.getUserName());
 
@@ -185,14 +203,24 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                 btnLike.setText(context.getString(R.string.txt_not_interest));
                 btnLike.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
                 // run code xử lý quan tâm tin này ở đây
-                runCareProject(obj , true);
+
+                runCareProject(obj, true);
             } else {
-                btnLike.setText(context.getString(R.string.txt_care));
-                runCareProject(obj , false);
-                btnLike.setTextColor(context.getResources().getColor(R.color.dark_ness_hint));
+
+                if(HViewUtils.isFastDoubleClick())
+                    return;
+                deleteNews(index);
             }
             // Xử lý like ở đây
         }
+        public void deleteNews(int index){
+            CoporateNewsObj obj = (CoporateNewsObj)listNews.get(index);
+            runCareProject(obj, false);
+            listNews.remove(index);
+            frmContainer.adapter.notifyDataSetChanged();
+            // run code xử lý del này ở đây
+        }
+
         public void commentNews(int index){
 
             // Xử lý like ở đây

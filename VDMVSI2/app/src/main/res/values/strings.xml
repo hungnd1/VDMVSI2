@@ -45,13 +45,13 @@
     <string name="tab_coporate">Hợp tác</string>
     <string name="tab_chat">Tin nhắn</string>
     <string name="tab_news">Bản tin</string>
-    <string name="tab_trade">Giao thương</string>
+    <string name="tab_trade">Bản tin</string>
     <string name="txt_back">Đóng</string>
     <string name="tab_more">Thêm</string>
 
     <!-- Coporate tab -->
     <string name="txt_new_chance">Cơ hội mới</string>
-    <string name="txt_care_ing">Đang quan tâm</string>
+    <string name="txt_care_ing">Quan tâm</string>
     <string name="txt_ingnore_care">Bỏ quan tâm</string>
     <string name="txt_my_project">Dự án của tôi</string>
 

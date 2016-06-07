@@ -112,7 +112,7 @@ public class FragmentCoporateNew extends Fragment{
         btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(HViewUtils.isFastDoubleClick())
+                if (HViewUtils.isFastDoubleClick())
                     return;
                 runGetNews(curgetAction);
             }
@@ -130,6 +130,13 @@ public class FragmentCoporateNew extends Fragment{
         recyclerView.setLayoutManager(llm);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeResources(R.color.PrimaryDarkColor);
+//        swipeRefreshLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                runGetNews(curgetAction);
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -156,6 +163,7 @@ public class FragmentCoporateNew extends Fragment{
             recyclerView.setAdapter(adapter);
         }
     }
+
     public void runGetNews(String action){
         if(!UtilNetwork.checkInternet(main,getString(R.string.txt_check_internet))){
             showBtnRetry(getString(R.string.txt_check_internet));

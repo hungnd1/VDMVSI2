@@ -30,6 +30,7 @@ public class ViewToolBar {
 		edtSearch = (EditText)viewRoot.findViewById(R.id.edt_search);
 		imgRight = (ImageView)viewRoot.findViewById(R.id.ic_right_act);
 		tvTitle = (TextView)viewRoot.findViewById(R.id.tv_title);
+		imgRight.setVisibility(View.INVISIBLE);
 	}
 	public EditText getEdtSearch(){
 		return edtSearch;

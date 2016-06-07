@@ -86,15 +86,16 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
         } else {
             Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
         }
+        Log.v("status",String.valueOf(obj.getStatus()));
         if(obj.getStatus() == 1){
             holder.btnCare.setText(context.getString(R.string.txt_ingnore_care));
             holder.btnCare.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
         }else{
-            holder.btnCare.setText(context.getString(R.string.txt_ingnore_care));
-            holder.btnCare.setTextColor(context.getResources().getColor(R.color.PrimaryDarkColor));
+            holder.btnCare.setText(context.getString(R.string.txt_care));
+            holder.btnCare.setTextColor(context.getResources().getColor(R.color.dark_ness_hint));
         }
         holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
-        holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText("Ngày: "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = i;
         holder.tvTitle.setVisibility(View.GONE);
         holder.tvDescription.setText(obj.getContent());
@@ -120,8 +121,8 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
 
         ViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.cv_news);
-            cv.setOnClickListener(this);
+//            cv = (CardView) itemView.findViewById(R.id.cv_news);
+//            cv.setOnClickListener(this);
             imageNews = (CircleImageView) itemView.findViewById(R.id.imv_profile);
             tvName = (TextView) itemView.findViewById(R.id.tv_name_user);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
@@ -135,6 +136,24 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
                 }
             });
             btnComment = (Button) itemView.findViewById(R.id.btn_comment);
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsObj pb = listNews.get(index);
+                    // run code xử lý show news details here
+                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+                }
+            });
+            tvDescription.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    NewsObj pb = listNews.get(index);
+                    // run code xử lý show news details here
+                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+                }
+            });
             //hungnd invisiable button comment
             btnComment.setVisibility(View.GONE);
 //            btnComment.setOnClickListener(new View.OnClickListener() {

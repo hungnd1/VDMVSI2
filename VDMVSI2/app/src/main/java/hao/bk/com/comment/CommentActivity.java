@@ -1,5 +1,6 @@
 package hao.bk.com.comment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
@@ -25,8 +26,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import hao.bk.com.customview.MyProgressDialog;
 import hao.bk.com.models.OnLoadMoreListener;
 import hao.bk.com.models.User;
+import hao.bk.com.vdmvsi.MainActivity;
 import hao.bk.com.vdmvsi.R;
 
 /**
@@ -37,6 +40,7 @@ public class CommentActivity extends AppCompatActivity {
     private List<User> mUsers = new ArrayList<>();
     private UserAdapter mUserAdapter;
     Toolbar toolbar;
+    MyProgressDialog mpdl;
 
     public void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -52,12 +56,15 @@ public class CommentActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_comment);
         initToolBar();
+//        mpdl = new MyProgressDialog(getBaseContext());
+//        mpdl.showLoading(getString(R.string.txt_loading));
 //        mToolbar = (Toolbar) findViewById(R.id.toolbar);
 //        mToolbar.setTitle("LoadMoreRecycleView");
 
@@ -105,8 +112,7 @@ public class CommentActivity extends AppCompatActivity {
                             mUsers.add(user);
                             j++;
                         }
-                        if(j == end){
-                        }else {
+                        if (j != end) {
                             mUserAdapter.notifyDataSetChanged();
                             mUserAdapter.setLoaded();
                         }
@@ -125,7 +131,7 @@ public class CommentActivity extends AppCompatActivity {
                     User user = new User();
                     user.setName("hungchelsea");
                     user.setEmail(edt_comment.getText().toString().trim());
-                    mUsers.add(0,user);
+                    mUsers.add(0, user);
                 } else {
                     Toast.makeText(getBaseContext(), "Bạn chưa nhập bình luận", Toast.LENGTH_SHORT).show();
                 }
