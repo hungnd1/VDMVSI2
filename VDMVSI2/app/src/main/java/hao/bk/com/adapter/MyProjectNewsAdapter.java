@@ -1,6 +1,7 @@
 package hao.bk.com.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,13 +15,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import hao.bk.com.chat.ProjectDetailActivity;
 import hao.bk.com.common.ToastUtil;
+import hao.bk.com.config.Config;
 import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
 import hao.bk.com.vdmvsi.FragmentCreateMyProject;
-import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
 import hao.bk.com.vdmvsi.R;
 
 /**
@@ -156,10 +158,18 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
 
         @Override
         public void onClick(View v) {
-            NewsObj pb = listNews.get(index);
-            // run code xử lý show news details here
-            FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+            try {
+                Intent intent = new Intent(context, ProjectDetailActivity.class);
+                CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
+                intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
+                intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                context.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

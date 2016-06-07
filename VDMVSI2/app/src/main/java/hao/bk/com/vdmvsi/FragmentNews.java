@@ -154,8 +154,9 @@ public class FragmentNews extends Fragment {
                 recyclerView.setAdapter(adapter);
             } else {
                 lnlError.setVisibility(View.VISIBLE);
+                lnlError.setOnClickListener(null);
                 swipeRefreshLayout.setVisibility(View.GONE);
-                btnRetry.setVisibility(View.INVISIBLE);
+                btnRetry.setVisibility(View.GONE);
                 tvErrorMsg.setText("Bạn phải đăng kí VIP để có thể xem được nội dung này");
             }
         }

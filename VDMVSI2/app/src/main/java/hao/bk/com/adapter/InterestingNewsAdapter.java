@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import hao.bk.com.chat.ProjectDetailActivity;
 import hao.bk.com.comment.CommentActivity;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.NetWorkServerApi;
@@ -32,7 +33,6 @@ import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
-import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
 import hao.bk.com.vdmvsi.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -191,11 +191,18 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
         }
         @Override
         public void onClick(View v) {
-            // show tin tuc chi tiet
-            NewsObj pb = listNews.get(index);
-            // run code xử lý show news details here
-            FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+            try {
+                Intent intent = new Intent(context, ProjectDetailActivity.class);
+                CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
+                intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
+                intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                context.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         public void likeNews(int index){
             CoporateNewsObj obj = (CoporateNewsObj)listNews.get(index);

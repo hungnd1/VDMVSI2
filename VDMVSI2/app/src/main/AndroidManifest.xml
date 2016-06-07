@@ -37,6 +37,12 @@
             android:name="hao.bk.com.chat.NewsDetailActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden|stateUnchanged|adjustResize"></activity>
+
+        <activity
+            android:name="hao.bk.com.chat.ProjectDetailActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|stateUnchanged|adjustResize"></activity>
+
         <activity
             android:name="hao.bk.com.comment.CommentActivity"
             android:label="@string/title_activity_display_message"

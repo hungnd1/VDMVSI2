@@ -2,25 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/white_full"
-    android:paddingBottom="@dimen/padding_item"
-    android:layout_marginBottom="20dp"
-    android:layout_height="match_parent">
+    android:id="@+id/container"
+    android:layout_height="match_parent"
+    android:transcriptMode="normal">
 
-    <!-- input email - pass -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_above="@+id/btn_back">
 
         <LinearLayout
             android:id="@+id/ll_input_text"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/heigh_view_nomal"
+            android:layout_marginTop="@dimen/padding_item_half"
             android:orientation="vertical"
             android:gravity="center">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,37 +41,13 @@
                 android:imeOptions="actionNext"
                 android:background="@null" />
 
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="@dimen/padding_item_half"
                 android:layout_marginRight="@dimen/padding_item_half"
                 android:layout_marginBottom="@dimen/padding_item_half"
-                android:background="@color/PrimaryColor"/>
-
-            <TextView
-                android:id="@+id/tv_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:textSize="@dimen/font_normal"
-                android:gravity="center_vertical"
-                android:textColor="@color/PrimaryColor"
-                android:text="@string/txt_start_date_pro"
-                android:drawableLeft="@drawable/ic_date_select_blue"
-                android:background="@null"
-                android:drawablePadding="@dimen/padding_item" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:background="@color/PrimaryColor"/>
+                android:background="@color/PrimaryColor"/>-->
 
             <TextView
                 android:id="@+id/tv_c_date"
@@ -136,22 +116,22 @@
                 android:layout_marginBottom="@dimen/padding_item_half"
                 android:background="@color/PrimaryColor"/>
 
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:gravity="center_vertical"
+                android:textColor="@color/PrimaryColor"
+                android:drawableLeft="@drawable/ic_date_select_blue"
+                android:background="@null"
+                android:drawablePadding="@dimen/padding_item" />
+
+
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_selector_blue_border_bkg"
-        android:text="@string/txt_back"
-        android:textColor="@color/PrimaryColor"
-        android:layout_alignParentBottom="true"
-        android:padding="@dimen/padding_item_half"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/padding_item_half"
-        android:layout_marginBottom="@dimen/padding_item"
-        android:textSize="@dimen/font_normal"/>
 
 </RelativeLayout>

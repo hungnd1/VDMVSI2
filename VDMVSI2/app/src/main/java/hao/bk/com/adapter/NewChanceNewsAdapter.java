@@ -1,34 +1,24 @@
 package hao.bk.com.adapter;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import hao.bk.com.chat.NewsDetailActivity;
+import hao.bk.com.chat.ProjectDetailActivity;
 import hao.bk.com.common.DataStoreApp;
-import hao.bk.com.common.JsonCommon;
 import hao.bk.com.common.NetWorkServerApi;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.common.UtilNetwork;
@@ -38,11 +28,8 @@ import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
-import hao.bk.com.vdmvsi.FragmentDialogShowDetailsMyProject;
 import hao.bk.com.vdmvsi.R;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,7 +39,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Url;
 
 /**
  * Created by T430 on 4/22/2016.
@@ -173,22 +159,18 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
 
         @Override
         public void onClick(View v) {
-            NewsObj pb = listNews.get(index);
-            // run code xử lý show news details here
-            FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-            // show tin tuc chi tiet
-//            try {
-//                Intent intent = new Intent(context, NewsDetailActivity.class);
-//                NewsObj obj = listNews.get(index);
-//                intent.putExtra(Config.NEWS_TITLE, obj.getTitle());
-//                intent.putExtra(Config.NEWS_INTRO, obj.getIntros());
-//                intent.putExtra(Config.NEWS_CONTENT, obj.getContent());
-//                intent.putExtra(Config.NEWS_IMG, obj.getSetUrlNew());
-//                context.startActivity(intent);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            try {
+                Intent intent = new Intent(context, ProjectDetailActivity.class);
+                CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
+                intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
+                intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                context.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         public void setCareNews() {

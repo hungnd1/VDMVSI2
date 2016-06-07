@@ -25,7 +25,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     DataStoreApp dataStoreApp;
     ToastUtil toastUtil;
     TextView tvIntros;
-    ImageView ivNews, btnBack;
+    ImageView ivNews;
     WebView webView;
     ViewToolBar vToolBar;
     NewsObj newsObj;

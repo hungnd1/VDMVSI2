@@ -151,4 +151,11 @@ public class Config {
     public static final String NEWS_INTRO = "newsIntro";
     public static final String NEWS_CONTENT = "newsContent";
     public static final String NEWS_IMG = "newsImg";
+
+    //project detail
+    public static final String PROJECT_TITLE = "projectTitle";
+    public static final String PROJECT_CONTENT = "projectContent";
+    public static final String PROJECT_CDATE = "projectCdate";
+    public static final String PROJECT_FDATE = "projectFdate";
+    public static final String PROJECT_EDATE = "projectEdate";
 }
