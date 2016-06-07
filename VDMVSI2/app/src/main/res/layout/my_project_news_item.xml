@@ -84,27 +84,19 @@
                     android:textSize="@dimen/font_normal"/>
             </LinearLayout>
 
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_small"
+                android:background="@color/divider_color"
+                android:layout_marginBottom="@dimen/padding_item_small"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_weight="0.4">
-
-                <Button
-                    android:id="@+id/btn_show"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.2"
-                    android:drawableLeft="@drawable/ic_show_24"
-                    android:paddingLeft="@dimen/padding_item"
-                    android:drawablePadding="@dimen/padding_item_half"
-                    android:gravity="center_vertical|left"
-                    android:textColor="@color/dark_ness_hint"
-                    android:textSize="@dimen/font_normaless"
-                    android:background="@drawable/btn_selector_transperent_bkg"
-                    android:textAllCaps="false"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_show" />
 
                 <Button
                     android:id="@+id/btn_edit"

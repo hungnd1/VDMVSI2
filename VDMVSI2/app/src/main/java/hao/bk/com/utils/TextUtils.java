@@ -3,6 +3,7 @@ package hao.bk.com.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by T430 on 4/21/2016.
@@ -36,6 +37,13 @@ public class TextUtils {
 
 
     public static String toSimpleDate(String cdate) {
+        Date d = stringToDate(cdate);
+        Date now = new Date();
+        long distance = now.getTime() - d.getTime();
+        if (distance < TimeUnit.DAYS.toMillis(5)){
+            return (distance/TimeUnit.DAYS.toMillis(1))+" ngày";
+        }
         return sdf2.format(stringToDate(cdate));
     }
+
 }

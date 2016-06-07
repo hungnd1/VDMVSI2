@@ -48,6 +48,7 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
         }
         holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
         holder.tvTime.setText("Ngày: "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
         holder.index = position;
         holder.tvDescription.setText(obj.getContent());
@@ -66,7 +67,7 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
         return listNews != null ? listNews.size() : 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CardView cv;
         TextView tvTitle;
         TextView tvName;
@@ -114,6 +115,8 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
                     showNews(index);
                 }
             });
+            tvTitle.setOnClickListener(this);
+            tvDescription.setOnClickListener(this);
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -151,5 +154,12 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             // run code xử lý del này ở đây
         }
 
+        @Override
+        public void onClick(View v) {
+            NewsObj pb = listNews.get(index);
+            // run code xử lý show news details here
+            FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
+            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+        }
     }
 }
