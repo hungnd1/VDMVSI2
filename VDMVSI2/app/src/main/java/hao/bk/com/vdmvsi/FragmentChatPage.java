@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import hao.bk.com.adapter.ChatItemAdapter;
@@ -99,6 +100,7 @@ public class FragmentChatPage extends Fragment {
         });
 
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -130,18 +132,16 @@ public class FragmentChatPage extends Fragment {
         if(!UtilNetwork.checkInternet(main)){
             return;
         }
-        Retrofit retrofit = new Retrofit.Builder()
+        final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_GET)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        // Khởi tạo các cuộc gọi cho Retrofit 2.0
         mpdl.showLoading("");
-        NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
+        final NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("publicKey",Config.PUBLIC_KEY);
         hashMap.put("action", Config.getUser);
         Call<JsonObject> call = stackOverflowAPI.getAllUser(hashMap);
-        // Cuộc gọi bất đồng bọ (chạy dưới background)
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -159,23 +159,14 @@ public class FragmentChatPage extends Fragment {
                     return;
                 }
                 listMemberChat.clear();
-                //listMemberChat.addAll(JsonCommon.getAllUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data")));
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(Config.BASE_URL_REGISTER)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
-                ArrayList<MemberVsiObj> tmp = JsonCommon.getAllUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data"));
-                dem = tmp.size();
-                for (final MemberVsiObj obj: tmp) {
+                final ArrayList<MemberVsiObj> tmp = JsonCommon.getAllUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data"));
                     Map users = new HashMap();
-                    users.put("from_user", dataStoreApp.getUserName());
-                    users.put("to_user", obj.getUserName());
-                    Call<JsonObject> call2 = serverNetWorkAPI.getChatMessageTwoUser(users);
+                    users.put("username", dataStoreApp.getUserName());
+                    Call<JsonObject> call2 = stackOverflowAPI.getLastMessage(users);
                     call2.enqueue(new Callback<JsonObject>() {
                         @Override
                         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
+                            Log.d("track",response.body().toString());
                             try {
                                 boolean status = response.body().get(Config.status_response).getAsBoolean();
                                 if (!status) {
@@ -185,43 +176,32 @@ public class FragmentChatPage extends Fragment {
                                 return;
                             }
                             try {
-                                ChatObj chatObj = JsonCommon.getLastChatTwoUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data"));
-                                if (chatObj != null) {
-                                    Log.d(obj.getUserName(), chatObj.getContent());
-                                    obj.setLastMessage(chatObj);
-                                    listMemberChat.add(obj);
+                                Map<String, ChatObj> mapChatObj = JsonCommon.getLastMessage(response.body().getAsJsonArray("data"));
+                                for (MemberVsiObj obj: tmp) {
+                                    if (mapChatObj.containsKey(obj.getUserName())) {
+                                        obj.setLastMessage(mapChatObj.get(obj.getUserName()));
+                                        listMemberChat.add(obj);
+                                    }
                                 }
                             } catch (Exception e) {
                             }
-                            dem--;
-                        }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable t) {
-                            dem--;
-                        }
-                    });
-                }
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (dem <= 0) {
                             Collections.sort(listMemberChat, new Comparator<MemberVsiObj>() {
                                 @Override
                                 public int compare(MemberVsiObj lhs, MemberVsiObj rhs) {
-
                                     return (int) (TextUtils.stringToDate(rhs.getLastMessage().getCdate()).getTime()-TextUtils.stringToDate(lhs.getLastMessage().getCdate()).getTime());
                                 }
                             });
                             adapter.updateFilter();
                             adapter.notifyDataSetChanged();
-                        }else{
-                            handler.postDelayed(this,100);
                         }
-                    }
-                }, 100);
-            }
+
+                        @Override
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
+                            Log.d("track",t.toString());
+                        }
+                    });
+                }
+
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d("CallBack", " Throwable is " +t);

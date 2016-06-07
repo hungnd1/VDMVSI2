@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,24 +123,8 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
                 }
             });
             btnComment = (Button) itemView.findViewById(R.id.btn_comment);
-            tvName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NewsObj pb = listNews.get(index);
-                    // run code xử lý show news details here
-                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-                }
-            });
-            tvDescription.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    NewsObj pb = listNews.get(index);
-                    // run code xử lý show news details here
-                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-                }
-            });
+            tvName.setOnClickListener(this);
+            tvDescription.setOnClickListener(this);
             //hungnd invisiable button comment
             btnComment.setVisibility(View.GONE);
 //            btnComment.setOnClickListener(new View.OnClickListener() {

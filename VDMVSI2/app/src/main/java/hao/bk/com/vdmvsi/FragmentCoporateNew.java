@@ -1,6 +1,7 @@
 package hao.bk.com.vdmvsi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import hao.bk.com.adapter.InterestingNewsAdapter;
 import hao.bk.com.adapter.MyProjectNewsAdapter;
 import hao.bk.com.adapter.NewChanceNewsAdapter;
+import hao.bk.com.chat.CreateProjectActivity;
+import hao.bk.com.chat.NewsDetailActivity;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.JsonCommon;
 import hao.bk.com.common.NetWorkServerApi;
@@ -101,8 +104,14 @@ public class FragmentCoporateNew extends Fragment{
         btnAddNewProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentCreateMyProject fragmentCreateMyProject =  FragmentCreateMyProject.newInstance();
-                fragmentCreateMyProject.show(main.getFragmentManager(), "");
+                try {
+                    Intent intent = new Intent(main, CreateProjectActivity.class);
+                    main.startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+//                FragmentCreateMyProject fragmentCreateMyProject =  FragmentCreateMyProject.newInstance();
+//                fragmentCreateMyProject.show(main.getFragmentManager(), "");
             }
         });
         lnlError = (LinearLayout)v.findViewById(R.id.lnl_error);

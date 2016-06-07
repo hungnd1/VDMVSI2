@@ -185,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
         try{
             pubnub.unsubscribe(myChannel);
         }catch (Exception e){
-
         }
     }
     // subcribe my channer for message from my friend chat

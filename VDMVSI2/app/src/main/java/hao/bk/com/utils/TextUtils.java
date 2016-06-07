@@ -1,5 +1,7 @@
 package hao.bk.com.utils;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,9 +39,19 @@ public class TextUtils {
 
 
     public static String toSimpleDate(String cdate) {
+        Log.d("track",cdate);
         Date d = stringToDate(cdate);
         Date now = new Date();
         long distance = now.getTime() - d.getTime();
+        if (distance < TimeUnit.MINUTES.toMillis(1)){
+            return "Vừa xong";
+        }
+        if (distance < TimeUnit.HOURS.toMillis(1)){
+            return (distance/TimeUnit.MINUTES.toMillis(1))+" phút";
+        }
+        if (distance < TimeUnit.DAYS.toMillis(1)){
+            return (distance/TimeUnit.HOURS.toMillis(1))+" giờ";
+        }
         if (distance < TimeUnit.DAYS.toMillis(5)){
             return (distance/TimeUnit.DAYS.toMillis(1))+" ngày";
         }

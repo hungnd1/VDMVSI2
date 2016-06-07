@@ -28,8 +28,8 @@ public class NewsDetailActivity extends AppCompatActivity {
     ImageView ivNews;
     WebView webView;
     ViewToolBar vToolBar;
-    NewsObj newsObj;
     View viewRoot;
+    NewsObj newsObj;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

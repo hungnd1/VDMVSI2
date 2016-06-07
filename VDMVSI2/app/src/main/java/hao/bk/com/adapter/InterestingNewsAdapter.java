@@ -112,24 +112,8 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDescription = (TextView)itemView.findViewById(R.id.tv_descript);
             btnLike = (Button)itemView.findViewById(R.id.btn_like);
-            tvName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NewsObj pb = listNews.get(index);
-                    // run code xử lý show news details here
-                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-                }
-            });
-            tvDescription.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    NewsObj pb = listNews.get(index);
-                    // run code xử lý show news details here
-                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-                }
-            });
+            tvName.setOnClickListener(this);
+            tvDescription.setOnClickListener(this);
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

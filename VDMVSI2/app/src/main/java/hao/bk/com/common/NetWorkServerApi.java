@@ -57,7 +57,7 @@ public interface NetWorkServerApi {
     @GET("api/mem_api.php")
     public Call<JsonObject> getAllUser(@QueryMap Map<String, String> maps);
 
-    @GET("api/mess_api.php")
+    @GET("api/mess_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=getListLateMess")
     public Call<JsonObject> getLastMessage(@QueryMap Map<String, String> maps);
 
 }

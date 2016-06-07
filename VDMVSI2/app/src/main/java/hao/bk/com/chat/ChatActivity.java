@@ -63,14 +63,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by T430 on 4/22/2016.
  */
-public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
+public class ChatActivity extends AppCompatActivity{
     private final String tag = "ChatActivity";
     MemberVsiObj friend;
     ToastUtil toastUtil;
     ViewToolBar vToolBar;
     DataStoreApp dataStoreApp;
     View viewRoot;
-    private TextToSpeech engine;
 
     RecyclerView recyclerView;
     LinearLayoutManager manager;
@@ -86,7 +85,6 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        engine = new TextToSpeech(this, this);
         setContentView(R.layout.activity_chat);
         viewRoot = (View) findViewById(R.id.container);
         vToolBar = new ViewToolBar(this, viewRoot);
@@ -153,11 +151,11 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     return;
                 if (TextUtils.isEmpty(edtMsg.getText().toString()))
                     return;
-                speech(edtMsg.getText().toString());
                 ChatObj obj = new ChatObj();
                 obj.setContent(edtMsg.getText().toString());
                 obj.setItsMe(true);
                 obj.setCdate(TextUtils.dateToString(new Date()));
+                Log.d("track",obj.getCdate());
                 if (publish(obj.getContent())) {
                     if (listChat.size() > 0 && listChat.get(0).isItsMe() && TextUtils.equalTime(obj.getCdate(), listChat.get(0).getCdate())) {
                         obj.setContent(listChat.get(0).getContent() + "\n" + obj.getContent());
@@ -361,33 +359,4 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         return jsonObject;
     }
 
-    @Override
-    public void onInit(int status) {
-        Log.d("Speech", "OnInit - Status ["+status+"]");
-
-        if (status == TextToSpeech.SUCCESS) {
-            Log.d("Speech", "Success!");
-            engine.setLanguage(Locale.UK);
-            engine.setPitch((float) 0);
-            engine.setSpeechRate((float) 0);
-        }
-    }
-
-    private void speech(String s) {
-        Log.d("version",Build.VERSION.SDK_INT+"");
-        if (Build.VERSION.SDK_INT>=21){
-            speechOver21(s);
-        }else{
-            speechBelow21(s);
-        }
-    }
-
-    private void speechBelow21(String s) {
-        engine.speak(s, TextToSpeech.QUEUE_FLUSH, null);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void speechOver21(String s) {
-        engine.speak(s, TextToSpeech.QUEUE_FLUSH, null,null);
-    }
 }

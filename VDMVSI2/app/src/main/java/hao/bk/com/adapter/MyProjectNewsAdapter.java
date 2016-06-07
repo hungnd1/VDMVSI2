@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import hao.bk.com.chat.CreateProjectActivity;
 import hao.bk.com.chat.ProjectDetailActivity;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
@@ -87,37 +88,9 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDescription = (TextView)itemView.findViewById(R.id.tv_descript);
-            btnShow = (Button)itemView.findViewById(R.id.btn_show);
             btnEdit = (Button)itemView.findViewById(R.id.btn_edit);
             btnDel = (Button)itemView.findViewById(R.id.btn_del);
-            btnShow.setVisibility(View.INVISIBLE);
-            tvName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NewsObj pb = listNews.get(index);
-                    // run code xử lý show news details here
-                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-                }
-            });
-            tvDescription.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    NewsObj pb = listNews.get(index);
-                    // run code xử lý show news details here
-                    FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-                    fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-                }
-            });
-            btnShow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(HViewUtils.isFastDoubleClick())
-                        return;
-                    showNews(index);
-                }
-            });
-            tvTitle.setOnClickListener(this);
+            tvName.setOnClickListener(this);
             tvDescription.setOnClickListener(this);
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,17 +111,23 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             });
         }
 
-        public void showNews(int index){
-            NewsObj pb = listNews.get(index);
-            // run code xử lý show news details here
-            FragmentDialogShowDetailsMyProject fragmentCreateMyProject =  FragmentDialogShowDetailsMyProject.newInstance(pb);
-            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
-        }
         public void editNews(int index){
-            NewsObj pb = listNews.get(index);
-
-            FragmentCreateMyProject fragmentCreateMyProject =  FragmentCreateMyProject.newInstance(pb);
-            fragmentCreateMyProject.show(frmContainer.getActivity().getFragmentManager(), "");
+            try {
+                try {
+                    Intent intent = new Intent(context, CreateProjectActivity.class);
+                    CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                    intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                    intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                    intent.putExtra(Config.PROJECT_CARID, pb.getCarId());
+                    intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
+                    intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                    context.startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         public void deleteNews(int index){
             listNews.remove(index);

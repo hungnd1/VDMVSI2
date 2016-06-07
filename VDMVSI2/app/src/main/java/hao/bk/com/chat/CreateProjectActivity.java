@@ -1,27 +1,16 @@
-package hao.bk.com.vdmvsi;
+package hao.bk.com.chat;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.google.gson.JsonObject;
 
@@ -36,14 +25,13 @@ import hao.bk.com.common.NetWorkServerApi;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
-import hao.bk.com.customview.MyProgressDialog;
+import hao.bk.com.customview.ViewToolBar;
 import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.LCareObj;
-import hao.bk.com.models.MyProjectObj;
-import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
+import hao.bk.com.vdmvsi.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,48 +39,40 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Haodv
+ * Created by T430 on 4/22/2016.
  */
-public class FragmentCreateMyProject extends DialogFragment {
+public class CreateProjectActivity extends AppCompatActivity {
 
-    MainActivity main;
     EditText edtTitleProject, edtContent;
     Button btnCreateNew;
     TextView btnStartDate, btnEndate;
     DataStoreApp dataStoreApp;
     ToastUtil toastUtil;
-    static CoporateNewsObj myObj = null;
+    ViewToolBar vToolBar;
+    View viewRoot;
+    CoporateNewsObj myObj = null;
     ArrayList<LCareObj> listCareObjs;
     AppCompatSpinner spnCare;
-    ImageView btnBack;
 
-    public static FragmentCreateMyProject newInstance() {
-        FragmentCreateMyProject fragmentCreateMyProject = new FragmentCreateMyProject();
-        Bundle args = new Bundle();
-        fragmentCreateMyProject.setArguments(args);
-        return fragmentCreateMyProject;
-    }
-
-    public static FragmentCreateMyProject newInstance(NewsObj mp) {
-        FragmentCreateMyProject fragmentCreateMyProject = new FragmentCreateMyProject();
-        Bundle args = new Bundle();
-        fragmentCreateMyProject.setArguments(args);
-        myObj = (CoporateNewsObj) mp;
-        return fragmentCreateMyProject;
-    }
-
-    @Override
-    public void onAttach(Activity context) {
-        super.onAttach(context);
-        main = (MainActivity) context;
-        dataStoreApp = new DataStoreApp(context);
-        toastUtil = new ToastUtil(context);
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        dataStoreApp = new DataStoreApp(this);
+        toastUtil = new ToastUtil(this);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_project);
         listCareObjs = new ArrayList<>();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            myObj = new CoporateNewsObj();
+            myObj.setTitle(extras.getString(Config.PROJECT_TITLE, ""));
+            myObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
+            myObj.setFromDate(extras.getLong(Config.PROJECT_FDATE, 0));
+            myObj.setEndDate(extras.getLong(Config.PROJECT_EDATE, 0));
+            myObj.setCarId(extras.getInt(Config.PROJECT_CARID, 0));
+        }
+        initViews();
     }
+
     public void getTimePicker(final TextView tv){
         final Calendar myCalendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -103,25 +83,11 @@ public class FragmentCreateMyProject extends DialogFragment {
                 tv.setText(dayOfMonth+"/"+monthOfYear+"/" + year);
             }
         };
-        new DatePickerDialog(main, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
 
-    }
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_dialog_create_myproject, container, false);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        getDialog().setCanceledOnTouchOutside(false);
-        initViews(v);
-        return v;
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDialog().getWindow().setLayout(main.getWindow().getDecorView().getWidth(),main.getWindow().getDecorView().getHeight()-200);
-    }
     public void runGetListCare(){
-        if(!UtilNetwork.checkInternet(main,getString(R.string.txt_check_internet))){
+        if(!UtilNetwork.checkInternet(this,getString(R.string.txt_check_internet))){
             toastUtil.showToast(getString(R.string.txt_check_internet));
             return;
         }
@@ -173,24 +139,17 @@ public class FragmentCreateMyProject extends DialogFragment {
     }
 
     public void setDataSpinnerCar(){
-        ArrayAdapter<LCareObj> adp= new ArrayAdapter<LCareObj>(main,
+        ArrayAdapter<LCareObj> adp= new ArrayAdapter<LCareObj>(this,
                 android.R.layout.simple_list_item_1,listCareObjs);
         adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCare.setAdapter(adp);
     }
 
-    public void initViews(View v){
-        spnCare = (AppCompatSpinner)v.findViewById(R.id.spn_major);
-        edtTitleProject = (EditText)v.findViewById(R.id.edt_title_project);
-        edtContent = (EditText)v.findViewById(R.id.edt_content);
-        btnStartDate = (TextView)v.findViewById(R.id.tv_start_date);
-        btnBack = (ImageView)v.findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+    public void initViews(){
+        spnCare = (AppCompatSpinner) findViewById(R.id.spn_major);
+        edtTitleProject = (EditText) findViewById(R.id.edt_title_project);
+        edtContent = (EditText) findViewById(R.id.edt_content);
+        btnStartDate = (TextView) findViewById(R.id.tv_start_date);
         btnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,7 +158,7 @@ public class FragmentCreateMyProject extends DialogFragment {
                 getTimePicker(btnStartDate);
             }
         });
-        btnEndate = (TextView)v.findViewById(R.id.tv_end_date);
+        btnEndate = (TextView) findViewById(R.id.tv_end_date);
         btnEndate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,7 +167,7 @@ public class FragmentCreateMyProject extends DialogFragment {
                 getTimePicker(btnEndate);
             }
         });
-        btnCreateNew = (Button)v.findViewById(R.id.btn_create_new);
+        btnCreateNew = (Button) findViewById(R.id.btn_create_new);
         btnCreateNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,6 +180,9 @@ public class FragmentCreateMyProject extends DialogFragment {
                 createNewProject(users);
             }
         });
+        viewRoot = (View) findViewById(R.id.container);
+        vToolBar = new ViewToolBar(this, viewRoot);
+        vToolBar.showButtonBack(true);
         runGetListCare();
         showInfo();
     }
@@ -240,6 +202,7 @@ public class FragmentCreateMyProject extends DialogFragment {
             }
         }
     }
+
 
     public boolean validate(){
         if(TextUtils.isEmpty(edtTitleProject.getText().toString())){
@@ -264,7 +227,7 @@ public class FragmentCreateMyProject extends DialogFragment {
     public void createNewProject(Map users){
         if(!validate())
             return;
-        if(!UtilNetwork.checkInternet(main, getString(R.string.check_internet))){
+        if(!UtilNetwork.checkInternet(this, getString(R.string.check_internet))){
             return;
         }
         Retrofit retrofit = new Retrofit.Builder()
@@ -308,8 +271,6 @@ public class FragmentCreateMyProject extends DialogFragment {
     }
     public void addMyProjectSuccess(){
         toastUtil.showToast(getString(R.string.txt_success_add_project));
-        dismiss();
+        this.onBackPressed();
     }
-
 }
-
