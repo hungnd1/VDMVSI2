@@ -46,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FragmentRegister extends Fragment {
     public final String tag = "FragmentRegister";
     EditText edtUserName, edtPassword, edtEmail, edtRepassword;
-    Button btnRegister;
+    Button btnRegister, btnLogin;
     ToastUtil toastUtil;
     DataStoreApp dataStoreApp;
     RegisterSuccessItf mCallback;
@@ -86,6 +86,7 @@ public class FragmentRegister extends Fragment {
         edtEmail = (EditText)view.findViewById(R.id.edt_email);
         edtRepassword = (EditText)view.findViewById(R.id.edt_re_password);
         btnRegister = (Button)view.findViewById(R.id.btn_register);
+        btnLogin = (Button)view.findViewById(R.id.btn_login);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +94,12 @@ public class FragmentRegister extends Fragment {
                     return;
                 if(validate())
                     runRegister();
+            }
+        });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginAct.onBackPressed();
             }
         });
     }

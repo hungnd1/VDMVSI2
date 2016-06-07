@@ -110,8 +110,6 @@ public class FragmentCoporateNew extends Fragment{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                FragmentCreateMyProject fragmentCreateMyProject =  FragmentCreateMyProject.newInstance();
-//                fragmentCreateMyProject.show(main.getFragmentManager(), "");
             }
         });
         lnlError = (LinearLayout)v.findViewById(R.id.lnl_error);

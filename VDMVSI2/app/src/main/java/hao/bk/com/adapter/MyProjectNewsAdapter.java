@@ -23,7 +23,6 @@ import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
-import hao.bk.com.vdmvsi.FragmentCreateMyProject;
 import hao.bk.com.vdmvsi.R;
 
 /**

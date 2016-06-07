@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
+        android:background="@color/message_background"
         android:padding="8dp" />
 
     <RelativeLayout
@@ -50,7 +51,7 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/imb_send"
             android:background="@null"
-            android:hint="@string/txt_input_message"
+            android:hint="@string/txt_input_comment"
             android:inputType="textCapSentences" />
     </RelativeLayout>
 </LinearLayout>
