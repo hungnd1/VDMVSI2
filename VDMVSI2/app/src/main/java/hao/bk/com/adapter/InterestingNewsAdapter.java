@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
+import com.pubnub.api.PubnubError;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -312,4 +313,38 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 
+
+    //hungnd_notification
+    public boolean publish(String message) {
+        com.pubnub.api.Callback callback = new com.pubnub.api.Callback() {
+            public void successCallback(String channel, Object response) {
+                Util.LOGD("26_4 publish successCallback", response.toString());
+            }
+
+            public void errorCallback(String channel, PubnubError error) {
+                Util.LOGD("26_4 errorCallback publish", error.toString());
+            }
+        };
+        try {
+            MainActivity.pubnub.publish(Config.startChannelName + "hungnd1", createMessageSend(message).toString(), callback);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public JsonObject createMessageSend(String message) {
+//        mess:{
+//            author:nxtuyen
+//            mess:content
+//            time:321313
+//        }
+        JsonObject jsonObject = new JsonObject();
+        JsonObject objC = new JsonObject();
+        objC.addProperty("from", dataStoreApp.getUserName());
+        objC.addProperty("title", message);
+        jsonObject.add("content", objC);
+        return jsonObject;
+
+    }
 }

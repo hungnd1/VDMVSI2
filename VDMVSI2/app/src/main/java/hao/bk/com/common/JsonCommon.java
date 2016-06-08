@@ -1,5 +1,7 @@
 package hao.bk.com.common;
 
+import android.util.Log;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -492,21 +494,28 @@ public class JsonCommon {
         if (TextUtils.isEmpty(msg))
             return chatObj;
         JsonParser parser = new JsonParser();
-        JsonObject obj = (JsonObject) (parser.parse(msg).getAsJsonObject()).get("mess");
+
+        JsonObject obj = (JsonObject) (parser.parse(msg).getAsJsonObject());
         if (obj == null)
             return chatObj;
         try {
-            chatObj.setAuthor(obj.get("author").getAsString());
+            chatObj.setTitle(obj.get("title").getAsString());
+            Log.v("obj", obj.get("title").getAsString());
         } catch (Exception e) {
 
         }
         try {
-            chatObj.setMess(obj.get("mess").getAsString());
+            chatObj.setContent(obj.get("content").getAsString());
         } catch (Exception e) {
 
         }
         try {
-            chatObj.setTime(obj.get("321313").getAsLong());
+            chatObj.setType(obj.get("type").getAsInt());
+        } catch (Exception e) {
+
+        }
+        try {
+            chatObj.setFrom(obj.get("from").getAsString());
         } catch (Exception e) {
 
         }

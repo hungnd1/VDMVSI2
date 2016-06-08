@@ -4,40 +4,60 @@ package hao.bk.com.models;
  * Created by T430 on 4/27/2016.
  */
 public class ChatPubNubObj {
-    private String author;
-    private String mess;
-    private String thumnails;
+    private int type;
+    private String from;
+    private String to;
+    private String content;
+    private String title;
+    private String users;
     private long time;
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public int getType() {
+        return type;
     }
 
-    public String getAuthor() {
-        return author;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public void setMess(String mess) {
-        this.mess = mess;
+    public String getFrom() {
+        return from;
     }
 
-    public String getMess() {
-        return mess;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public String getTo() {
+        return to;
     }
 
-    public long getTime() {
-        return time;
+    public void setTo(String to) {
+        this.to = to;
     }
 
-    public void setThumnails(String thumnails) {
-        this.thumnails = thumnails;
+    public String getContent() {
+        return content;
     }
 
-    public String getThumnails() {
-        return thumnails;
+    public void setContent(String content) {
+        this.content = content;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUsers() {
+        return users;
+    }
+
+    public void setUsers(String users) {
+        this.users = users;
+    }
+
 }

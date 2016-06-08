@@ -98,10 +98,10 @@ public class ChatActivity extends AppCompatActivity{
             if (extras.containsKey(Config.CHAT_PUBNUB)) {
                 ChatPubNubObj chatMsg = JsonCommon.getMessageChatFromPubNub(extras.getString(Config.CHAT_PUBNUB));
                 friend.setUrlThumnails("");
-                friend.setUserName(extras.getString(chatMsg.getAuthor(), ""));
+                friend.setUserName(extras.getString(chatMsg.getFrom(), ""));
                 chatObjLastest = new ChatObj();
                 chatObjLastest.setItsMe(false);
-                chatObjLastest.setContent(chatMsg.getMess());
+                chatObjLastest.setContent(chatMsg.getContent());
             } else {
                 friend.setUrlThumnails(extras.getString(Config.URL_THUMNAILS_PUT, ""));
                 friend.setUserName(extras.getString(Config.USER_NAME_PUT, ""));
@@ -187,7 +187,7 @@ public class ChatActivity extends AppCompatActivity{
             ChatPubNubObj chatMsg = JsonCommon.getMessageChatFromPubNub(incomingSms);
             ChatObj chatObj = new ChatObj();
             chatObj.setItsMe(false);
-            chatObj.setContent(chatMsg.getMess());
+            chatObj.setContent(chatMsg.getContent());
             chatObj.setCdate(TextUtils.dateToString(new Date()));
             if (listChat.size() > 0 && !listChat.get(0).isItsMe()) {
                 chatObj.setContent(listChat.get(0).getContent() + "\n" + chatObj.getContent());
@@ -352,7 +352,7 @@ public class ChatActivity extends AppCompatActivity{
 //        }
         JsonObject jsonObject = new JsonObject();
         JsonObject objC = new JsonObject();
-        objC.addProperty("author", dataStoreApp.getUserName());
+        objC.addProperty("admin", dataStoreApp.getUserName());
         objC.addProperty("mess", message);
         objC.addProperty("time", System.currentTimeMillis() + "");
         jsonObject.add("mess", objC);

@@ -17,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         Intent serviceIntent = new Intent(this, PubnubService.class);
         startService(serviceIntent);
         pubnub = new Pubnub(Config.publish_key_pub, Config.subscribe_key_pub,  Config.secret_key_pub, "",false);
+//        pubnub,
         subcribeMyChannel();
     }
 
@@ -132,48 +134,84 @@ public class MainActivity extends AppCompatActivity {
     NotificationCompat.Builder builder;
 
     // public void sendMessage to Chat Activity
-    public void sendMessgeToChatActivity(String message){
-        try{
-            Intent intent = new Intent(Config.NAME_BROAD_CAST_FROM_MAIN_TO_CHAT_ACTIVITY).putExtra(Config.BROAD_CASS_MSG_MAIN_TO_CHAT_FILTER, message);
-            sendBroadcast(intent);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+//    public void sendMessgeToChatActivity(String message){
+//        try{
+//            Log.v("sendMessageTo",message);
+//            Intent intent = new Intent(Config.NAME_BROAD_CAST_FROM_MAIN_TO_CHAT_ACTIVITY).putExtra(Config.BROAD_CASS_MSG_MAIN_TO_CHAT_FILTER, message);
+//            sendBroadcast(intent);
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
     private void sendNotification(String msg) {
-        if(dataStoreApp.getChatActivityShowing()){
-            sendMessgeToChatActivity(msg);
-            return;
-        }
+        Log.v("message_punub",msg);
+//        if(dataStoreApp.getChatActivityShowing()){
+//            sendMessgeToChatActivity(msg);
+//            return;
+//        }
         ChatPubNubObj chatObj = JsonCommon.getMessageChatFromPubNub(msg);
-        Intent resultIntent = new Intent(this, ChatActivity.class);
-        resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
-        resultIntent.setAction(Intent.ACTION_MAIN);
-        resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
-                resultIntent, PendingIntent.FLAG_ONE_SHOT);
-        NotificationCompat.Builder mNotifyBuilder;
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Log.v("type",String.valueOf(chatObj.getType()));
+        if(chatObj.getType() == 4){
+            Intent  resultIntent = new Intent(this, ChatActivity.class);
+            resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
+            resultIntent.setAction(Intent.ACTION_MAIN);
+            resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
+            NotificationCompat.Builder mNotifyBuilder;
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle(chatObj.getAuthor())
-                .setSmallIcon(R.drawable.ic_avatar)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar))
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(TextUtils.isEmpty(chatObj.getMess())?"You've received new message.":chatObj.getMess()));
-        // Set pending intent
-        mNotifyBuilder.setContentIntent(resultPendingIntent);
-        // Set Vibrate, Sound and Light
-        int defaults = 0;
-        defaults = defaults | Notification.DEFAULT_LIGHTS;
-        defaults = defaults | Notification.DEFAULT_VIBRATE;
-		defaults = defaults | Notification.DEFAULT_SOUND;
-        mNotifyBuilder.setDefaults(defaults);
-        // Set the content for Notification
-        mNotifyBuilder.setContentText(TextUtils.isEmpty(chatObj.getMess())?"New message":chatObj.getMess());
-        // Set autocancel
-        mNotifyBuilder.setAutoCancel(true);
-        // Post a notification
-        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+            mNotifyBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle(chatObj.getTitle())
+                    .setSmallIcon(R.drawable.ic_avatar)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(TextUtils.isEmpty(chatObj.getContent())?"You've received new message.":chatObj.getContent()));
+            // Set pending intent
+            mNotifyBuilder.setContentIntent(resultPendingIntent);
+            // Set Vibrate, Sound and Light
+            int defaults = 0;
+            defaults = defaults | Notification.DEFAULT_LIGHTS;
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+            defaults = defaults | Notification.DEFAULT_SOUND;
+            mNotifyBuilder.setDefaults(defaults);
+            // Set the content for Notification
+            mNotifyBuilder.setContentText(TextUtils.isEmpty(chatObj.getContent())?"New message":chatObj.getContent());
+            // Set autocancel
+            mNotifyBuilder.setAutoCancel(true);
+            // Post a notification
+            mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+        }else if(chatObj.getType() == 2 ){
+            Intent  resultIntent = new Intent(this, MainActivity.class);
+            resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
+            resultIntent.setAction(Intent.ACTION_MAIN);
+            resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
+            NotificationCompat.Builder mNotifyBuilder;
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            mNotifyBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle(chatObj.getTitle())
+                    .setSmallIcon(R.drawable.ic_avatar)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(TextUtils.isEmpty(chatObj.getContent())?"You've received new message.":chatObj.getContent()));
+            // Set pending intent
+            mNotifyBuilder.setContentIntent(resultPendingIntent);
+            // Set Vibrate, Sound and Light
+            int defaults = 0;
+            defaults = defaults | Notification.DEFAULT_LIGHTS;
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+            defaults = defaults | Notification.DEFAULT_SOUND;
+            mNotifyBuilder.setDefaults(defaults);
+            // Set the content for Notification
+            mNotifyBuilder.setContentText(TextUtils.isEmpty(chatObj.getContent())?"New message":chatObj.getContent());
+            // Set autocancel
+            mNotifyBuilder.setAutoCancel(true);
+            // Post a notification
+            mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+        }
+
+
     }
 
     @Override
@@ -190,7 +228,9 @@ public class MainActivity extends AppCompatActivity {
     // subcribe my channer for message from my friend chat
     // flase: la unsubcribe
     public void subcribeMyChannel(){
-        String my_channel = Config.startChannelName + dataStoreApp.getUserName();
+
+        String my_channel = Config.CHANNEL_NOTIFICATION ;
+        Log.v("test1",my_channel);
         //unSubcribe
         try {
             pubnub.subscribe(my_channel, new Callback() {
