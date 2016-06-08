@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -225,6 +226,7 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     public void createNewProject(Map users){
+        Log.v("users1", users.toString());
         if(!validate())
             return;
         if(!UtilNetwork.checkInternet(this, getString(R.string.check_internet))){
@@ -236,7 +238,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                 .build();
         NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
         users.put("txt_username", dataStoreApp.getUserName());
-        users.put("txt_carid", ((LCareObj) spnCare.getSelectedItem()).getId());
+        users.put("txt_carid", ((LCareObj) spnCare.getSelectedItem()).getId()+"");
         users.put("txt_title", edtTitleProject.getText().toString());
         users.put("txt_content", edtContent.getText().toString());
         users.put("txt_fdate", btnStartDate.getText().toString());
@@ -247,6 +249,7 @@ public class CreateProjectActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Util.LOGD("20_5", response.body().toString());
+                Log.v("test",response.body().toString());
                 try{
                     boolean status = response.body().get(Config.status_response).getAsBoolean();
                     if(!status){
@@ -264,6 +267,7 @@ public class CreateProjectActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.v("erro_create",t.toString());
                 toastUtil.showToast(getString(R.string.txt_error_common));
                 return;
             }

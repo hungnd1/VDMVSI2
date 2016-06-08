@@ -108,6 +108,7 @@ public class FragmentCoporateNew extends Fragment{
             @Override
             public void onClick(View v) {
                 try {
+                    Log.v("users2", "aaa");
                     Intent intent = new Intent(main, CreateProjectActivity.class);
                     main.startActivity(intent);
                 } catch (Exception e) {
