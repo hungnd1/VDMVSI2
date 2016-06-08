@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import hao.bk.com.chat.CreateProjectActivity;
 import hao.bk.com.chat.ProjectDetailActivity;
 import hao.bk.com.comment.CommentActivity;
 import hao.bk.com.common.ChatFilter;
@@ -41,6 +42,7 @@ import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.FragmentCoporateNew;
+import hao.bk.com.vdmvsi.MainActivity;
 import hao.bk.com.vdmvsi.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,12 +58,9 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
     static ArrayList<NewsObj> listNews;
     public  FragmentCoporateNew frmContainer;
     public  Context context;
-<<<<<<< 092b51f6f71d051fee988425d92f8b08dd8faf6d
     NewsFilter filter;
-=======
     public static final int notifyID = 9002;
     NotificationCompat.Builder builder;
->>>>>>> 3f0d569a205e9013b640823ee2ad5c45e9e8b520
     ToastUtil toastUtil;
     DataStoreApp dataStoreApp;
     public InterestingNewsAdapter(FragmentCoporateNew frmContainer, ArrayList<NewsObj> listNews){
@@ -279,7 +278,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
 
     private void sendNotification(String msg) {
 
-        Intent resultIntent = new Intent(context.getApplicationContext(), InterestingNewsAdapter.class);
+        Intent resultIntent = new Intent(context.getApplicationContext(), MainActivity.class);
         resultIntent.putExtra("msg", msg);
         resultIntent.setAction(Intent.ACTION_MAIN);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP );
