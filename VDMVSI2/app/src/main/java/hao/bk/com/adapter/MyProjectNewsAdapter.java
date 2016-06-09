@@ -166,4 +166,6 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             }
         }
     }
+
+
 }

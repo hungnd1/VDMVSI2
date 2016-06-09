@@ -259,7 +259,6 @@ public class ChatActivity extends AppCompatActivity{
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 mpDl.hideLoading();
                 try {
-                    Log.d("body",response.body().toString());
                     boolean status = response.body().get(Config.status_response).getAsBoolean();
                     if (!status) {
                         return;
@@ -271,7 +270,6 @@ public class ChatActivity extends AppCompatActivity{
                     listChat.clear();
                     listChat.addAll(JsonCommon.getChatTwoUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data")));
                     chatMessageAdapter.notifyDataSetChanged();
-                    Log.d("trace",4+" "+listChat.size());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

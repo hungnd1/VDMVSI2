@@ -259,4 +259,5 @@ public class FragmentCoporateNew extends Fragment{
         });
 
     }
+
 }
