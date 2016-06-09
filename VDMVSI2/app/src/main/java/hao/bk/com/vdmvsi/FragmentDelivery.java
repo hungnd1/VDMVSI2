@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,12 +16,10 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import hao.bk.com.adapter.DeliveryItemAdapter;
-import hao.bk.com.adapter.NewsItemAdapter;
+import hao.bk.com.adapter.ProductItemAdapter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
-import hao.bk.com.models.DeliveryObj;
-import hao.bk.com.models.NewsObj;
-import hao.bk.com.models.NewsVsiObj;
+import hao.bk.com.models.ProductObj;
 
 /**
  * Created by T430 on 4/23/2016.
@@ -29,6 +28,7 @@ public class FragmentDelivery extends Fragment {
     public RecyclerView recyclerView;
     // adapterLv cho recycleView
     public DeliveryItemAdapter adapter;
+    public ProductItemAdapter adapter2;
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager llm;
     // lay ve activity
@@ -36,7 +36,7 @@ public class FragmentDelivery extends Fragment {
     public String curTabName = "";
     Button btnSupport;
     public ToastUtil toastUtil;
-    ArrayList<NewsObj> lisNews =  new ArrayList<>();
+    ArrayList<ProductObj> lisProducts =  new ArrayList<>();
     public FragmentDelivery(){
 
     }
@@ -64,7 +64,6 @@ public class FragmentDelivery extends Fragment {
     public void initViews(View v){
         recyclerView = (RecyclerView) v.findViewById(R.id.rv);
         llm = new LinearLayoutManager(main);
-        recyclerView.setLayoutManager(llm);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
         // refresh recyclerView, tai tin tuc moi (pull to refresh)
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -75,16 +74,6 @@ public class FragmentDelivery extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.PrimaryDarkColor);
-        if(Config.SUPPORT_NEED_TAB.equals(curTabName)){
-            dulieugia1();
-            adapter = new DeliveryItemAdapter(this, lisNews);
-            recyclerView.setAdapter(adapter);
-        } else if(Config.FAIR_GOOD_TAB.equals(curTabName)) {
-            dulieugia1();
-            adapter = new DeliveryItemAdapter(this,lisNews);
-            recyclerView.setAdapter(adapter);
-        }
         btnSupport = (Button)v.findViewById(R.id.btn_support);
         btnSupport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,18 +81,32 @@ public class FragmentDelivery extends Fragment {
                 toastUtil.showToast(getString(R.string.txt_comming_soon));
             }
         });
+        swipeRefreshLayout.setColorSchemeResources(R.color.PrimaryDarkColor);
+        if(Config.SUPPORT_NEED_TAB.equals(curTabName)){
+            // của bạn hưng chè xanh
+//            recyclerView.setLayoutManager(llm);
+//            dulieugia1();
+//            adapter = new DeliveryItemAdapter(this, lisNews);
+//            recyclerView.setAdapter(adapter);
+        } else if(Config.FAIR_GOOD_TAB.equals(curTabName)) {
+            btnSupport.setVisibility(View.GONE);
+            recyclerView.setLayoutManager(new GridLayoutManager(main,2));
+            dulieugia1();
+            adapter2 = new ProductItemAdapter(this,lisProducts);
+            recyclerView.setAdapter(adapter2);
+        }
+
     }
 
     public void dulieugia1(){
-        lisNews.clear();
+        lisProducts.clear();
         for(int i = 1; i <= 10; i++){
-            DeliveryObj obj = new DeliveryObj();
-            obj.setNameUser("User name: " + i);
+            ProductObj obj = new ProductObj();
             obj.setTitle("title nay:" + i);
            // obj.setDescription("Description nay: " + i);
-            obj.setTime(i + " Phút trước");
             obj.setUrlThumnails("http://ithethao.com/sites/default/files/304442c800000578-3403987-image-a-32_1453064019909.jpg");
-            lisNews.add(obj);
+            obj.setCompany("VSI");
+            lisProducts.add(obj);
         }
     }
 }

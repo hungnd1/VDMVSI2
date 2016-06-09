@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_news"
+        android:layout_width="@dimen/width_card_product"
+        android:layout_height="@dimen/heigh_card_product"
+        cv:cardElevation = "1dp"
+        android:background="@color/bkg_main"
+        cv:cardCornerRadius="1dp"
+        cv:cardUseCompatPadding="true"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        > <!-- hieu ung khi click vao cardview -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_news_default"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/img_product"
+                android:layout_margin="@dimen/padding_item_medium"
+                android:layout_above="@+id/tv_product_name"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_item_medium"
+                android:layout_above="@+id/tv_product_company"
+                android:text="product name product name product name product name product name product name product name product name product name product nameproduct name product name "
+                android:lines="3"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:id="@+id/tv_product_name"
+                android:textColor="@color/black_full"
+                android:textSize="@dimen/font_normal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:lines="3"
+                android:padding="@dimen/padding_item_small"
+                android:id="@+id/tv_product_company"
+                android:text="company"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/PrimaryColor"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
