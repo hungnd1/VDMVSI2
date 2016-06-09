@@ -80,7 +80,6 @@ public class ChatActivity extends AppCompatActivity{
     ChatMessageAdapter chatMessageAdapter;
     MyProgressDialog mpDl;
     String yourUserName;
-    ChatObj chatObjLastest = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,16 +96,12 @@ public class ChatActivity extends AppCompatActivity{
         if (extras != null) {
             if (extras.containsKey(Config.CHAT_PUBNUB)) {
                 ChatPubNubObj chatMsg = JsonCommon.getMessageChatFromPubNub(extras.getString(Config.CHAT_PUBNUB));
-                friend.setUrlThumnails("");
-                friend.setUserName(extras.getString(chatMsg.getFrom(), ""));
-                chatObjLastest = new ChatObj();
-                chatObjLastest.setItsMe(false);
-                chatObjLastest.setContent(chatMsg.getContent());
+                friend.setUserName(chatMsg.getFrom());
             } else {
-                friend.setUrlThumnails(extras.getString(Config.URL_THUMNAILS_PUT, ""));
                 friend.setUserName(extras.getString(Config.USER_NAME_PUT, ""));
             }
         }
+        friend.setUrlThumnails(dataStoreApp.getFriendAvatar(friend.getUserName()));
         getAvatarYourFriend();
         yourUserName = friend.getUserName();
         vToolBar.showTextTitle(yourUserName);
@@ -114,9 +109,9 @@ public class ChatActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         dataStoreApp.setChatActivityShowing(false);
-        super.onDestroy();
+        super.onStop();
     }
 
     public void initViews() {
@@ -155,7 +150,6 @@ public class ChatActivity extends AppCompatActivity{
                 obj.setContent(edtMsg.getText().toString());
                 obj.setItsMe(true);
                 obj.setCdate(TextUtils.dateToString(new Date()));
-                Log.d("track",obj.getCdate());
                 if (publish(obj.getContent())) {
                     if (listChat.size() > 0 && listChat.get(0).isItsMe() && TextUtils.equalTime(obj.getCdate(), listChat.get(0).getCdate())) {
                         obj.setContent(listChat.get(0).getContent() + "\n" + obj.getContent());
@@ -194,6 +188,7 @@ public class ChatActivity extends AppCompatActivity{
                 listChat.set(0, chatObj);
             } else listChat.add(0, chatObj);
             chatMessageAdapter.notifyDataSetChanged();
+            recyclerView.smoothScrollToPosition(0);
         }
     };
 
@@ -274,10 +269,9 @@ public class ChatActivity extends AppCompatActivity{
                 }
                 try {
                     listChat.clear();
-                    if (chatObjLastest != null)
-                        listChat.add(chatObjLastest);
                     listChat.addAll(JsonCommon.getChatTwoUser(dataStoreApp.getUserName(), response.body().getAsJsonArray("data")));
                     chatMessageAdapter.notifyDataSetChanged();
+                    Log.d("trace",4+" "+listChat.size());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -290,8 +284,6 @@ public class ChatActivity extends AppCompatActivity{
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                if (chatMessageAdapter != null)
-                    listChat.add(chatObjLastest);
                 mpDl.hideLoading();
                 Util.LOGD(tag, " Throwable is " + t);
             }

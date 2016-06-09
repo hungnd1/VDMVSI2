@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_item_small">3dp</dimen>
+    <dimen name="padding_item_medium">6dp</dimen>
     <dimen name="padding_item_half">10dp</dimen>
     <dimen name="padding_cardview">5dp</dimen>
     <dimen name="padding_item">16dp</dimen>
@@ -10,7 +11,7 @@
     <dimen name="padding_large">25dp</dimen>
     <dimen name="heigh_view_nomal">50dp</dimen>
     <dimen name="heigh_view_nomaless">40dp</dimen>
-    <dimen name="heigh_width_card_news">100dp</dimen>
+    <dimen name="heigh_width_card_news">120dp</dimen>
     <dimen name="min_width_message">120dp</dimen>
     <dimen name="max_width_message">250dp</dimen>
     <dimen name="width_btn_standard">150dp</dimen>

@@ -9,9 +9,9 @@
         android:id="@+id/cv_news"
         android:layout_width="match_parent"
         android:layout_height="@dimen/heigh_width_card_news"
-        cv:cardElevation = "4dp"
+        cv:cardElevation = "1dp"
         android:background="@color/bkg_main"
-        cv:cardCornerRadius="3dp"
+        cv:cardCornerRadius="2dp"
         cv:cardUseCompatPadding="true"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -28,7 +28,7 @@
                 android:background="@drawable/ic_news_default"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_margin="@dimen/padding_item_medium"
                 android:id="@+id/img_news" />
 
             <TextView

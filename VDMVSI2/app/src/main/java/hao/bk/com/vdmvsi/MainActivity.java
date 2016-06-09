@@ -134,21 +134,20 @@ public class MainActivity extends AppCompatActivity {
     NotificationCompat.Builder builder;
 
     // public void sendMessage to Chat Activity
-//    public void sendMessgeToChatActivity(String message){
-//        try{
-//            Log.v("sendMessageTo",message);
-//            Intent intent = new Intent(Config.NAME_BROAD_CAST_FROM_MAIN_TO_CHAT_ACTIVITY).putExtra(Config.BROAD_CASS_MSG_MAIN_TO_CHAT_FILTER, message);
-//            sendBroadcast(intent);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+    public void sendMessgeToChatActivity(String message){
+        try{
+            Intent intent = new Intent(Config.NAME_BROAD_CAST_FROM_MAIN_TO_CHAT_ACTIVITY).putExtra(Config.BROAD_CASS_MSG_MAIN_TO_CHAT_FILTER, message);
+            sendBroadcast(intent);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     private void sendNotification(String msg) {
-        Log.v("message_punub",msg);
-//        if(dataStoreApp.getChatActivityShowing()){
-//            sendMessgeToChatActivity(msg);
-//            return;
-//        }
+        Log.d("abc",dataStoreApp.getChatActivityShowing()+"");
+        if(dataStoreApp.getChatActivityShowing()){
+            sendMessgeToChatActivity(msg);
+            return;
+        }
         ChatPubNubObj chatObj = JsonCommon.getMessageChatFromPubNub(msg);
         Log.v("username",chatObj.getUsers()+"   "+dataStoreApp.getUserName());
         if(!chatObj.getFrom().equals(dataStoreApp.getUserName())) {

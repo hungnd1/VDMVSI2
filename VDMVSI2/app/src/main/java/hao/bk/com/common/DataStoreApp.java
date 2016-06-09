@@ -48,8 +48,18 @@ public class DataStoreApp {
         editor.commit();
     }
 
+    public void createFriendAvatar(String friendName, String friendAvatar){
+        editor = prefs.edit();
+        editor.putString(AVATAR_URL+"_"+friendName, friendAvatar);
+        editor.commit();
+    }
+
     public String getAvatar(){
         return prefs.getString(AVATAR_URL, "");
+    }
+
+    public String getFriendAvatar(String friendName){
+        return prefs.getString(AVATAR_URL+"_"+friendName, "");
     }
 
     public void createVip(boolean isVip){

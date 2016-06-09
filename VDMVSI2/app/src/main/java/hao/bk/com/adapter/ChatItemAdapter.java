@@ -104,7 +104,6 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
                         Intent intent = new Intent(context, ChatActivity.class);
                         MemberVsiObj obj = listChat.get(index);
                         intent.putExtra(Config.USER_NAME_PUT, obj.getUserName());
-                        intent.putExtra(Config.URL_THUMNAILS_PUT, obj.getUrlThumnails());
                         context.startActivity(intent);
                    } catch (Exception e) {
 

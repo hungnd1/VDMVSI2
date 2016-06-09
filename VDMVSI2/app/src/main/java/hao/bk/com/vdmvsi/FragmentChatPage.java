@@ -166,7 +166,6 @@ public class FragmentChatPage extends Fragment {
                     call2.enqueue(new Callback<JsonObject>() {
                         @Override
                         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                            Log.d("track",response.body().toString());
                             try {
                                 boolean status = response.body().get(Config.status_response).getAsBoolean();
                                 if (!status) {
@@ -181,6 +180,7 @@ public class FragmentChatPage extends Fragment {
                                     if (mapChatObj.containsKey(obj.getUserName())) {
                                         obj.setLastMessage(mapChatObj.get(obj.getUserName()));
                                         listMemberChat.add(obj);
+                                        dataStoreApp.createFriendAvatar(obj.getUserName(),obj.getUrlThumnails());
                                     }
                                 }
                             } catch (Exception e) {
@@ -197,7 +197,6 @@ public class FragmentChatPage extends Fragment {
 
                         @Override
                         public void onFailure(Call<JsonObject> call, Throwable t) {
-                            Log.d("track",t.toString());
                         }
                     });
                 }
