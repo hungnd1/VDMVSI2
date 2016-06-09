@@ -519,6 +519,12 @@ public class JsonCommon {
         } catch (Exception e) {
 
         }
+        try {
+
+            chatObj.setUsers(obj.get("users").getAsString());
+        }catch (Exception e){
+
+        }
         return chatObj;
     }
 }

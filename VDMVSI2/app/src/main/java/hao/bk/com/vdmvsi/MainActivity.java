@@ -151,64 +151,66 @@ public class MainActivity extends AppCompatActivity {
 //        }
         ChatPubNubObj chatObj = JsonCommon.getMessageChatFromPubNub(msg);
         Log.v("type",String.valueOf(chatObj.getType()));
-        if(chatObj.getType() == 4){
-            Intent  resultIntent = new Intent(this, ChatActivity.class);
-            resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
-            resultIntent.setAction(Intent.ACTION_MAIN);
-            resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
-                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
-            NotificationCompat.Builder mNotifyBuilder;
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(!chatObj.getUsers().equals(dataStoreApp.getUserName())) {
+            if (chatObj.getType() == 4) {
+                Intent resultIntent = new Intent(this, ChatActivity.class);
+                resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
+                resultIntent.setAction(Intent.ACTION_MAIN);
+                resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                        resultIntent, PendingIntent.FLAG_ONE_SHOT);
+                NotificationCompat.Builder mNotifyBuilder;
+                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            mNotifyBuilder = new NotificationCompat.Builder(this)
-                    .setContentTitle(chatObj.getTitle())
-                    .setSmallIcon(R.drawable.ic_avatar)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar))
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(TextUtils.isEmpty(chatObj.getContent())?"You've received new message.":chatObj.getContent()));
-            // Set pending intent
-            mNotifyBuilder.setContentIntent(resultPendingIntent);
-            // Set Vibrate, Sound and Light
-            int defaults = 0;
-            defaults = defaults | Notification.DEFAULT_LIGHTS;
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
-            defaults = defaults | Notification.DEFAULT_SOUND;
-            mNotifyBuilder.setDefaults(defaults);
-            // Set the content for Notification
-            mNotifyBuilder.setContentText(TextUtils.isEmpty(chatObj.getContent())?"New message":chatObj.getContent());
-            // Set autocancel
-            mNotifyBuilder.setAutoCancel(true);
-            // Post a notification
-            mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-        }else{
-            Intent  resultIntent = new Intent(this, MainActivity.class);
-            resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
-            resultIntent.setAction(Intent.ACTION_MAIN);
-            resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
-                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
-            NotificationCompat.Builder mNotifyBuilder;
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotifyBuilder = new NotificationCompat.Builder(this)
+                        .setContentTitle(chatObj.getTitle())
+                        .setSmallIcon(R.drawable.ic_avatar)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(TextUtils.isEmpty(chatObj.getContent()) ? "You've received new message." : chatObj.getContent()));
+                // Set pending intent
+                mNotifyBuilder.setContentIntent(resultPendingIntent);
+                // Set Vibrate, Sound and Light
+                int defaults = 0;
+                defaults = defaults | Notification.DEFAULT_LIGHTS;
+                defaults = defaults | Notification.DEFAULT_VIBRATE;
+                defaults = defaults | Notification.DEFAULT_SOUND;
+                mNotifyBuilder.setDefaults(defaults);
+                // Set the content for Notification
+                mNotifyBuilder.setContentText(TextUtils.isEmpty(chatObj.getContent()) ? "New message" : chatObj.getContent());
+                // Set autocancel
+                mNotifyBuilder.setAutoCancel(true);
+                // Post a notification
+                mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+            } else {
+                Intent resultIntent = new Intent(this, MainActivity.class);
+                resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
+                resultIntent.setAction(Intent.ACTION_MAIN);
+                resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                        resultIntent, PendingIntent.FLAG_ONE_SHOT);
+                NotificationCompat.Builder mNotifyBuilder;
+                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            mNotifyBuilder = new NotificationCompat.Builder(this)
-                    .setContentTitle(chatObj.getTitle())
-                    .setSmallIcon(R.drawable.ic_avatar)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar))
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(TextUtils.isEmpty(chatObj.getContent())?"You've received new message.":chatObj.getContent()));
-            // Set pending intent
-            mNotifyBuilder.setContentIntent(resultPendingIntent);
-            // Set Vibrate, Sound and Light
-            int defaults = 0;
-            defaults = defaults | Notification.DEFAULT_LIGHTS;
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
-            defaults = defaults | Notification.DEFAULT_SOUND;
-            mNotifyBuilder.setDefaults(defaults);
-            // Set the content for Notification
-            mNotifyBuilder.setContentText(TextUtils.isEmpty(chatObj.getContent())?"New message":chatObj.getContent());
-            // Set autocancel
-            mNotifyBuilder.setAutoCancel(true);
-            // Post a notification
-            mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+                mNotifyBuilder = new NotificationCompat.Builder(this)
+                        .setContentTitle(chatObj.getTitle())
+                        .setSmallIcon(R.drawable.ic_avatar)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(TextUtils.isEmpty(chatObj.getContent()) ? "You've received new message." : chatObj.getContent()));
+                // Set pending intent
+                mNotifyBuilder.setContentIntent(resultPendingIntent);
+                // Set Vibrate, Sound and Light
+                int defaults = 0;
+                defaults = defaults | Notification.DEFAULT_LIGHTS;
+                defaults = defaults | Notification.DEFAULT_VIBRATE;
+                defaults = defaults | Notification.DEFAULT_SOUND;
+                mNotifyBuilder.setDefaults(defaults);
+                // Set the content for Notification
+                mNotifyBuilder.setContentText(TextUtils.isEmpty(chatObj.getContent()) ? "New message" : chatObj.getContent());
+                // Set autocancel
+                mNotifyBuilder.setAutoCancel(true);
+                // Post a notification
+                mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+            }
         }
 
 
@@ -216,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        unSubcribeMychannel(Config.startChannelName + dataStoreApp.getUserName());
+        unSubcribeMychannel(Config.CHANNEL_NOTIFICATION);
         super.onDestroy();
     }
     public static void unSubcribeMychannel(String myChannel){
