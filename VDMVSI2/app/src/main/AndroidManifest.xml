@@ -48,7 +48,7 @@
         <activity
             android:name="hao.bk.com.chat.CreateProjectActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize|stateUnchanged|stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden|stateUnchanged|adjustResize"></activity>
 
         <activity
             android:name="hao.bk.com.comment.CommentActivity"

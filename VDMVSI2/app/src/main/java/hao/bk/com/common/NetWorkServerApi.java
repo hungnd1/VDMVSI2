@@ -29,6 +29,10 @@ public interface NetWorkServerApi {
     public Call<JsonObject> addNewProject(@FieldMap Map<String, String> users);
 
     @FormUrlEncoded
+    @POST("project_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=editProject")
+    public Call<JsonObject> editProject(@FieldMap Map<String, String> users);
+
+    @FormUrlEncoded
     @POST("mess_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=getListMessUser")
     public Call<JsonObject> getChatMessageTwoUser(@FieldMap Map<String, String> users);
 

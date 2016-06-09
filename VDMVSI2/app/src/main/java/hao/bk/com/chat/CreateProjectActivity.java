@@ -65,6 +65,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             myObj = new CoporateNewsObj();
+            myObj.setId(extras.getInt(Config.PROJECT_ID, 0));
             myObj.setTitle(extras.getString(Config.PROJECT_TITLE, ""));
             myObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
             myObj.setFromDate(extras.getLong(Config.PROJECT_FDATE, 0));
@@ -190,7 +191,6 @@ public class CreateProjectActivity extends AppCompatActivity {
 
     private void showInfo() {
         if (myObj != null){
-            btnCreateNew.setText(getString(R.string.txt_edit_proj));
             edtTitleProject.setText(myObj.getTitle());
             edtContent.setText(myObj.getContent());
             btnStartDate.setText(HViewUtils.getTimeViaMiliseconds(myObj.getFromDate()));
@@ -243,7 +243,8 @@ public class CreateProjectActivity extends AppCompatActivity {
         users.put("txt_content", edtContent.getText().toString());
         users.put("txt_fdate", btnStartDate.getText().toString());
         users.put("txt_edate", btnEndate.getText().toString());
-        Call<JsonObject> call = serverNetWorkAPI.addNewProject(users);
+        if (myObj!=null) users.put("txt_id", myObj.getId()+"");
+        Call<JsonObject> call = myObj!=null ? serverNetWorkAPI.editProject(users) : serverNetWorkAPI.addNewProject(users);
         call.enqueue(new Callback<JsonObject>(){
 
             @Override
@@ -274,7 +275,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         });
     }
     public void addMyProjectSuccess(){
-        toastUtil.showToast(getString(R.string.txt_success_add_project));
+        toastUtil.showToast(getString(myObj==null? R.string.txt_success_add_project : R.string.txt_success_edit_project));
         this.onBackPressed();
     }
 }

@@ -67,6 +67,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         }catch (Exception e){
         }
         tvIntros.setText(newsObj.getIntros());
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setDefaultFontSize(13);
         webView.loadData("<style>img{display: inline; height: auto; max-width: 100%;}</style>"+newsObj.getContent(), "text/html; charset=utf-8", "utf-8");
     }
     @Override

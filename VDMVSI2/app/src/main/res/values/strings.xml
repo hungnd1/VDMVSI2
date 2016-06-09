@@ -45,7 +45,7 @@
     <string name="tab_coporate">Hợp tác</string>
     <string name="tab_chat">Tin nhắn</string>
     <string name="tab_news">Bản tin</string>
-    <string name="tab_trade">Bản tin</string>
+    <string name="tab_trade">Giao thương</string>
     <string name="txt_back">Đóng</string>
     <string name="tab_more">Thêm</string>
 
@@ -106,7 +106,7 @@
     <string name="txt_end_date_pro">Ngày kết thúc dự án</string>
     <string name="txt_c_date_pro">Ngày tạo dự án</string>
     <string name="txt_content">Nội dung</string>
-    <string name="txt_create_new">Tạo mới dự án</string>
+    <string name="txt_create_new">Xong</string>
     <string name="txt_edit_proj">Hoàn tất sửa</string>
 
     <string name="txt_old_password">Mật khẩu cũ</string>
@@ -115,6 +115,7 @@
     <string name="txt_renew_password">Nhập lại mật khẩu mới</string>
     <string name="txt_change_pass_success">Thay đổi mật khẩu thành công!</string>
     <string name="txt_success_add_project">Tạo dự án thành công</string>
+    <string name="txt_success_edit_project">Sửa dự án thành công</string>
 
     <!-- dialog call-->
     <string name="txt_message">Bạn có muốn gọi </string>

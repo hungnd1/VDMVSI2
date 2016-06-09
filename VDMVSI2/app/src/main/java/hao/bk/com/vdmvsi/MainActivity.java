@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         vToolBar = new ViewToolBar(this, (View)findViewById(R.id.container_main));
         edtSearch = vToolBar.getEdtSearch();
         mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.setTextAppearance(R.style.TextAppearance_baseText);
         mBottomBar.setItemsFromMenu(R.menu.bottombar_menu, new OnMenuTabClickListener() {
             @Override
             public void onMenuTabSelected(@IdRes int menuItemId) {

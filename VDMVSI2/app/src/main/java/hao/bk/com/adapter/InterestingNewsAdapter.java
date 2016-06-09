@@ -109,7 +109,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
     @Override
     public void filter(CharSequence cs) {
         listNews.clear();
-        listNews.addAll(filter.filter(cs));
+        if (filter != null) listNews.addAll(filter.filter(cs));
         notifyDataSetChanged();
     }
 

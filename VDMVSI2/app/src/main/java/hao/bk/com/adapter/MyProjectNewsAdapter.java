@@ -130,6 +130,7 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
                 try {
                     Intent intent = new Intent(context, CreateProjectActivity.class);
                     CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                    intent.putExtra(Config.PROJECT_ID, pb.getId());
                     intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                     intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                     intent.putExtra(Config.PROJECT_CARID, pb.getCarId());
