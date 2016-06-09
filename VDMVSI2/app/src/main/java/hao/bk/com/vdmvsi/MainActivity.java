@@ -143,14 +143,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void sendNotification(String msg) {
-        Log.d("abc",dataStoreApp.getChatActivityShowing()+"");
-        if(dataStoreApp.getChatActivityShowing()){
-            sendMessgeToChatActivity(msg);
-            return;
-        }
         ChatPubNubObj chatObj = JsonCommon.getMessageChatFromPubNub(msg);
-        Log.v("username",chatObj.getUsers()+"   "+dataStoreApp.getUserName());
         if(!chatObj.getFrom().equals(dataStoreApp.getUserName())) {
+            if(dataStoreApp.getChatActivityShowing()){
+                sendMessgeToChatActivity(msg);
+                return;
+            }
             if (chatObj.getType() == 4 ) {
                 Intent resultIntent = new Intent(this, ChatActivity.class);
                 resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
