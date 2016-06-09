@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity {
 //            return;
 //        }
         ChatPubNubObj chatObj = JsonCommon.getMessageChatFromPubNub(msg);
-        Log.v("type",String.valueOf(chatObj.getType()));
-        if(!chatObj.getUsers().equals(dataStoreApp.getUserName())) {
-            if (chatObj.getType() == 4) {
+        Log.v("username",chatObj.getUsers()+"   "+dataStoreApp.getUserName());
+        if(!chatObj.getFrom().equals(dataStoreApp.getUserName())) {
+            if (chatObj.getType() == 4 ) {
                 Intent resultIntent = new Intent(this, ChatActivity.class);
                 resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
                 resultIntent.setAction(Intent.ACTION_MAIN);
