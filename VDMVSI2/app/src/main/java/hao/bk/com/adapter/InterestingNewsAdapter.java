@@ -146,7 +146,6 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                     if(HViewUtils.isFastDoubleClick())
                         return;
                     likeNews(index);
-                    sendNotification("Success");
                 }
             });
             btnComment = (Button)itemView.findViewById(R.id.btn_comment);

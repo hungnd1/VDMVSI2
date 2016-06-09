@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             mNotifyBuilder.setAutoCancel(true);
             // Post a notification
             mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-        }else if(chatObj.getType() == 2 ){
+        }else{
             Intent  resultIntent = new Intent(this, MainActivity.class);
             resultIntent.putExtra(Config.CHAT_PUBNUB, msg);
             resultIntent.setAction(Intent.ACTION_MAIN);
