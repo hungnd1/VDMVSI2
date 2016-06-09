@@ -102,7 +102,7 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
     @Override
     public void filter(CharSequence cs) {
         listNews.clear();
-        listNews.addAll(filter.filter(cs));
+        if (filter!=null) listNews.addAll(filter.filter(cs));
         notifyDataSetChanged();
     }
 

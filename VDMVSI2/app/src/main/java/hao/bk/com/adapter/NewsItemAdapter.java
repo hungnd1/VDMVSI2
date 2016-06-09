@@ -99,11 +99,12 @@ public class NewsItemAdapter extends  RecyclerView.Adapter<NewsItemAdapter.ViewH
             // show tin tuc chi tiet
             try {
                 Intent intent = new Intent(context, NewsDetailActivity.class);
-                NewsObj obj = listNews.get(index);
+                NewsVsiObj obj = (NewsVsiObj) listNews.get(index);
                 intent.putExtra(Config.NEWS_TITLE, obj.getTitle());
                 intent.putExtra(Config.NEWS_INTRO, obj.getIntros());
                 intent.putExtra(Config.NEWS_CONTENT, obj.getContent());
                 intent.putExtra(Config.NEWS_IMG, obj.getSetUrlNew());
+                intent.putExtra(Config.NEWS_TIME, obj.getcDate());
                 context.startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
