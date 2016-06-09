@@ -155,7 +155,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                     if(HViewUtils.isFastDoubleClick())
                         return;
                     Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
-                    intent.putExtra("id",index);
+                    intent.putExtra("project_id",index);
                     context.startActivity(intent);
                 }
             });
