@@ -47,6 +47,10 @@ public interface NetWorkServerApi {
     @GET("api/project_api.php")
     public Call<JsonObject> getNews(@QueryMap Map<String, String> maps);
 
+    @GET("api/comment_api.php")
+    public Call<JsonObject> getCommentProject(@QueryMap Map<String, String> maps);
+
+
     @GET("api/project_api.php")
     public Call<JsonObject> runCareProject(@QueryMap Map<String, String> maps);
     @GET("api/project_api.php")
@@ -64,4 +68,7 @@ public interface NetWorkServerApi {
     @GET("api/mess_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=getListLateMess")
     public Call<JsonObject> getLastMessage(@QueryMap Map<String, String> maps);
 
+    @FormUrlEncoded
+    @POST("comment_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=addCommentProject")
+    public Call<JsonObject> addComment(@FieldMap Map<String, String> comment);
 }

@@ -114,6 +114,8 @@ public class Config {
     public static final String getListCare = "getListCare";
     public static final String careProject = "careProject";
     public static final String cancelCareProject = "cancelCareProject";
+    public static final String getListCommentProject = "getCommentProject";
+    public static final String addComment = "addCommentProject";
     public static final String CHAT_PUBNUB = "CHAT_PUBNUB";
     // Chat tab
     public static final String LAST_MSG_TAB = "LAST_MSG_TAB";
@@ -160,4 +162,8 @@ public class Config {
     public static final String PROJECT_FDATE = "projectFdate";
     public static final String PROJECT_EDATE = "projectEdate";
     public static final String PROJECT_CARID = "projectCarId";
+
+    //comment
+    public static final String Project_id = "project_id";
+    public static final String Username = "username";
 }

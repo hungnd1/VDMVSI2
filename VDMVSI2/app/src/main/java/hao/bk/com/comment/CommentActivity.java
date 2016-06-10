@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,24 +25,54 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.JsonObject;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import hao.bk.com.common.JsonCommon;
+import hao.bk.com.common.NetWorkServerApi;
+import hao.bk.com.common.ToastUtil;
+import hao.bk.com.common.UtilNetwork;
+import hao.bk.com.config.Config;
 import hao.bk.com.customview.MyProgressDialog;
+import hao.bk.com.models.Comment;
+import hao.bk.com.models.IFilter;
+import hao.bk.com.models.NewsObj;
 import hao.bk.com.models.OnLoadMoreListener;
 import hao.bk.com.models.User;
+import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.MainActivity;
 import hao.bk.com.vdmvsi.R;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Url;
 
 /**
  * Created by HungChelsea on 06-Jun-16.
  */
 public class CommentActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private List<User> mUsers = new ArrayList<>();
+    public RecyclerView.Adapter adapter;
+    private ArrayList<Comment> mUsers = new ArrayList<>();
+    private static ArrayList<Comment> listNews = new ArrayList<>();
+    private ArrayList<Comment> listComment;
     private UserAdapter mUserAdapter;
     Toolbar toolbar;
+    ToastUtil toastUtil;
+    Comment mycomment = null;
     MyProgressDialog mpdl;
+    ImageButton btn_comment;
+    EditText edt_comment;
 
     public void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -50,88 +82,68 @@ public class CommentActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CommentActivity.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CommentActivity.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
         });
+
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+//        Log.v("extras",extras+"");
+//        Log.v("aaaa",extras.getString(Config.Project_id));
+//        Log.v("aaaaa", extras.getString(Config.Username));
 
+        if (extras != null) {
+            mycomment = new Comment();
+            mycomment.setPar_id(extras.getInt("project_id", 0));
+            mycomment.setUsername(extras.getString(Config.Username, ""));
+        }
+        Log.v("comment",mycomment.getPar_id()+"");
+//        Toast.makeText(getBaseContext(),extras.getString(Config.Project_id),Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_comment);
+        btn_comment = (ImageButton) findViewById(R.id.imb_send_comment);
+        edt_comment = (EditText) findViewById(R.id.edt_chat_comment);
         initToolBar();
+        runGetNews("1");
+//        try {
+//            OkHttpClient client = new OkHttpClient();
+//            URL url = new URL(String.format("http://vsi.vietitech.com/api/comment_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=getCommentProject&project_id=1"));
+//            Request request = new Request.Builder()
+//                    .url(url)
+//                    .build();
+//            okhttp3.Response response = client.newCall(request).execute();
+//            Log.v("response",response.body().toString());
+//        }catch (IOException ex){
+//            ex.printStackTrace();
+//        }
+
+        Log.v("message", listComment + "");
+//        Toast.makeText(this, listNews.get(0).getContent(), Toast.LENGTH_LONG).show();
 //        mpdl = new MyProgressDialog(getBaseContext());
 //        mpdl.showLoading(getString(R.string.txt_loading));
 //        mToolbar = (Toolbar) findViewById(R.id.toolbar);
 //        mToolbar.setTitle("LoadMoreRecycleView");
-
-        for (int i = 0; i < 15; i++) {
-            User user = new User();
-            user.setName("Name " + i);
-            user.setEmail("alibaba" + i + "@gmail.com");
-            mUsers.add(user);
-        }
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mUserAdapter = new UserAdapter();
-        mRecyclerView.setAdapter(mUserAdapter);
-
-        mUserAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                Log.e("haint", "Load More");
-                mUsers.add(null);
-                mUserAdapter.notifyItemInserted(mUsers.size() - 1);
-
-                //Load more data for reyclerview
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e("haint", "Load More 2");
-
-                        //Remove loading item
-                        mUsers.remove(mUsers.size() - 1);
-                        mUserAdapter.notifyItemRemoved(mUsers.size());
-
-                        //Load data
-//                        int index = mUsers.size();
-//                        mUsers.size() = 30;
-
-                        int index = 15;
-                        int j = index;
-                        int end = index + 5;
-                        for (int i = index; i < end; i++) {
-                            User user = new User();
-                            user.setName("Name " + i);
-                            user.setEmail("mkkkkkk" + i + "@gmail.com");
-                            mUsers.add(user);
-                            j++;
-                        }
-                        if (j != end) {
-                            mUserAdapter.notifyDataSetChanged();
-                            mUserAdapter.setLoaded();
-                        }
-                    }
-                }, 2000);
-            }
-        });
-        ImageButton btn_comment = (ImageButton) findViewById(R.id.imb_send);
-        final EditText edt_comment = (EditText) findViewById(R.id.edt_chat);
-        assert btn_comment != null;
         btn_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (edt_comment.getText().toString().trim() != null && edt_comment.getText().toString().trim() != "") {
-                    User user = new User();
-                    user.setName("hungchelsea");
-                    user.setEmail(edt_comment.getText().toString().trim());
+                if (edt_comment.getText().toString().trim() != null && !edt_comment.getText().toString().trim().equals("")) {
+                    Comment user = new Comment();
+                    user.setUsername(mycomment.getUsername());
+                    user.setContent(edt_comment.getText().toString().trim());
                     mUsers.add(0, user);
+                    Map users = new HashMap();
+                    if (mycomment != null){
+                        users.put("username",mycomment.getUsername());
+                        users.put("project_id",mycomment.getPar_id()+"");
+                        users.put("content",edt_comment.getText().toString().trim());
+                    }
+                    Log.v("username", users.get("content") + "");
+                    addComment(users);
                 } else {
                     Toast.makeText(getBaseContext(), "Bạn chưa nhập bình luận", Toast.LENGTH_SHORT).show();
                 }
@@ -139,6 +151,165 @@ public class CommentActivity extends AppCompatActivity {
                 edt_comment.setText("");
                 mUserAdapter.notifyDataSetChanged();
                 mUserAdapter.setLoaded();
+            }
+        });
+
+    }
+
+
+    public void runGetNews(String id) {
+//        mpdl.showLoading(getString(R.string.txt_loading));
+        Log.v("1a", "1");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.BASE_URL_GET)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Log.v("1a", "2");
+        // Khởi tạo các cuộc gọi cho Retrofit 2.0
+        NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("publicKey", Config.PUBLIC_KEY);
+        hashMap.put("action", Config.getListCommentProject);
+        hashMap.put("project_id", mycomment.getPar_id()+"");
+        Log.v("1a", "3");
+        Call<JsonObject> call = stackOverflowAPI.getCommentProject(hashMap);
+        // Cuộc gọi bất đồng bọ (chạy dưới background)
+        Log.v("1a", call + "");
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+//                mpdl.hideLoading();
+                try {
+                    if (response.body().has(Config.status_response)) {
+
+                        boolean status = response.body().get(Config.status_response).getAsBoolean();
+                        Log.v("call", status + "");
+                        if (!status) {
+//                            notifyDataSetChanged();
+                            return;
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.v("1a", "5");
+                    toastUtil.showToast(getString(R.string.txt_error_common));
+//                    notifyDataSetChanged();
+                    return;
+                }
+                try {
+                    listNews.clear();
+                    listNews.addAll(JsonCommon.getComment(response.body().getAsJsonArray("data")));
+                    CommentActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int sizeofComment = 10;
+                            if (listNews.size() < 10) {
+                                sizeofComment = listNews.size();
+                            }
+                            for (int i = 0; i < sizeofComment; i++) {
+                                Comment comment = new Comment();
+                                comment.setUsername(listNews.get(i).getUsername());
+                                comment.setContent(listNews.get(i).getContent());
+                                mUsers.add(comment);
+                            }
+                            Log.v("check", mUsers + "");
+
+                            mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
+
+                            mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            mUserAdapter = new UserAdapter();
+                            mRecyclerView.setAdapter(mUserAdapter);
+
+                            mUserAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+                                @Override
+                                public void onLoadMore() {
+                                    Log.e("haint", "Load More");
+                                    mUsers.add(null);
+                                    mUserAdapter.notifyItemInserted(mUsers.size() - 1);
+
+                                    //Load more data for reyclerview
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Log.e("haint", "Load More 2");
+
+                                            //Remove loading item
+                                            mUsers.remove(mUsers.size() - 1);
+                                            mUserAdapter.notifyItemRemoved(mUsers.size());
+
+                                            //Load data
+//                        int index = mUsers.size();
+//                        mUsers.size() = 30;
+
+                                            int index = 11;
+                                            int j = index;
+                                            int end = listNews.size();
+                                            for (int i = index; i < end; i++) {
+                                                Comment user = new Comment();
+                                                user.setUsername(listNews.get(i).getUsername());
+                                                user.setContent(listNews.get(i).getContent());
+                                                mUsers.add(user);
+                                                j++;
+                                            }
+                                            if (j != end) {
+                                                mUserAdapter.notifyDataSetChanged();
+                                                mUserAdapter.setLoaded();
+                                            }
+                                        }
+                                    }, 2000);
+                                }
+                            });
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.v("1a", "6");
+                }
+//                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("CallBack", " Throwable is " + t);
+                Log.v("1a", "7");
+//                mpdl.hideLoading();
+//                notifyDataSetChanged();
+            }
+        });
+        Log.v("1a", "8");
+    }
+
+    public void addComment(Map comment) {
+        Log.v("logcomment","1");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.BASE_URL_REGISTER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
+        Call<JsonObject> call = serverNetWorkAPI.addComment(comment);
+        call.enqueue(new Callback<JsonObject>() {
+
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Util.LOGD("20_5", response.body().toString());
+                Log.v("test", response.body().toString());
+                try {
+                    boolean status = response.body().get(Config.status_response).getAsBoolean();
+                    if (!status) {
+//                        toastUtil.showToast(getString(R.string.txt_error_common));
+                        return;
+                    } else {
+                        return;
+                    }
+                } catch (Exception e) {
+//                    toastUtil.showToast(getString(R.string.txt_error_common));
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.v("erro_create", t.toString());
+//                toastUtil.showToast(getString(R.string.txt_error_common));
+                return;
             }
         });
     }
@@ -230,10 +401,10 @@ public class CommentActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof UserViewHolder) {
-                User user = mUsers.get(position);
+                Comment user = mUsers.get(position);
                 UserViewHolder userViewHolder = (UserViewHolder) holder;
-                userViewHolder.tvName.setText(user.getName());
-                userViewHolder.tvEmailId.setText(user.getEmail());
+                userViewHolder.tvName.setText(user.getUsername());
+                userViewHolder.tvEmailId.setText(user.getContent());
             } else if (holder instanceof LoadingViewHolder) {
                 LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
                 loadingViewHolder.progressBar.setIndeterminate(true);
@@ -248,6 +419,8 @@ public class CommentActivity extends AppCompatActivity {
         public void setLoaded() {
             isLoading = false;
         }
+
+
     }
 
 

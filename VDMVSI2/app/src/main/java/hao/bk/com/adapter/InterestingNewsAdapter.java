@@ -12,11 +12,13 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.pubnub.api.PubnubError;
@@ -155,8 +157,13 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                     if(HViewUtils.isFastDoubleClick())
                         return;
                     Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
-                    intent.putExtra("project_id",index);
+                    CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                    intent.putExtra(Config.Project_id,pb.getCarId());
+                    intent.putExtra(Config.Username,dataStoreApp.getUserName());
                     context.startActivity(intent);
+//                    Log.v("index",index+"");
+//                    Log.v("index",pb.getCarId()+"");
+//                    toastUtil.showToast(index+"");
                 }
             });
             btnCall = (Button)itemView.findViewById(R.id.btn_call);

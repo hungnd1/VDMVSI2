@@ -14,6 +14,7 @@ import java.util.Map;
 
 import hao.bk.com.models.ChatObj;
 import hao.bk.com.models.ChatPubNubObj;
+import hao.bk.com.models.Comment;
 import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.LCareObj;
 import hao.bk.com.models.MemberVsiObj;
@@ -526,5 +527,52 @@ public class JsonCommon {
 
         }
         return chatObj;
+    }
+
+    public static ArrayList<Comment> getComment(JsonArray jsonArray) {
+        ArrayList<Comment> list = new ArrayList<>();
+        if (jsonArray == null)
+            return list;
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject object = (JsonObject) jsonArray.get(i);
+            if (object == null)
+                continue;
+            Comment comment = new Comment();
+            if (object.has("id")) {
+                try {
+                    comment.setId(object.get("id").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("par_id")) {
+                try {
+                    comment.setPar_id(object.get("par_id").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("username")) {
+                try {
+                    comment.setUsername(object.get("username").getAsString());
+                } catch (Exception e) {
+
+                }
+            }
+            if (object.has("content")) {
+                try {
+                    comment.setContent(object.get("content").getAsString());
+                } catch (Exception e) {
+
+                }
+            }
+            if (object.has("avata")) {
+                try {
+                    comment.setAvata(object.get("avata").getAsString());
+                } catch (Exception e) {
+                }
+            }
+
+            list.add(comment);
+        }
+        return list;
     }
 }

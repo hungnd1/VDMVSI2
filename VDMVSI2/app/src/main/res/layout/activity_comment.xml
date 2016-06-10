@@ -35,7 +35,7 @@
         android:weightSum="5">
 
         <ImageButton
-            android:id="@+id/imb_send"
+            android:id="@+id/imb_send_comment"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -45,11 +45,11 @@
             android:src="@drawable/ic_send_message" />
 
         <EditText
-            android:id="@+id/edt_chat"
+            android:id="@+id/edt_chat_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/imb_send"
+            android:layout_toLeftOf="@+id/imb_send_comment"
             android:background="@null"
             android:hint="@string/txt_input_comment"
             android:inputType="textCapSentences" />
