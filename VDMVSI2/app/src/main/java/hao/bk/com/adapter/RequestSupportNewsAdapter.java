@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import hao.bk.com.chat.CreateSupportActivity;
 import hao.bk.com.common.NewsFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
@@ -30,13 +31,15 @@ import hao.bk.com.vdmvsi.R;
 /**
  * Created by HungChelsea on 10-Jun-16.
  */
-public class RequestSupportNewsAdapter extends  RecyclerView.Adapter<RequestSupportNewsAdapter.ViewHolder> implements IFilter {
+public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSupportNewsAdapter.ViewHolder> implements IFilter {
     static ArrayList<NewsObj> listNews;
     public FragmentDelivery frmContainer;
     NewsFilter filter;
     public Context context;
+    int index;
     ToastUtil toastUtil;
-    public RequestSupportNewsAdapter(FragmentDelivery frmContainer, ArrayList<NewsObj> listNews){
+
+    public RequestSupportNewsAdapter(FragmentDelivery frmContainer, ArrayList<NewsObj> listNews) {
         this.listNews = listNews;
         this.frmContainer = frmContainer;
         context = frmContainer.getContext();
@@ -46,13 +49,14 @@ public class RequestSupportNewsAdapter extends  RecyclerView.Adapter<RequestSupp
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CoporateNewsObj obj = (CoporateNewsObj) listNews.get(position);
+//        Log.v("content",obj.getContent());
         if (obj.getUrlAvar() == null || obj.getUrlAvar() == "") {
             Picasso.with(context.getApplicationContext()).load(R.drawable.icon_user).transform(new CircleTransform()).into(holder.imageNews);
         } else {
             Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
         }
         holder.tvName.setText(obj.getNameUser());
-        holder.tvTime.setText("Ngày: "+ HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText("Ngày: " + HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
         holder.index = position;
@@ -65,6 +69,17 @@ public class RequestSupportNewsAdapter extends  RecyclerView.Adapter<RequestSupp
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_project_news_item, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
+    }
+
+    public void onClick(View v) {
+        try {
+            Intent intent = new Intent(context, CreateSupportActivity.class);
+            CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+            intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -84,7 +99,7 @@ public class RequestSupportNewsAdapter extends  RecyclerView.Adapter<RequestSupp
         filter = new NewsFilter(listNews);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
         TextView tvTitle;
         TextView tvName;
@@ -96,36 +111,18 @@ public class RequestSupportNewsAdapter extends  RecyclerView.Adapter<RequestSupp
 
         ViewHolder(final View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv_news);
-            imageNews = (CircleImageView)itemView.findViewById(R.id.imv_profile);
-            tvName = (TextView)itemView.findViewById(R.id.tv_name_user);
-            tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
+            cv = (CardView) itemView.findViewById(R.id.cv_news);
+            imageNews = (CircleImageView) itemView.findViewById(R.id.imv_profile);
+            tvName = (TextView) itemView.findViewById(R.id.tv_name_user);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-            tvDescription = (TextView)itemView.findViewById(R.id.tv_descript);
-            btnEdit = (Button)itemView.findViewById(R.id.btn_edit);
-            btnDel = (Button)itemView.findViewById(R.id.btn_del);
+            tvDescription = (TextView) itemView.findViewById(R.id.tv_descript);
             tvName.setOnClickListener(this);
             tvDescription.setOnClickListener(this);
-            btnEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(HViewUtils.isFastDoubleClick())
-                        return;
-//                    editNews(index);
 
-                }
-            });
-            btnDel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(HViewUtils.isFastDoubleClick())
-                        return;
-                    deleteNews(index);
-                }
-            });
         }
 
-//        public void editNews(int index){
+        //        public void editNews(int index){
 //            try {
 //                try {
 //                    Intent intent = new Intent(context, CreateProjectActivity.class);
@@ -144,7 +141,7 @@ public class RequestSupportNewsAdapter extends  RecyclerView.Adapter<RequestSupp
 //                e.printStackTrace();
 //            }
 //        }
-        public void deleteNews(int index){
+        public void deleteNews(int index) {
             listNews.remove(index);
             frmContainer.adapter.notifyDataSetChanged();
             // run code xử lý del này ở đây
@@ -153,14 +150,15 @@ public class RequestSupportNewsAdapter extends  RecyclerView.Adapter<RequestSupp
         @Override
         public void onClick(View v) {
             try {
-//                Intent intent = new Intent(context, ProjectDetailActivity.class);
-//                CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                Intent intent = new Intent(context, CreateSupportActivity.class);
+                CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
 //                intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
-//                intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                Log.v("content",pb.getContent());
 //                intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
 //                intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
 //                intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
-//                context.startActivity(intent);
+                context.startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
             }

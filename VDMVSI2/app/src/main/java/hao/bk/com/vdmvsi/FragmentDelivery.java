@@ -34,6 +34,7 @@ import hao.bk.com.common.ToastUtil;
 import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
 import hao.bk.com.customview.MyProgressDialog;
+import hao.bk.com.models.IFilter;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.models.ProductObj;
 import hao.bk.com.models.SupportObj;
@@ -154,16 +155,23 @@ public class FragmentDelivery extends Fragment {
         btnSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastUtil.showToast(getString(R.string.txt_comming_soon));
+//                toastUtil.showToast(getString(R.string.txt_comming_soon));
+                try {
+                    Intent intent = new Intent(main,CreateSupportActivity.class);
+                    main.startActivity(intent);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
         if(Config.SUPPORT_NEED_TAB.equals(curTabName)){
 //         curgetAction = Config.getRequestSupport;
-            curgetAction = Config.getNewsVsi;
+            curgetAction = Config.getProject;
             runGetNews(curgetAction);
 //            supportRequest();
-//            Log.v("listSupprot",listSupports.get(0).getContent());
+
             adapter = new RequestSupportNewsAdapter(this, listSupports);
+            Log.v("listSupprot",listSupports.size()+"");
             recyclerView.setAdapter(adapter);
 
         } else if(Config.FAIR_GOOD_TAB.equals(curTabName)) {
@@ -199,33 +207,35 @@ public class FragmentDelivery extends Fragment {
         hashMap.put("publicKey", Config.PUBLIC_KEY);
         hashMap.put("action", action);
         hashMap.put("username", dataStoreApp.getUserName());
+        Log.v("hasmap",hashMap.get("username"));
         mPdl.showLoading(getString(R.string.txt_loading));
-        Call<JsonObject> call = stackOverflowAPI.getNewsVis(hashMap);
+        Call<JsonObject> call = stackOverflowAPI.getNews(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                listSupports.clear();
+                Log.v("response", response.body().get(Config.status_response) + "");
+
                 mPdl.hideLoading();
                 try {
                     if (response.body().has(Config.status_response)) {
                         boolean status = response.body().get(Config.status_response).getAsBoolean();
+                        Log.v("status",status+"");
                         if (!status) {
                             notifyDataSetChanged();
                             return;
                         }
+//                            listSupports.clear();
+                            Log.v("log2", listSupports + "");
+                            listSupports.addAll(JsonCommon.getCoporateNews(response.body().getAsJsonArray("data")));
+                            Log.v("log1",listSupports+"");
                     }
                 } catch (Exception e) {
                     toastUtil.showToast(getString(R.string.txt_error_common));
                     notifyDataSetChanged();
                     return;
                 }
-                try {
-                    listSupports.addAll(JsonCommon.getCoporateNews(response.body().getAsJsonArray("data")));
-                    Log.v("log1",listSupports+"");
-                } catch (Exception e) {
 
-                }
                 notifyDataSetChanged();
             }
 
@@ -239,17 +249,18 @@ public class FragmentDelivery extends Fragment {
     }
 
     public void notifyDataSetChanged() {
-        if (curgetAction == Config.getNewsVsi) {
+        ((IFilter)adapter).updateFilter();
+
             adapter.notifyDataSetChanged();
             if (listSupports.size() == 0) {
                 showBtnRetry(getString(R.string.txt_server_not_data));
             }
-        } else  if (curgetAction == Config.getProduct){
-            adapter2.notifyDataSetChanged();
-            if (lisProducts.size() == 0) {
-                showBtnRetry(getString(R.string.txt_server_not_data));
-            }
-        }
+//        } else  if (curgetAction == Config.getProduct){
+//            adapter2.notifyDataSetChanged();
+//            if (lisProducts.size() == 0) {
+//                showBtnRetry(getString(R.string.txt_server_not_data));
+//            }
+//        }
     }
     public void dulieugia1(){
         lisProducts.clear();
