@@ -11,11 +11,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.ProductDetailActivity;
 import hao.bk.com.common.ToastUtil;
+import hao.bk.com.config.Config;
 import hao.bk.com.models.DeliveryObj;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.models.ProductObj;
@@ -52,8 +55,14 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.ivProduct.setImageResource(R.drawable.nom);
         ProductObj obj = listProducts.get(position);
+        try {
+            Picasso.with(context).load(obj.getUrlThumnails())
+                    .placeholder(R.drawable.nom)
+                    .into(holder.ivProduct);
+        } catch (Exception e) {
+        }
         holder.tvProductCompany.setText(obj.getCompany());
-       // holder.tvProductName.setText(obj.getName());
+        holder.tvProductName.setText(obj.getName());
         holder.index = position;
         //holder.tvDescription.setText(obj.getDescription());
     }
@@ -79,6 +88,10 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ProductDetailActivity.class);
+                    ProductObj obj = listProducts.get(index);
+                    intent.putExtra(Config.PRODUCT_COMPANY,obj.getCompany());
+                    intent.putExtra(Config.PRODUCT_NAME,obj.getName());
+                    intent.putExtra(Config.PRODUCT_THUMB,obj.getUrlThumnails());
                     context.startActivity(intent);
                 }
             });

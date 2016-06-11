@@ -11,6 +11,7 @@ import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
 import hao.bk.com.customview.ViewToolBar;
 import hao.bk.com.models.CoporateNewsObj;
+import hao.bk.com.models.ProductObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.vdmvsi.R;
 
@@ -21,7 +22,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     DataStoreApp dataStoreApp;
     ToastUtil toastUtil;
-    static CoporateNewsObj myProjectObj;
+    static ProductObj productObj;
     TextView tvTitle, tvContent, tvCdate, tvFromDate, tvEndate;
     ViewToolBar vToolBar;
     View viewRoot;
@@ -29,23 +30,20 @@ public class ProductDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project_detail);
+        setContentView(R.layout.activity_product_detail);
         dataStoreApp = new DataStoreApp(this);
         toastUtil = new ToastUtil(this);
         Bundle extras = getIntent().getExtras();
-        myProjectObj = new CoporateNewsObj();
+        productObj = new ProductObj();
         if (extras != null) {
-            myProjectObj.setTitle(extras.getString(Config.PROJECT_TITLE, ""));
-            myProjectObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
-            myProjectObj.setcDate(extras.getLong(Config.PROJECT_CDATE, 0));
-            myProjectObj.setFromDate(extras.getLong(Config.PROJECT_FDATE, 0));
-            myProjectObj.setEndDate(extras.getLong(Config.PROJECT_EDATE, 0));
+            productObj.setName(extras.getString(Config.PRODUCT_NAME, ""));
+            productObj.setCompany(extras.getString(Config.PRODUCT_COMPANY, ""));
+            productObj.setUrlThumnails(extras.getString(Config.PRODUCT_THUMB, ""));
         }
         initViews();
     }
 
     public void initViews(){
-//        tvTitle = (TextView) findViewById(R.id.tv_title);
         tvContent = (TextView) findViewById(R.id.tv_content);
         tvFromDate = (TextView) findViewById(R.id.tv_from_date);
         tvEndate = (TextView) findViewById(R.id.tv_e_date);
@@ -56,12 +54,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         showData();
     }
     private void showData(){
-        vToolBar.showTextTitle(myProjectObj.getTitle());
-        //tvTitle.setText(Html.fromHtml(getString(R.string.txt_tile_project) + "<br><font color='black'>"+myProjectObj.getTitle()+"</font>"));
-        tvContent.setText(Html.fromHtml(getString(R.string.txt_content) + "<br><font color='black'>"+myProjectObj.getContent()+"</font>"));
-        tvCdate.setText(Html.fromHtml(getString(R.string.txt_c_date_pro) + "<br><font color='black'>"+ HViewUtils.getTimeViaMiliseconds(myProjectObj.getcDate())+"</font>"));
-        tvFromDate.setText(Html.fromHtml(getString(R.string.txt_start_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getFromDate())+"</font>"));
-        tvEndate.setText(Html.fromHtml(getString(R.string.txt_end_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getEndDate())+"</font>"));
+        vToolBar.showTextTitle(productObj.getName());
     }
 
     @Override

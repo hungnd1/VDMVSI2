@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white_full"
+    android:id="@+id/container"
+    android:layout_height="match_parent"
+    android:transcriptMode="normal">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@+id/btn_back">
+
+        <LinearLayout
+            android:id="@+id/ll_input_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_item_half"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!--<TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:drawableLeft="@drawable/ic_title_project_blue"
+                android:drawablePadding="@dimen/padding_item"
+                android:layout_marginTop="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/PrimaryColor"
+                android:gravity="center_vertical"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:imeOptions="actionNext"
+                android:background="@null" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:background="@color/PrimaryColor"/>-->
+
+            <TextView
+                android:id="@+id/tv_c_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/PrimaryColor"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_date_select_blue"
+                android:background="@null"
+                android:drawablePadding="@dimen/padding_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:background="@color/PrimaryColor"/>
+
+            <TextView
+                android:id="@+id/tv_from_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/PrimaryColor"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_date_select_blue"
+                android:background="@null"
+                android:drawablePadding="@dimen/padding_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:background="@color/PrimaryColor"/>
+
+
+            <TextView
+                android:id="@+id/tv_e_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/PrimaryColor"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_date_select_blue"
+                android:background="@null"
+                android:drawablePadding="@dimen/padding_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:background="@color/PrimaryColor"/>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_item_half"
+                android:layout_marginRight="@dimen/padding_item_half"
+                android:layout_marginBottom="@dimen/padding_item_half"
+                android:textSize="@dimen/font_normal"
+                android:gravity="center_vertical"
+                android:textColor="@color/PrimaryColor"
+                android:drawableLeft="@drawable/ic_date_select_blue"
+                android:background="@null"
+                android:drawablePadding="@dimen/padding_item" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

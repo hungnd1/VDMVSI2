@@ -169,7 +169,8 @@ public class FragmentDelivery extends Fragment {
         } else if(Config.FAIR_GOOD_TAB.equals(curTabName)) {
             btnSupport.setVisibility(View.GONE);
             recyclerView.setLayoutManager(new GridLayoutManager(main,2));
-            dulieugia1();
+            curgetAction = Config.getProduct;
+            runGetNews(curgetAction);
             adapter2 = new ProductItemAdapter(this,lisProducts);
             recyclerView.setAdapter(adapter2);
         }
@@ -180,6 +181,10 @@ public class FragmentDelivery extends Fragment {
     public void runGetNews(String action) {
         if (!UtilNetwork.checkInternet(main, getString(R.string.txt_check_internet))) {
             showBtnRetry(getString(R.string.txt_check_internet));
+            return;
+        }
+        if (action == Config.getProduct){
+            dulieugia1();
             return;
         }
         lnlError.setVisibility(View.GONE);
@@ -234,17 +239,23 @@ public class FragmentDelivery extends Fragment {
     }
 
     public void notifyDataSetChanged() {
-        adapter.notifyDataSetChanged();
-        if (listSupports.size() == 0) {
-            showBtnRetry(getString(R.string.txt_server_not_data));
+        if (curgetAction == Config.getNewsVsi) {
+            adapter.notifyDataSetChanged();
+            if (listSupports.size() == 0) {
+                showBtnRetry(getString(R.string.txt_server_not_data));
+            }
+        } else  if (curgetAction == Config.getProduct){
+            adapter2.notifyDataSetChanged();
+            if (lisProducts.size() == 0) {
+                showBtnRetry(getString(R.string.txt_server_not_data));
+            }
         }
     }
     public void dulieugia1(){
         lisProducts.clear();
         for(int i = 1; i <= 10; i++){
             ProductObj obj = new ProductObj();
-            obj.setTitle("title nay:" + i);
-           // obj.setDescription("Description nay: " + i);
+            obj.setName("title nay:" + i);
             obj.setUrlThumnails("http://ithethao.com/sites/default/files/304442c800000578-3403987-image-a-32_1453064019909.jpg");
             obj.setCompany("VSI");
             lisProducts.add(obj);

@@ -107,6 +107,7 @@ public class Config {
     public static final String getProjectCare = "getProjectCare";
     public static final String getProjectItme = "getProjectItme";
     public static final String getNewsVsi = "getNewsVsi";
+    public static final String getProduct = "getProduct";
     public static final String getNewsVip = "getNewsVip";
     public static final String getNewsChuyenNganh = "getNewsChuyenNganh";
     public static final String getListLateMess = "getListLateMess";
@@ -170,4 +171,9 @@ public class Config {
     //comment
     public static final String Project_id = "project_id";
     public static final String Username = "username";
+
+    //product detail
+    public static final String PRODUCT_NAME = "productName";
+    public static final String PRODUCT_THUMB = "productThumb";
+    public static final String PRODUCT_COMPANY = "company";
 }
