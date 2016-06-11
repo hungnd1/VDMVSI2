@@ -1,40 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lnl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <Button
+        android:id="@+id/btn_support"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/padding_item_half"
+        android:background="@drawable/btn_selector_blue_border_bkg"
+        android:paddingLeft="@dimen/padding_item_half"
+        android:paddingRight="@dimen/padding_item_half"
+        android:text="@string/txt_need_support"
+        android:textAllCaps="false"
+        android:textColor="@color/PrimaryColor"
+        android:textSize="@dimen/font_small" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/btn_support"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="@dimen/padding_item_half"
-                android:layout_gravity="right"
-                android:textColor="@color/PrimaryColor"
-                android:textSize="@dimen/font_small"
-                android:textAllCaps="false"
-                android:paddingLeft="@dimen/padding_item_half"
-                android:paddingRight="@dimen/padding_item_half"
-                android:text="@string/txt_need_support"
-                android:background="@drawable/btn_selector_blue_border_bkg"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rv"
-                />
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/lnl_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_item"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/font_normal"/>
+
+        <Button
+            android:id="@+id/btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/heigh_view_nomaless"
+            android:text="@string/txt_retry"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_selector_blue_border_bkg"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/font_normal"/>
+    </LinearLayout>
 </LinearLayout>

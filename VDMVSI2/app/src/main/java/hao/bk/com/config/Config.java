@@ -117,6 +117,10 @@ public class Config {
     public static final String getListCommentProject = "getCommentProject";
     public static final String addComment = "addCommentProject";
     public static final String CHAT_PUBNUB = "CHAT_PUBNUB";
+
+    //support tab
+    public static final String getRequestSupport = "";
+
     // Chat tab
     public static final String LAST_MSG_TAB = "LAST_MSG_TAB";
     public static final String CONTACTS_TAB = "CONTACTS_TAB";

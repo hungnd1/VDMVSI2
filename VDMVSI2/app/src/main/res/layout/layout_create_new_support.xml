@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white_full"
+    android:id="@+id/container"
+    android:layout_height="match_parent"
+    android:transcriptMode="normal">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
+
+    <!-- input email - pass -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/ll_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/edt_content_support"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/padding_item_half"
+                android:drawableLeft="@drawable/ic_title_project_blue"
+                android:drawablePadding="@dimen/padding_item_half"
+                android:hint="@string/txt_tile_project"
+                android:textColorHint="@color/dark_ness_hint"
+                android:textSize="@dimen/font_normal"
+                android:gravity="center_vertical"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:imeOptions="actionNext"
+                android:background="@null"
+                android:textColor="@color/PrimaryColor" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_create_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="@string/txt_create_new"
+        android:textColor="@color/white_full"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/padding_item_half"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding_item_small"
+        android:textSize="@dimen/font_normal"/>
+
+</RelativeLayout>
