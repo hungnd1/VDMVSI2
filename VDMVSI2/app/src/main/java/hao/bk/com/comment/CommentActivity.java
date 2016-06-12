@@ -241,11 +241,6 @@ public class CommentActivity extends AppCompatActivity {
                                             //Remove loading item
                                             mUsers.remove(mUsers.size() - 1);
                                             mUserAdapter.notifyItemRemoved(mUsers.size());
-
-                                            //Load data
-//                        int index = mUsers.size();
-//                        mUsers.size() = 30;
-
                                             int index = 11;
                                             int j = index;
                                             int end = listNews.size();
