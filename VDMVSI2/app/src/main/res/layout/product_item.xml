@@ -30,27 +30,48 @@
                 android:layout_alignParentLeft="true"
                 android:id="@+id/img_product"
                 android:layout_margin="@dimen/padding_item_medium"
-                android:layout_above="@+id/tv_product_name"
+                android:layout_above="@+id/tv_product_code"
                 android:layout_alignParentTop="true" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_item_medium"
+                android:layout_marginLeft="@dimen/padding_item_medium"
+                android:layout_marginRight="@dimen/padding_item_medium"
+                android:layout_above="@+id/tv_product_name"
+                android:lines="1"
+                android:ellipsize="end"
+                android:id="@+id/tv_product_code"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/font_normal"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_item_medium"
-                android:layout_above="@+id/tv_product_company"
+                android:layout_above="@+id/divider"
                 android:text="product name product name product name product name product name product name product name product name product name product nameproduct name product name "
-                android:lines="3"
+                android:lines="2"
                 android:ellipsize="end"
                 android:id="@+id/tv_product_name"
                 android:textColor="@color/black_full"
                 android:textSize="@dimen/font_normal"/>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_small"
+                android:background="@color/divider_color"
+                android:layout_marginTop="@dimen/padding_item_medium"
+                android:layout_above="@+id/tv_product_company"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:lines="3"
-                android:layout_margin="@dimen/padding_item_medium"
+                android:layout_marginLeft="@dimen/padding_item_medium"
+                android:layout_marginRight="@dimen/padding_item_medium"
                 android:id="@+id/tv_product_company"
                 android:text="company"
                 android:textSize="@dimen/font_normal"

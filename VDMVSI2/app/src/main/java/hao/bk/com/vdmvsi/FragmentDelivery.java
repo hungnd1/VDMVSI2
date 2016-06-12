@@ -66,16 +66,18 @@ public class FragmentDelivery extends Fragment {
     MyProgressDialog mPdl;
     Button btnSupport;
     public ToastUtil toastUtil;
-    ArrayList<ProductObj> lisProducts =  new ArrayList<>();
+    ArrayList<ProductObj> lisProducts = new ArrayList<>();
     ArrayList<NewsObj> listSupports = new ArrayList<>();
     Button btn_addSupport;
-    public FragmentDelivery(){
+
+    public FragmentDelivery() {
 
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        main = (MainActivity)context;
+        main = (MainActivity) context;
         toastUtil = new ToastUtil(context);
         dataStoreApp = main.dataStoreApp;
         mPdl = new MyProgressDialog(context);
@@ -96,7 +98,8 @@ public class FragmentDelivery extends Fragment {
         initViews(content);
         return content;
     }
-    public void initViews(View v){
+
+    public void initViews(View v) {
         if (dataStoreApp == null) {
             dataStoreApp = new DataStoreApp(getContext());
         }
@@ -107,7 +110,7 @@ public class FragmentDelivery extends Fragment {
         lnlError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(HViewUtils.isFastDoubleClick())
+                if (HViewUtils.isFastDoubleClick())
                     return;
                 runGetNews(curgetAction);
             }
@@ -151,35 +154,35 @@ public class FragmentDelivery extends Fragment {
             }
         });
 
-        btnSupport = (Button)v.findViewById(R.id.btn_support);
+        btnSupport = (Button) v.findViewById(R.id.btn_support);
         btnSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                toastUtil.showToast(getString(R.string.txt_comming_soon));
                 try {
-                    Intent intent = new Intent(main,CreateSupportActivity.class);
+                    Intent intent = new Intent(main, CreateSupportActivity.class);
                     main.startActivity(intent);
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         });
-        if(Config.SUPPORT_NEED_TAB.equals(curTabName)){
+        if (Config.SUPPORT_NEED_TAB.equals(curTabName)) {
 //         curgetAction = Config.getRequestSupport;
             curgetAction = Config.getRequestSupport;
             runGetNews(curgetAction);
 //            supportRequest();
 
             adapter = new RequestSupportNewsAdapter(this, listSupports);
-            Log.v("listSupprot",listSupports.size()+"");
+            Log.v("listSupprot", listSupports.size() + "");
             recyclerView.setAdapter(adapter);
 
-        } else if(Config.FAIR_GOOD_TAB.equals(curTabName)) {
+        } else if (Config.FAIR_GOOD_TAB.equals(curTabName)) {
             btnSupport.setVisibility(View.GONE);
-            recyclerView.setLayoutManager(new GridLayoutManager(main,2));
+            recyclerView.setLayoutManager(new GridLayoutManager(main, 2));
             curgetAction = Config.getProduct;
             runGetNews(curgetAction);
-            adapter2 = new ProductItemAdapter(this,lisProducts);
+            adapter2 = new ProductItemAdapter(this, lisProducts);
             recyclerView.setAdapter(adapter2);
         }
 
@@ -191,8 +194,8 @@ public class FragmentDelivery extends Fragment {
             showBtnRetry(getString(R.string.txt_check_internet));
             return;
         }
-        if (action == Config.getProduct){
-            dulieugia1();
+        if (action == Config.getProduct) {
+            dulieugia1(null);
             return;
         }
         lnlError.setVisibility(View.GONE);
@@ -207,7 +210,7 @@ public class FragmentDelivery extends Fragment {
         hashMap.put("publicKey", Config.PUBLIC_KEY);
         hashMap.put("action", action);
         hashMap.put("username", dataStoreApp.getUserName());
-        Log.v("hasmap",hashMap.get("username"));
+        Log.v("hasmap", hashMap.get("username"));
         mPdl.showLoading(getString(R.string.txt_loading));
         Call<JsonObject> call = stackOverflowAPI.getSupport(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
@@ -220,15 +223,13 @@ public class FragmentDelivery extends Fragment {
                 try {
                     if (response.body().has(Config.status_response)) {
                         boolean status = response.body().get(Config.status_response).getAsBoolean();
-                        Log.v("status",status+"");
+                        Log.v("status", status + "");
                         if (!status) {
                             notifyDataSetChanged();
                             return;
                         }
-//                            listSupports.clear();
-                            Log.v("log2", listSupports + "");
-                            listSupports.addAll(JsonCommon.getSupport(response.body().getAsJsonArray("data")));
-                            Log.v("log1",listSupports+"");
+                        listSupports.clear();
+                        listSupports.addAll(JsonCommon.getSupport(response.body().getAsJsonArray("data")));
                     }
                 } catch (Exception e) {
                     toastUtil.showToast(getString(R.string.txt_error_common));
@@ -249,29 +250,74 @@ public class FragmentDelivery extends Fragment {
     }
 
     public void notifyDataSetChanged() {
-        ((IFilter)adapter).updateFilter();
-
-            adapter.notifyDataSetChanged();
-            if (listSupports.size() == 0) {
+        if (curgetAction == Config.getProduct) {
+            adapter2.updateFilter();
+            adapter2.notifyDataSetChanged();
+            if (lisProducts.size() == 0) {
                 showBtnRetry(getString(R.string.txt_server_not_data));
             }
-//        } else  if (curgetAction == Config.getProduct){
-//            adapter2.notifyDataSetChanged();
-//            if (lisProducts.size() == 0) {
-//                showBtnRetry(getString(R.string.txt_server_not_data));
-//            }
-//        }
-    }
-    public void dulieugia1(){
-        lisProducts.clear();
-        for(int i = 1; i <= 10; i++){
-            ProductObj obj = new ProductObj();
-            obj.setName("title nay:" + i);
-            obj.setUrlThumnails("http://ithethao.com/sites/default/files/304442c800000578-3403987-image-a-32_1453064019909.jpg");
-            obj.setCompany("VSI");
-            lisProducts.add(obj);
+            return;
+        }
+        ((IFilter) adapter).updateFilter();
+        adapter.notifyDataSetChanged();
+        if (listSupports.size() == 0) {
+            showBtnRetry(getString(R.string.txt_server_not_data));
         }
     }
+
+    public void dulieugia1(String comId) {
+        lnlError.setVisibility(View.GONE);
+        swipeRefreshLayout.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.BASE_URL_GET)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        // Khởi tạo các cuộc gọi cho Retrofit 2.0
+        NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("publicKey", Config.PUBLIC_KEY);
+        hashMap.put("action", Config.getProduct);
+        if (comId !=  null){
+            hashMap.put("company_id", comId);
+        }
+        mPdl.showLoading(getString(R.string.txt_loading));
+        Call<JsonObject> call = stackOverflowAPI.getProduct(hashMap);
+        // Cuộc gọi bất đồng bọ (chạy dưới background)
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.v("response", response.body().get(Config.status_response) + "");
+
+                mPdl.hideLoading();
+                try {
+                    if (response.body().has(Config.status_response)) {
+                        boolean status = response.body().get(Config.status_response).getAsBoolean();
+                        Log.v("status", status + "");
+                        if (!status) {
+                            notifyDataSetChanged();
+                            return;
+                        }
+                        lisProducts.clear();
+                        lisProducts.addAll(JsonCommon.getProduct(response.body().getAsJsonArray("data")));
+                    }
+                } catch (Exception e) {
+                    toastUtil.showToast(getString(R.string.txt_error_common));
+                    notifyDataSetChanged();
+                    return;
+                }
+
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("CallBack", " Throwable is " + t);
+                mPdl.hideLoading();
+                notifyDataSetChanged();
+            }
+        });
+    }
+
     public void showBtnRetry(String message) {
         if (listSupports.size() == 0) {
             lnlError.setVisibility(View.VISIBLE);

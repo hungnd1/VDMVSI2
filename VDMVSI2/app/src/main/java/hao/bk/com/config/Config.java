@@ -177,4 +177,10 @@ public class Config {
     public static final String PRODUCT_NAME = "productName";
     public static final String PRODUCT_THUMB = "productThumb";
     public static final String PRODUCT_COMPANY = "company";
+    public static final String PRODUCT_CODE = "productCode";
+    public static final String PRODUCT_COMPANY_ID = "productComId";
+    public static final String PRODUCT_INTRO = "productIntro";
+    public static final String PRODUCT_FULLTEXT = "productText";
+    public static final String PRODUCT_USERNAME = "productOwner";
+    public static final String PRODUCT_ID = "productId";
 }

@@ -55,6 +55,9 @@ public interface NetWorkServerApi {
     @GET("api/support_api.php")
     public Call<JsonObject> getSupport(@QueryMap Map<String, String> maps);
 
+    @GET("api/product_api.php")
+    public Call<JsonObject> getProduct(@QueryMap Map<String, String> maps);
+
     @GET("api/comment_api.php")
     public Call<JsonObject> getCommentProject(@QueryMap Map<String, String> maps);
 

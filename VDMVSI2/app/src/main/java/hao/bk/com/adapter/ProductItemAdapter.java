@@ -17,9 +17,12 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.ProductDetailActivity;
+import hao.bk.com.common.ChatFilter;
+import hao.bk.com.common.ProductFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
 import hao.bk.com.models.DeliveryObj;
+import hao.bk.com.models.IFilter;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.models.ProductObj;
 import hao.bk.com.utils.HViewUtils;
@@ -29,10 +32,11 @@ import hao.bk.com.vdmvsi.R;
 /**
  * Created by T430 on 4/23/2016.
  */
-public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.ViewHolder> {
+public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.ViewHolder> implements IFilter {
 
     ArrayList<ProductObj> listProducts;
     FragmentDelivery frmContainer;
+    ProductFilter filter;
     Context context;
     ToastUtil toastUtil;
 
@@ -63,6 +67,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         }
         holder.tvProductCompany.setText(obj.getCompany());
         holder.tvProductName.setText(obj.getName());
+        holder.tvProductCode.setText(obj.getPro_code());
         holder.index = position;
         //holder.tvDescription.setText(obj.getDescription());
     }
@@ -74,10 +79,22 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         return 0;
     }
 
+    @Override
+    public void filter(CharSequence cs) {
+        listProducts.clear();
+        listProducts.addAll(filter.filterCompany(cs));
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateFilter() {
+        this.filter = new ProductFilter(listProducts);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView tvProductName;
-        TextView tvProductCompany;
+        TextView tvProductCompany,tvProductCode;
         ImageView ivProduct;
         int index;
 
@@ -92,10 +109,23 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
                     intent.putExtra(Config.PRODUCT_COMPANY,obj.getCompany());
                     intent.putExtra(Config.PRODUCT_NAME,obj.getName());
                     intent.putExtra(Config.PRODUCT_THUMB,obj.getUrlThumnails());
+                    intent.putExtra(Config.PRODUCT_CODE,obj.getPro_code());
+                    intent.putExtra(Config.PRODUCT_COMPANY_ID,obj.getCompanyId());
+                    intent.putExtra(Config.PRODUCT_FULLTEXT,obj.getFulltext());
+                    intent.putExtra(Config.PRODUCT_INTRO,obj.getIntro());
+                    intent.putExtra(Config.PRODUCT_USERNAME,obj.getUsername());
+                    intent.putExtra(Config.PRODUCT_ID,obj.getId());
                     context.startActivity(intent);
                 }
             });
+            tvProductCode = (TextView) itemView.findViewById(R.id.tv_product_code);
             tvProductCompany = (TextView) itemView.findViewById(R.id.tv_product_company);
+            tvProductCompany.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    frmContainer.dulieugia1(listProducts.get(index).getCompanyId());
+                }
+            });
             tvProductName = (TextView) itemView.findViewById(R.id.tv_product_name);
             ivProduct = (ImageView) itemView.findViewById(R.id.img_product);
         }

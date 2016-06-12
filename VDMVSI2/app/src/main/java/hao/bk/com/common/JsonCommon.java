@@ -19,6 +19,7 @@ import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.LCareObj;
 import hao.bk.com.models.MemberVsiObj;
 import hao.bk.com.models.NewsVsiObj;
+import hao.bk.com.models.ProductObj;
 import hao.bk.com.models.SupportObj;
 import hao.bk.com.models.UserObj;
 import hao.bk.com.utils.TextUtils;
@@ -644,6 +645,77 @@ public class JsonCommon {
                 }
             }
             list.add(newsObj);
+        }
+        return list;
+    }
+
+    public static ArrayList<ProductObj> getProduct(JsonArray jsonArray) {
+        ArrayList<ProductObj> list = new ArrayList<>();
+        if (jsonArray == null)
+            return list;
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject object = (JsonObject) jsonArray.get(i);
+            if (object == null)
+                continue;
+            ProductObj obj = new ProductObj();
+            if (object.has("id")) {
+                try {
+                    obj.setId(object.get("id").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("pro_code")) {
+                try {
+                    obj.setPro_code(object.get("pro_code").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("name")) {
+                try {
+                    obj.setName(object.get("name").getAsString());
+                } catch (Exception e) {
+
+                }
+            }
+            if (object.has("intro")) {
+                try {
+                    obj.setIntro(object.get("intro").getAsString());
+                } catch (Exception e) {
+
+                }
+            }
+            if (object.has("fulltext")) {
+                try {
+                    obj.setFulltext(object.get("fulltext").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("thumb")) {
+                try {
+                    obj.setUrlThumnails(object.get("thumb").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("username")) {
+                try {
+                    obj.setUsername(object.get("username").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("com_id")) {
+                try {
+                    obj.setCompanyId(object.get("com_id").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("company_name")) {
+                try {
+                    obj.setCompany(object.get("company_name").getAsString());
+                } catch (Exception e) {
+                }
+            }
+
+            list.add(obj);
         }
         return list;
     }
