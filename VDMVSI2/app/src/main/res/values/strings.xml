@@ -126,4 +126,6 @@
     <string name="title_activity_display_message">Bình luận</string>
 
     <string name="txt_content_support">Nội dung </string>
+
+    <string name="txt_success_add_support">Tạo hỗ trợ thành công</string>
 </resources>

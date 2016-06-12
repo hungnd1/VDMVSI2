@@ -5,18 +5,34 @@ package hao.bk.com.models;
  */
 public class SupportObj extends NewsObj {
 
+    private int id;
     private String username;
-    private String avartar;
+    private String code;
     private String content;
-    private String phoneNumber;
-    private int like;
+    private int car_id;
     private int unlike;
     private long cDate;
-    private long fromDate;
-    private long EndDate;
+    private int like;
     private int isActive;
-    private int status;
-    private String comment;
+    private String title;
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -26,12 +42,12 @@ public class SupportObj extends NewsObj {
         this.username = username;
     }
 
-    public String getAvartar() {
-        return avartar;
+    public String getCode() {
+        return code;
     }
 
-    public void setAvartar(String avartar) {
-        this.avartar = avartar;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -44,20 +60,12 @@ public class SupportObj extends NewsObj {
         this.content = content;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public int getCar_id() {
+        return car_id;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getLike() {
-        return like;
-    }
-
-    public void setLike(int like) {
-        this.like = like;
+    public void setCar_id(int car_id) {
+        this.car_id = car_id;
     }
 
     public int getUnlike() {
@@ -76,20 +84,12 @@ public class SupportObj extends NewsObj {
         this.cDate = cDate;
     }
 
-    public long getFromDate() {
-        return fromDate;
+    public int getLike() {
+        return like;
     }
 
-    public void setFromDate(long fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public long getEndDate() {
-        return EndDate;
-    }
-
-    public void setEndDate(long endDate) {
-        EndDate = endDate;
+    public void setLike(int like) {
+        this.like = like;
     }
 
     public int getIsActive() {
@@ -98,21 +98,5 @@ public class SupportObj extends NewsObj {
 
     public void setIsActive(int isActive) {
         this.isActive = isActive;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 }

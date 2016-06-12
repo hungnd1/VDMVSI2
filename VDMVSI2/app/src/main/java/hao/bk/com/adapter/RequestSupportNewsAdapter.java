@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.CreateSupportActivity;
+import hao.bk.com.comment.CommentActivity;
+import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.NewsFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
@@ -37,25 +39,28 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
     NewsFilter filter;
     public Context context;
     int index;
+    DataStoreApp dataStoreApp;
+    Button btn_comment_support;
     ToastUtil toastUtil;
 
     public RequestSupportNewsAdapter(FragmentDelivery frmContainer, ArrayList<NewsObj> listNews) {
         this.listNews = listNews;
         this.frmContainer = frmContainer;
         context = frmContainer.getContext();
+        dataStoreApp = new DataStoreApp(context);
         toastUtil = frmContainer.toastUtil;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CoporateNewsObj obj = (CoporateNewsObj) listNews.get(position);
+        SupportObj obj = (SupportObj) listNews.get(position);
 //        Log.v("content",obj.getContent());
-        if (obj.getUrlAvar() == null || obj.getUrlAvar() == "") {
+//        if (obj.getUrlAvar() == null || obj.getUrlAvar() == "") {
             Picasso.with(context.getApplicationContext()).load(R.drawable.icon_user).transform(new CircleTransform()).into(holder.imageNews);
-        } else {
-            Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
-        }
-        holder.tvName.setText(obj.getNameUser());
+//        } else {
+//            Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
+//        }
+        holder.tvName.setText(obj.getUsername()+" > "+ obj.getTitle());
         holder.tvTime.setText("Ngày: " + HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
@@ -74,7 +79,8 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
     public void onClick(View v) {
         try {
             Intent intent = new Intent(context, CreateSupportActivity.class);
-            CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+            SupportObj pb = (SupportObj) listNews.get(index);
+            intent.putExtra(Config.PROJECT_TITLE,pb.getTitle());
             intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
             context.startActivity(intent);
         } catch (Exception e) {
@@ -119,28 +125,23 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
             tvDescription = (TextView) itemView.findViewById(R.id.tv_descript);
             tvName.setOnClickListener(this);
             tvDescription.setOnClickListener(this);
+            btn_comment_support = (Button) itemView.findViewById(R.id.btn_comment_support);
+            btn_comment_support.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(HViewUtils.isFastDoubleClick())
+                        return;
+                    Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
+                    SupportObj pb = (SupportObj) listNews.get(index);
+                    intent.putExtra(Config.Project_id,pb.getCar_id());
+                    intent.putExtra(Config.ACTION_COMMENT,"getCommentSupport");
+                    intent.putExtra(Config.Username,dataStoreApp.getUserName());
+                    context.startActivity(intent);
 
+                }
+            });
         }
 
-        //        public void editNews(int index){
-//            try {
-//                try {
-//                    Intent intent = new Intent(context, CreateProjectActivity.class);
-//                    CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
-//                    intent.putExtra(Config.PROJECT_ID, pb.getId());
-//                    intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
-//                    intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
-//                    intent.putExtra(Config.PROJECT_CARID, pb.getCarId());
-//                    intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
-//                    intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
-//                    context.startActivity(intent);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
         public void deleteNews(int index) {
             listNews.remove(index);
             frmContainer.adapter.notifyDataSetChanged();
@@ -151,8 +152,8 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
         public void onClick(View v) {
             try {
                 Intent intent = new Intent(context, CreateSupportActivity.class);
-                CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
-//                intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                SupportObj pb = (SupportObj) listNews.get(index);
+                intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                 Log.v("content",pb.getContent());
 //                intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());

@@ -120,7 +120,7 @@ public class Config {
     public static final String CHAT_PUBNUB = "CHAT_PUBNUB";
 
     //support tab
-    public static final String getRequestSupport = "";
+    public static final String getRequestSupport = "getSupport";
 
     // Chat tab
     public static final String LAST_MSG_TAB = "LAST_MSG_TAB";
@@ -171,6 +171,7 @@ public class Config {
     //comment
     public static final String Project_id = "project_id";
     public static final String Username = "username";
+    public static final String ACTION_COMMENT = "action";
 
     //product detail
     public static final String PRODUCT_NAME = "productName";

@@ -29,6 +29,10 @@ public interface NetWorkServerApi {
     public Call<JsonObject> addNewProject(@FieldMap Map<String, String> users);
 
     @FormUrlEncoded
+    @POST("support_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=addSupport")
+    public Call<JsonObject> addNewSupport(@FieldMap Map<String, String> users);
+
+    @FormUrlEncoded
     @POST("project_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=editProject")
     public Call<JsonObject> editProject(@FieldMap Map<String, String> users);
 
@@ -46,6 +50,10 @@ public interface NetWorkServerApi {
 
     @GET("api/project_api.php")
     public Call<JsonObject> getNews(@QueryMap Map<String, String> maps);
+
+
+    @GET("api/support_api.php")
+    public Call<JsonObject> getSupport(@QueryMap Map<String, String> maps);
 
     @GET("api/comment_api.php")
     public Call<JsonObject> getCommentProject(@QueryMap Map<String, String> maps);
@@ -71,4 +79,8 @@ public interface NetWorkServerApi {
     @FormUrlEncoded
     @POST("comment_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=addCommentProject")
     public Call<JsonObject> addComment(@FieldMap Map<String, String> comment);
+
+    @FormUrlEncoded
+    @POST("comment_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=addCommentSupport")
+    public Call<JsonObject> addCommentSupport(@FieldMap Map<String, String> comment);
 }

@@ -28,6 +28,7 @@ import hao.bk.com.config.Config;
 import hao.bk.com.customview.ViewToolBar;
 import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.LCareObj;
+import hao.bk.com.models.SupportObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
@@ -43,13 +44,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class CreateSupportActivity extends AppCompatActivity {
 
-    EditText edtContent;
+    EditText edtTitle,edtContent;
     Button btnCreateNew;
     DataStoreApp dataStoreApp;
     ToastUtil toastUtil;
     ViewToolBar vToolBar;
     View viewRoot;
-    CoporateNewsObj myObj = null;
+    SupportObj myObj = null;
     ArrayList<LCareObj> listCareObjs;
     AppCompatSpinner spnCare;
 
@@ -62,8 +63,9 @@ public class CreateSupportActivity extends AppCompatActivity {
         listCareObjs = new ArrayList<>();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            myObj = new CoporateNewsObj();
+            myObj = new SupportObj();
             myObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
+            myObj.setTitle(extras.getString(Config.PROJECT_TITLE,""));
         }
         initViews();
     }
@@ -121,6 +123,7 @@ public class CreateSupportActivity extends AppCompatActivity {
     }
 
     public void initViews() {
+        edtTitle = (EditText) findViewById(R.id.edt_title_support);
         edtContent = (EditText) findViewById(R.id.edt_txt_content_support);
         btnCreateNew = (Button) findViewById(R.id.btn_create_support);
         if (myObj != null) {
@@ -132,7 +135,7 @@ public class CreateSupportActivity extends AppCompatActivity {
                 if (HViewUtils.isFastDoubleClick())
                     return;
                 Map users = new HashMap();
-                createNewProject(users);
+                createNewSupport(users);
             }
         });
         viewRoot = (View) findViewById(R.id.container);
@@ -144,7 +147,10 @@ public class CreateSupportActivity extends AppCompatActivity {
 
     private void showInfo() {
         if (myObj != null) {
+            edtTitle.setText(myObj.getTitle());
+            edtTitle.setEnabled(false);
             edtContent.setText(myObj.getContent());
+            edtContent.setEnabled(false);
         }
     }
 
@@ -157,7 +163,7 @@ public class CreateSupportActivity extends AppCompatActivity {
         return true;
     }
 
-    public void createNewProject(Map users) {
+    public void createNewSupport(Map users) {
         Log.v("users1", users.toString());
         if (!validate())
             return;
@@ -170,10 +176,10 @@ public class CreateSupportActivity extends AppCompatActivity {
                 .build();
         NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
         users.put("txt_username", dataStoreApp.getUserName());
-        users.put("txt_carid", ((LCareObj) spnCare.getSelectedItem()).getId() + "");
+        users.put("txt_carid", "0");
+        users.put("txt_title",edtTitle.getText().toString());
         users.put("txt_content", edtContent.getText().toString());
-        if (myObj != null) users.put("txt_id", myObj.getId() + "");
-        Call<JsonObject> call = myObj != null ? serverNetWorkAPI.editProject(users) : serverNetWorkAPI.addNewProject(users);
+        Call<JsonObject> call = serverNetWorkAPI.addNewSupport(users);
         call.enqueue(new Callback<JsonObject>() {
 
             @Override
@@ -205,7 +211,7 @@ public class CreateSupportActivity extends AppCompatActivity {
     }
 
     public void addMyProjectSuccess() {
-        toastUtil.showToast(getString(myObj == null ? R.string.txt_success_add_project : R.string.txt_success_edit_project));
+        toastUtil.showToast(getString(myObj == null ? R.string.txt_success_add_support : R.string.txt_success_edit_project));
         this.onBackPressed();
     }
 }

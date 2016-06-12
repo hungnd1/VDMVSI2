@@ -73,6 +73,7 @@ public class CommentActivity extends AppCompatActivity {
     MyProgressDialog mpdl;
     ImageButton btn_comment;
     EditText edt_comment;
+    String action = null;
 
     public void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -103,13 +104,14 @@ public class CommentActivity extends AppCompatActivity {
             mycomment.setPar_id(extras.getInt("project_id", 0));
             mycomment.setUsername(extras.getString(Config.Username, ""));
         }
-        Log.v("comment",mycomment.getPar_id()+"");
+        action = extras.getString(Config.ACTION_COMMENT, "");
+        Log.v("comment", mycomment.getPar_id() + "");
 //        Toast.makeText(getBaseContext(),extras.getString(Config.Project_id),Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_comment);
         btn_comment = (ImageButton) findViewById(R.id.imb_send_comment);
         edt_comment = (EditText) findViewById(R.id.edt_chat_comment);
         initToolBar();
-        runGetNews("1");
+        runGetNews(action);
 //        try {
 //            OkHttpClient client = new OkHttpClient();
 //            URL url = new URL(String.format("http://vsi.vietitech.com/api/comment_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=getCommentProject&project_id=1"));
@@ -137,13 +139,13 @@ public class CommentActivity extends AppCompatActivity {
                     user.setContent(edt_comment.getText().toString().trim());
                     mUsers.add(0, user);
                     Map users = new HashMap();
-                    if (mycomment != null){
-                        users.put("username",mycomment.getUsername());
-                        users.put("project_id",mycomment.getPar_id()+"");
-                        users.put("content",edt_comment.getText().toString().trim());
+                    if (mycomment != null) {
+                        users.put("username", mycomment.getUsername());
+                        users.put("project_id", mycomment.getPar_id() + "");
+                        users.put("content", edt_comment.getText().toString().trim());
                     }
                     Log.v("username", users.get("content") + "");
-                    addComment(users);
+                    addComment(users,action);
                 } else {
                     Toast.makeText(getBaseContext(), "Bạn chưa nhập bình luận", Toast.LENGTH_SHORT).show();
                 }
@@ -169,8 +171,12 @@ public class CommentActivity extends AppCompatActivity {
         NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("publicKey", Config.PUBLIC_KEY);
-        hashMap.put("action", Config.getListCommentProject);
-        hashMap.put("project_id", mycomment.getPar_id()+"");
+        hashMap.put("action", id);
+        if(action.equals("getCommentSupport")){
+            hashMap.put("support_id", mycomment.getPar_id() + "");
+        }else{
+            hashMap.put("project_id", mycomment.getPar_id() + "");
+        }
         Log.v("1a", "3");
         Call<JsonObject> call = stackOverflowAPI.getCommentProject(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
@@ -277,14 +283,14 @@ public class CommentActivity extends AppCompatActivity {
         Log.v("1a", "8");
     }
 
-    public void addComment(Map comment) {
-        Log.v("logcomment","1");
+    public void addComment(Map comment,String action) {
+        Log.v("logcomment", "1");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_REGISTER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
-        Call<JsonObject> call = serverNetWorkAPI.addComment(comment);
+        Call<JsonObject> call = action.equals("getCommentSupport")? serverNetWorkAPI.addCommentSupport(comment): serverNetWorkAPI.addComment(comment);
         call.enqueue(new Callback<JsonObject>() {
 
             @Override

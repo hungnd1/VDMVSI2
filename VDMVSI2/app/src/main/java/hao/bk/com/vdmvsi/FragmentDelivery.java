@@ -86,7 +86,7 @@ public class FragmentDelivery extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         curTabName = bundle.getString(Config.NAME_BUNDLE, Config.LAST_MSG_TAB);
-        curgetAction = Config.getNewsVsi;
+        curgetAction = Config.getRequestSupport;
     }
 
     @Nullable
@@ -166,7 +166,7 @@ public class FragmentDelivery extends Fragment {
         });
         if(Config.SUPPORT_NEED_TAB.equals(curTabName)){
 //         curgetAction = Config.getRequestSupport;
-            curgetAction = Config.getProject;
+            curgetAction = Config.getRequestSupport;
             runGetNews(curgetAction);
 //            supportRequest();
 
@@ -209,7 +209,7 @@ public class FragmentDelivery extends Fragment {
         hashMap.put("username", dataStoreApp.getUserName());
         Log.v("hasmap",hashMap.get("username"));
         mPdl.showLoading(getString(R.string.txt_loading));
-        Call<JsonObject> call = stackOverflowAPI.getNews(hashMap);
+        Call<JsonObject> call = stackOverflowAPI.getSupport(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -227,7 +227,7 @@ public class FragmentDelivery extends Fragment {
                         }
 //                            listSupports.clear();
                             Log.v("log2", listSupports + "");
-                            listSupports.addAll(JsonCommon.getCoporateNews(response.body().getAsJsonArray("data")));
+                            listSupports.addAll(JsonCommon.getSupport(response.body().getAsJsonArray("data")));
                             Log.v("log1",listSupports+"");
                     }
                 } catch (Exception e) {

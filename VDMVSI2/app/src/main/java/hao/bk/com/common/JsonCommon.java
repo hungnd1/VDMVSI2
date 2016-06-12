@@ -19,6 +19,7 @@ import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.LCareObj;
 import hao.bk.com.models.MemberVsiObj;
 import hao.bk.com.models.NewsVsiObj;
+import hao.bk.com.models.SupportObj;
 import hao.bk.com.models.UserObj;
 import hao.bk.com.utils.TextUtils;
 
@@ -572,6 +573,77 @@ public class JsonCommon {
             }
 
             list.add(comment);
+        }
+        return list;
+    }
+
+
+    public static ArrayList<SupportObj> getSupport(JsonArray jsonArray) {
+        ArrayList<SupportObj> list = new ArrayList<>();
+        if (jsonArray == null)
+            return list;
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject object = (JsonObject) jsonArray.get(i);
+            if (object == null)
+                continue;
+            SupportObj newsObj = new SupportObj();
+            if (object.has("id")) {
+                try {
+                    newsObj.setId(object.get("id").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("car_id")) {
+                try {
+                    newsObj.setCar_id(object.get("car_id").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("title")) {
+                try {
+                    newsObj.setTitle(object.get("title").getAsString());
+                } catch (Exception e) {
+
+                }
+            }
+            if (object.has("content")) {
+                try {
+                    newsObj.setContent(object.get("content").getAsString());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("cdate")) {
+                try {
+                    newsObj.setcDate(object.get("cdate").getAsLong());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("username")) {
+                try {
+                    newsObj.setUsername(object.get("username").getAsString());
+                } catch (Exception e) {
+                }
+            }
+
+            if (object.has("like")) {
+                try {
+                    newsObj.setLike(object.get("like").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("unlike")) {
+                try {
+                    newsObj.setUnlike(object.get("unlike").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            if (object.has("isactive")) {
+                try {
+                    newsObj.setIsActive(object.get("isactive").getAsInt());
+                } catch (Exception e) {
+                }
+            }
+            list.add(newsObj);
         }
         return list;
     }

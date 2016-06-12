@@ -159,6 +159,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                     Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
                     CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
                     intent.putExtra(Config.Project_id,pb.getCarId());
+                    intent.putExtra(Config.ACTION_COMMENT,"getCommentProject");
                     intent.putExtra(Config.Username,dataStoreApp.getUserName());
                     context.startActivity(intent);
 //                    Log.v("index",index+"");
