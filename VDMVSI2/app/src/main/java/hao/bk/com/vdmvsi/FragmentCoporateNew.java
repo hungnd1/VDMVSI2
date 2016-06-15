@@ -57,7 +57,7 @@ public class FragmentCoporateNew extends Fragment{
     public RecyclerView recyclerView;
     // adapterLv cho recycleView
     public RecyclerView.Adapter adapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    public SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager llm;
     // lay ve activity
     public MainActivity main;
@@ -176,7 +176,7 @@ public class FragmentCoporateNew extends Fragment{
         }
         lnlError.setVisibility(View.GONE);
         swipeRefreshLayout.setVisibility(View.VISIBLE);
-        mpdl.showLoading(getString(R.string.txt_loading));
+        //mpdl.showLoading(getString(R.string.txt_loading));
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_GET)
                 .addConverterFactory(GsonConverterFactory.create())

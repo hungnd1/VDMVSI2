@@ -56,7 +56,7 @@
                     android:layout_below="@+id/tv_name_user"
                     android:layout_marginTop="@dimen/padding_item_half"
                     android:textColor="@color/dark_ness_text"
-                    android:textSize="@dimen/font_normal"
+                    android:textSize="@dimen/font_small"
                     android:layout_toRightOf="@+id/imv_profile"/>
             </RelativeLayout>
 
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="2"
                     android:layout_marginTop="@dimen/padding_item_half"
-                    android:textColor="@color/dark_ness_text"
+                    android:textColor="@color/black_full"
                     android:textSize="@dimen/font_normaless"/>
             </LinearLayout>
 

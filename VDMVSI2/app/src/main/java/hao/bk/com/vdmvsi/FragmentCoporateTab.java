@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,11 @@ public class FragmentCoporateTab extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                if (position == 0){
+                    frmNewChance.runGetNews(Config.getProject);
+                }else if (position == 1){
+                    frmInteresting.runGetNews(Config.getProjectCare);
+                }
             }
         });
 

@@ -21,4 +21,10 @@
         android:id="@+id/bt_bar_more"
         android:icon="@drawable/ic_more_tab"
         android:title="@string/tab_more"  />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_small"
+        android:background="@color/white_full" />
 </menu>

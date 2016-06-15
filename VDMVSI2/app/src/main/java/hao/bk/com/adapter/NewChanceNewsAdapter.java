@@ -204,12 +204,8 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
             NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("publicKey", Config.PUBLIC_KEY);
-            if (flag) {
-                hashMap.put("action", Config.careProject);
-            } else {
-                hashMap.put("action", Config.cancelCareProject);
-            }
-            hashMap.put(" project_id", obj.getId() + "");
+            hashMap.put("action", flag ? Config.careProject : Config.cancelCareProject);
+            hashMap.put("project_id", obj.getId() + "");
             hashMap.put("username", dataStoreApp.getUserName());
 
             Call<JsonObject> call = stackOverflowAPI.runCareProject(hashMap);
