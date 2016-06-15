@@ -71,7 +71,7 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = null;
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_project_news_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.support_news_item, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
     }

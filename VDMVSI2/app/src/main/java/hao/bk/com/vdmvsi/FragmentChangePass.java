@@ -72,6 +72,8 @@ public class FragmentChangePass extends DialogFragment {
         initViews(v);
         return v;
     }
+
+
     public void initViews(View v) {
         btnBack = (ImageView)v.findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +147,7 @@ public class FragmentChangePass extends DialogFragment {
     public void onResume() {
         super.onResume();
         Window window = getDialog().getWindow();
-        window.setLayout(600, 900);
+        window.setLayout(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
         window.setGravity(Gravity.CENTER);
     }
 

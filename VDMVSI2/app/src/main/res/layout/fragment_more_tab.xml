@@ -29,7 +29,7 @@
             android:id="@+id/iv_user_avatar"
             android:layout_width="@dimen/diameter_avar_large"
             android:layout_height="@dimen/diameter_avar_large"
-            android:src="@drawable/ic_avatar"
+            android:src="@drawable/icon_user"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/padding_large"
