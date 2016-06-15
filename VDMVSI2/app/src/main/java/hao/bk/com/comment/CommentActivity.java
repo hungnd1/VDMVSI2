@@ -95,9 +95,6 @@ public class CommentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
-//        Log.v("extras",extras+"");
-//        Log.v("aaaa",extras.getString(Config.Project_id));
-//        Log.v("aaaaa", extras.getString(Config.Username));
 
         if (extras != null) {
             mycomment = new Comment();
@@ -112,24 +109,6 @@ public class CommentActivity extends AppCompatActivity {
         edt_comment = (EditText) findViewById(R.id.edt_chat_comment);
         initToolBar();
         runGetNews(action);
-//        try {
-//            OkHttpClient client = new OkHttpClient();
-//            URL url = new URL(String.format("http://vsi.vietitech.com/api/comment_api.php?publicKey=5628acfce494c53189505f337bfa6870&action=getCommentProject&project_id=1"));
-//            Request request = new Request.Builder()
-//                    .url(url)
-//                    .build();
-//            okhttp3.Response response = client.newCall(request).execute();
-//            Log.v("response",response.body().toString());
-//        }catch (IOException ex){
-//            ex.printStackTrace();
-//        }
-
-        Log.v("message", listComment + "");
-//        Toast.makeText(this, listNews.get(0).getContent(), Toast.LENGTH_LONG).show();
-//        mpdl = new MyProgressDialog(getBaseContext());
-//        mpdl.showLoading(getString(R.string.txt_loading));
-//        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        mToolbar.setTitle("LoadMoreRecycleView");
         btn_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

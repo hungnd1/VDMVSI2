@@ -162,6 +162,8 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
             try {
                 Intent intent = new Intent(context, ProjectDetailActivity.class);
                 CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                intent.putExtra(Config.Username,dataStoreApp.getUserName());
+                intent.putExtra(Config.Project_id,pb.getCarId());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());

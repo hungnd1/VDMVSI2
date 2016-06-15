@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.CreateProjectActivity;
 import hao.bk.com.chat.ProjectDetailActivity;
+import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.NewsFilter;
 import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
@@ -33,6 +34,7 @@ import hao.bk.com.vdmvsi.R;
 public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAdapter.ViewHolder> implements IFilter {
     static ArrayList<NewsObj> listNews;
     public FragmentCoporateNew frmContainer;
+    DataStoreApp dataStoreApp;
     NewsFilter filter;
     public Context context;
     ToastUtil toastUtil;
@@ -41,6 +43,7 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
         this.frmContainer = frmContainer;
         context = frmContainer.getContext();
         toastUtil = frmContainer.toastUtil;
+        dataStoreApp = new DataStoreApp(frmContainer.getContext());
     }
 
     @Override
@@ -155,6 +158,8 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             try {
                 Intent intent = new Intent(context, ProjectDetailActivity.class);
                 CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                intent.putExtra(Config.Username,dataStoreApp.getUserName());
+                intent.putExtra(Config.Project_id,pb.getCarId());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());

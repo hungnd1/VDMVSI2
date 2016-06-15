@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/white_full"
     android:id="@+id/container"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:transcriptMode="normal">
 
@@ -12,9 +13,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:layout_above="@+id/btn_back">
+        android:layout_height="100dp"
+        android:id="@+id/scroll"
+        android:layout_below="@id/toolbar">
 
         <LinearLayout
             android:id="@+id/ll_input_text"
@@ -23,90 +24,6 @@
             android:layout_marginTop="@dimen/padding_item_half"
             android:orientation="vertical"
             android:gravity="center">
-
-            <!--<TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:drawableLeft="@drawable/ic_title_project_blue"
-                android:drawablePadding="@dimen/padding_item"
-                android:layout_marginTop="@dimen/padding_item_half"
-                android:textSize="@dimen/font_normal"
-                android:textColor="@color/PrimaryColor"
-                android:gravity="center_vertical"
-                android:textCursorDrawable="@drawable/cursor_edittext"
-                android:imeOptions="actionNext"
-                android:background="@null" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:background="@color/PrimaryColor"/>-->
-
-            <TextView
-                android:id="@+id/tv_c_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:textSize="@dimen/font_normal"
-                android:textColor="@color/PrimaryColor"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_date_select_blue"
-                android:background="@null"
-                android:drawablePadding="@dimen/padding_item" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:background="@color/PrimaryColor"/>
-
-            <TextView
-                android:id="@+id/tv_from_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:textSize="@dimen/font_normal"
-                android:textColor="@color/PrimaryColor"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_date_select_blue"
-                android:background="@null"
-                android:drawablePadding="@dimen/padding_item" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:background="@color/PrimaryColor"/>
-
-
-            <TextView
-                android:id="@+id/tv_e_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_item_half"
-                android:layout_marginRight="@dimen/padding_item_half"
-                android:layout_marginBottom="@dimen/padding_item_half"
-                android:textSize="@dimen/font_normal"
-                android:textColor="@color/PrimaryColor"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_date_select_blue"
-                android:background="@null"
-                android:drawablePadding="@dimen/padding_item" />
 
             <View
                 android:layout_width="match_parent"
@@ -133,5 +50,44 @@
 
         </LinearLayout>
     </ScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_below="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:background="@color/message_background"
+        android:padding="8dp" />
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/lnl_input_chat"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:weightSum="5">
+
+        <ImageButton
+            android:id="@+id/imb_send_comment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/ic_send_message" />
+
+        <EditText
+            android:id="@+id/edt_chat_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/imb_send_comment"
+            android:background="@null"
+            android:hint="@string/txt_input_comment"
+            android:inputType="textCapSentences" />
+    </RelativeLayout>
+</LinearLayout>
