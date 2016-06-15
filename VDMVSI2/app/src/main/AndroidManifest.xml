@@ -55,6 +55,11 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged|adjustResize"></activity>
 
         <activity
+            android:name="hao.bk.com.chat.SuportDetailActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|stateUnchanged|adjustResize"></activity>
+
+        <activity
             android:name="hao.bk.com.comment.CommentActivity"
             android:label="@string/title_activity_display_message"
             android:launchMode="singleTask"

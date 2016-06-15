@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.chat.CreateSupportActivity;
+import hao.bk.com.chat.SuportDetailActivity;
 import hao.bk.com.comment.CommentActivity;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.NewsFilter;
@@ -61,8 +62,7 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
 //            Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
 //        }
         holder.tvName.setText(obj.getUsername()+" > "+ obj.getTitle());
-        holder.tvTime.setText("Ngày: " + HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
-        holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText("Ngày " + HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
         holder.index = position;
         holder.tvDescription.setText(obj.getContent());
@@ -74,18 +74,6 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.support_news_item, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
-    }
-
-    public void onClick(View v) {
-        try {
-            Intent intent = new Intent(context, CreateSupportActivity.class);
-            SupportObj pb = (SupportObj) listNews.get(index);
-            intent.putExtra(Config.PROJECT_TITLE,pb.getTitle());
-            intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
-            context.startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -123,7 +111,7 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDescription = (TextView) itemView.findViewById(R.id.tv_descript);
-            tvName.setOnClickListener(this);
+            tvTitle.setOnClickListener(this);
             tvDescription.setOnClickListener(this);
             btn_comment_support = (Button) itemView.findViewById(R.id.btn_comment_support);
             btn_comment_support.setOnClickListener(new View.OnClickListener() {
@@ -152,16 +140,12 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
         @Override
         public void onClick(View v) {
             try {
-                Intent intent = new Intent(context, CreateSupportActivity.class);
+                Intent intent = new Intent(context, SuportDetailActivity.class);
                 SupportObj pb = (SupportObj) listNews.get(index);
-                intent.putExtra(Config.Username,dataStoreApp.getUserName());
                 intent.putExtra(Config.Project_id,pb.getCar_id());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
-                Log.v("content",pb.getContent());
-//                intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
-//                intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
-//                intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
                 context.startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();

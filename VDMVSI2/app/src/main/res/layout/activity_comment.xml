@@ -20,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:background="@color/message_background"
-        android:padding="8dp" />
+        android:background="@color/message_background" />
 
     <RelativeLayout
         android:id="@+id/lnl_input_chat"

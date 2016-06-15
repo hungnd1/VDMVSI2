@@ -97,7 +97,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
             holder.btnLike.setTextColor(context.getResources().getColor(R.color.dark_ness_hint));
         }
         holder.tvName.setText(obj.getNameUser()+" > "+obj.getTitle());
-        holder.tvTime.setText("Ngày: "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText("Ngày "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = position;
         holder.tvTitle.setVisibility(View.GONE);
         holder.tvDescription.setText(obj.getContent());
@@ -219,6 +219,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
                 intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
                 intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                intent.putExtra(Config.PROJECT_AVATAR, pb.getUrlAvar());
                 context.startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();

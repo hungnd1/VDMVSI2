@@ -12,26 +12,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import hao.bk.com.adapter.CircleTransform;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.JsonCommon;
 import hao.bk.com.common.NetWorkServerApi;
@@ -39,9 +33,8 @@ import hao.bk.com.common.ToastUtil;
 import hao.bk.com.config.Config;
 import hao.bk.com.customview.ViewToolBar;
 import hao.bk.com.models.Comment;
-import hao.bk.com.models.CoporateNewsObj;
-import hao.bk.com.models.NewsObj;
 import hao.bk.com.models.OnLoadMoreListener;
+import hao.bk.com.models.SupportObj;
 import hao.bk.com.utils.HViewUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.R;
@@ -54,13 +47,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by T430 on 4/22/2016.
  */
-public class ProjectDetailActivity extends AppCompatActivity {
+public class SuportDetailActivity extends AppCompatActivity {
 
     DataStoreApp dataStoreApp;
     ToastUtil toastUtil;
     private UserAdapter mUserAdapter;
-    static CoporateNewsObj myProjectObj;
-    TextView tvTitle, tvContent, tvCdate, tvFromDate, tvEndate;
+    static SupportObj myProjectObj;
+    TextView tvTitle, tvContent, tvCdate;
     RelativeLayout lnlChat;
     CircleImageView imageNews;
     ViewToolBar vToolBar;
@@ -74,20 +67,16 @@ public class ProjectDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project_detail);
+        setContentView(R.layout.activity_suport_detail);
         dataStoreApp = new DataStoreApp(this);
         toastUtil = new ToastUtil(this);
         Bundle extras = getIntent().getExtras();
-        myProjectObj = new CoporateNewsObj();
+        myProjectObj = new SupportObj();
         if (extras != null) {
-            myProjectObj.setNameUser(extras.getString(Config.Username,""));
-            myProjectObj.setCarId(extras.getInt(Config.Project_id, 0));
             myProjectObj.setTitle(extras.getString(Config.PROJECT_TITLE, ""));
             myProjectObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
             myProjectObj.setcDate(extras.getLong(Config.PROJECT_CDATE, 0));
-            myProjectObj.setFromDate(extras.getLong(Config.PROJECT_FDATE, 0));
-            myProjectObj.setEndDate(extras.getLong(Config.PROJECT_EDATE, 0));
-            myProjectObj.setUrlAvar(extras.getString(Config.PROJECT_AVATAR, ""));
+            myProjectObj.setCar_id(extras.getInt(Config.Project_id, 0));
         }
         initViews();
     }
@@ -98,8 +87,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
         btn_comment = (ImageButton) findViewById(R.id.imb_send_comment);
         edt_comment = (EditText) findViewById(R.id.edt_chat_comment);
         imageNews = (CircleImageView) findViewById(R.id.imv_profile);
-//        tvFromDate = (TextView) findViewById(R.id.tv_from_date);
-//        tvEndate = (TextView) findViewById(R.id.tv_e_date);
         tvCdate = (TextView) findViewById(R.id.tv_date);
         lnlChat = (RelativeLayout) findViewById(R.id.lnl_input_chat);
         viewRoot = (View) findViewById(R.id.container);
@@ -112,17 +99,17 @@ public class ProjectDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (edt_comment.getText().toString().trim() != null && !edt_comment.getText().toString().trim().equals("")) {
                     Comment user = new Comment();
-                    user.setUsername(myProjectObj.getNameUser());
+                    user.setUsername(dataStoreApp.getUserName());
                     user.setContent(edt_comment.getText().toString().trim());
                     mUsers.add(0, user);
                     Map users = new HashMap();
                     if (myProjectObj != null) {
-                        users.put("username", myProjectObj.getNameUser());
-                        users.put("project_id", myProjectObj.getCarId() + "");
+                        users.put("username", dataStoreApp.getUserName());
+                        users.put("project_id", myProjectObj.getCar_id() + "");
                         users.put("content", edt_comment.getText().toString().trim());
                     }
                     Log.v("username", users.get("content") + "");
-                    addComment(users, "getCommentProject");
+                    addComment(users, "getCommentSupport");
                 } else {
                     Toast.makeText(getBaseContext(), "Bạn chưa nhập bình luận", Toast.LENGTH_SHORT).show();
                 }
@@ -135,17 +122,9 @@ public class ProjectDetailActivity extends AppCompatActivity {
     }
 
     private void showData() {
-//        vToolBar.showTextTitle(myProjectObj.getTitle());
-        if (myProjectObj.getUrlAvar() == null || myProjectObj.getUrlAvar() == "") {
-            Picasso.with(getApplicationContext()).load(R.drawable.icon_user).transform(new CircleTransform()).into(imageNews);
-        } else {
-            Picasso.with(getApplicationContext()).load(myProjectObj.getUrlAvar()).transform(new CircleTransform()).into(imageNews);
-        }
         tvTitle.setText(Html.fromHtml(myProjectObj.getTitle()));
         tvContent.setText(Html.fromHtml(myProjectObj.getContent()));
         tvCdate.setText(Html.fromHtml("Ngày "+HViewUtils.getTimeViaMiliseconds(myProjectObj.getcDate())));
-//        tvFromDate.setText(Html.fromHtml(getString(R.string.txt_start_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getFromDate())+"</font>"));
-//        tvEndate.setText(Html.fromHtml(getString(R.string.txt_end_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getEndDate())+"</font>"));
     }
 
     @Override
@@ -154,23 +133,18 @@ public class ProjectDetailActivity extends AppCompatActivity {
     }
 
     public void runGetNews() {
-//        mpdl.showLoading(getString(R.string.txt_loading));
-        Log.v("1a", "1");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_GET)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        Log.v("1a", "2");
         // Khởi tạo các cuộc gọi cho Retrofit 2.0
         NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("publicKey", Config.PUBLIC_KEY);
-        hashMap.put("action", "getCommentProject");
-        hashMap.put("project_id", myProjectObj.getCarId() + "");
-        Log.v("1a", "3");
+        hashMap.put("action", "getCommentSupport");
+        hashMap.put("support_id", myProjectObj.getCar_id() + "");
         Call<JsonObject> call = stackOverflowAPI.getCommentProject(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
-        Log.v("1a", call + "");
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -179,14 +153,12 @@ public class ProjectDetailActivity extends AppCompatActivity {
                     if (response.body().has(Config.status_response)) {
 
                         boolean status = response.body().get(Config.status_response).getAsBoolean();
-                        Log.v("call", status + "");
                         if (!status) {
 //                            notifyDataSetChanged();
                             return;
                         }
                     }
                 } catch (Exception e) {
-                    Log.v("1a", "5");
                     toastUtil.showToast(getString(R.string.txt_error_common));
 //                    notifyDataSetChanged();
                     return;
@@ -194,7 +166,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
                 try {
                     listNews.clear();
                     listNews.addAll(JsonCommon.getComment(response.body().getAsJsonArray("data")));
-                    ProjectDetailActivity.this.runOnUiThread(new Runnable() {
+                    SuportDetailActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             int sizeofComment = 10;
@@ -380,10 +352,10 @@ public class ProjectDetailActivity extends AppCompatActivity {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (viewType == VIEW_TYPE_ITEM) {
-                View view = LayoutInflater.from(ProjectDetailActivity.this).inflate(R.layout.layout_user_item, parent, false);
+                View view = LayoutInflater.from(SuportDetailActivity.this).inflate(R.layout.layout_user_item, parent, false);
                 return new UserViewHolder(view);
             } else if (viewType == VIEW_TYPE_LOADING) {
-                View view = LayoutInflater.from(ProjectDetailActivity.this).inflate(R.layout.layout_loading_item, parent, false);
+                View view = LayoutInflater.from(SuportDetailActivity.this).inflate(R.layout.layout_loading_item, parent, false);
                 return new LoadingViewHolder(view);
             }
             return null;

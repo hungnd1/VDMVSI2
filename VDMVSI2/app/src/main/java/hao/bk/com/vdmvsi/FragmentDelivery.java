@@ -68,7 +68,6 @@ public class FragmentDelivery extends Fragment {
     public ToastUtil toastUtil;
     ArrayList<ProductObj> lisProducts = new ArrayList<>();
     ArrayList<NewsObj> listSupports = new ArrayList<>();
-    Button btn_addSupport;
 
     public FragmentDelivery() {
 
@@ -115,20 +114,6 @@ public class FragmentDelivery extends Fragment {
                 runGetNews(curgetAction);
             }
         });
-        btn_addSupport = (Button) v.findViewById(R.id.btn_support);
-        btn_addSupport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    Log.v("users2", "aaa");
-                    Intent intent = new Intent(main, CreateSupportActivity.class);
-                    main.startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
         recyclerView = (RecyclerView) v.findViewById(R.id.rv);
         llm = new LinearLayoutManager(main);
         recyclerView.setLayoutManager(llm);
@@ -158,7 +143,6 @@ public class FragmentDelivery extends Fragment {
         btnSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                toastUtil.showToast(getString(R.string.txt_comming_soon));
                 try {
                     Intent intent = new Intent(main, CreateSupportActivity.class);
                     main.startActivity(intent);
@@ -174,7 +158,6 @@ public class FragmentDelivery extends Fragment {
 //            supportRequest();
 
             adapter = new RequestSupportNewsAdapter(this, listSupports);
-            Log.v("listSupprot", listSupports.size() + "");
             recyclerView.setAdapter(adapter);
 
         } else if (Config.FAIR_GOOD_TAB.equals(curTabName)) {

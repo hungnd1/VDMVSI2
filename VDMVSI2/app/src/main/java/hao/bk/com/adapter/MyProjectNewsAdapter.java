@@ -55,7 +55,7 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
         }
         holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
-        holder.tvTime.setText("Ngày: "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
+        holder.tvTime.setText("Ngày "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
         holder.index = position;
@@ -139,6 +139,7 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
                     intent.putExtra(Config.PROJECT_CARID, pb.getCarId());
                     intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
                     intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                    intent.putExtra(Config.PROJECT_AVATAR, pb.getUrlAvar());
                     context.startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();

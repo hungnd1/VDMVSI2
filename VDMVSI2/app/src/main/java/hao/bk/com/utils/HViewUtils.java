@@ -3,6 +3,7 @@ package hao.bk.com.utils;
 import android.os.SystemClock;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by T430 on 4/24/2016.
@@ -22,6 +23,6 @@ public class HViewUtils {
     }
 
     public static String getTimeViaMiliseconds(long miliseconds){
-        return DateFormat.getDateInstance(DateFormat.SHORT).format(miliseconds*1000);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(miliseconds*1000);
     }
 }

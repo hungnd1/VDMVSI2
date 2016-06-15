@@ -83,6 +83,13 @@
         android:background="@color/message_background"
         android:padding="8dp" />
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_small"
+        android:background="@color/PrimaryColor"
+        android:layout_above="@+id/lnl_input_chat"/>
+
     <RelativeLayout
         android:id="@+id/lnl_input_chat"
         android:layout_width="match_parent"
