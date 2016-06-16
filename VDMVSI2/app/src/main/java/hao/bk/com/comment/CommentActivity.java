@@ -63,7 +63,7 @@ import retrofit2.http.Url;
 public class CommentActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     public RecyclerView.Adapter adapter;
-    private ArrayList<Comment> mUsers = new ArrayList<>();
+    private List<Comment> mUsers = new ArrayList<>();
     private static ArrayList<Comment> listNews = new ArrayList<>();
     private ArrayList<Comment> listComment;
     private UserAdapter mUserAdapter;
@@ -102,7 +102,6 @@ public class CommentActivity extends AppCompatActivity {
             mycomment.setUsername(extras.getString(Config.Username, ""));
         }
         action = extras.getString(Config.ACTION_COMMENT, "");
-        Log.v("comment", mycomment.getPar_id() + "");
 //        Toast.makeText(getBaseContext(),extras.getString(Config.Project_id),Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_comment);
         btn_comment = (ImageButton) findViewById(R.id.imb_send_comment);
@@ -123,15 +122,18 @@ public class CommentActivity extends AppCompatActivity {
                         users.put("project_id", mycomment.getPar_id() + "");
                         users.put("content", edt_comment.getText().toString().trim());
                     }
-                    Log.v("username", users.get("content") + "");
-                    addComment(users,action);
+                    addComment(users, action);
                 } else {
                     Toast.makeText(getBaseContext(), "Bạn chưa nhập bình luận", Toast.LENGTH_SHORT).show();
                 }
 
                 edt_comment.setText("");
-                mUserAdapter.notifyDataSetChanged();
-                mUserAdapter.setLoaded();
+                if (mUserAdapter != null) {
+                    mUserAdapter.notifyDataSetChanged();
+                    mUserAdapter.setLoaded();
+                } else {
+//                    mUserAdapter.setLoaded();
+                }
             }
         });
 
@@ -140,26 +142,22 @@ public class CommentActivity extends AppCompatActivity {
 
     public void runGetNews(String id) {
 //        mpdl.showLoading(getString(R.string.txt_loading));
-        Log.v("1a", "1");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_GET)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        Log.v("1a", "2");
         // Khởi tạo các cuộc gọi cho Retrofit 2.0
         NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("publicKey", Config.PUBLIC_KEY);
         hashMap.put("action", id);
-        if(action.equals("getCommentSupport")){
+        if (action.equals("getCommentSupport")) {
             hashMap.put("support_id", mycomment.getPar_id() + "");
-        }else{
+        } else {
             hashMap.put("project_id", mycomment.getPar_id() + "");
         }
-        Log.v("1a", "3");
         Call<JsonObject> call = stackOverflowAPI.getCommentProject(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
-        Log.v("1a", call + "");
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -175,7 +173,6 @@ public class CommentActivity extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-                    Log.v("1a", "5");
                     toastUtil.showToast(getString(R.string.txt_error_common));
 //                    notifyDataSetChanged();
                     return;
@@ -196,7 +193,6 @@ public class CommentActivity extends AppCompatActivity {
                                 comment.setContent(listNews.get(i).getContent());
                                 mUsers.add(comment);
                             }
-                            Log.v("check", mUsers + "");
 
                             mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
 
@@ -241,36 +237,30 @@ public class CommentActivity extends AppCompatActivity {
                         }
                     });
                 } catch (Exception e) {
-                    Log.v("1a", "6");
                 }
 //                notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("CallBack", " Throwable is " + t);
-                Log.v("1a", "7");
 //                mpdl.hideLoading();
 //                notifyDataSetChanged();
             }
         });
-        Log.v("1a", "8");
     }
 
-    public void addComment(Map comment,String action) {
-        Log.v("logcomment", "1");
+    public void addComment(Map comment, String action) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_REGISTER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         NetWorkServerApi serverNetWorkAPI = retrofit.create(NetWorkServerApi.class);
-        Call<JsonObject> call = action.equals("getCommentSupport")? serverNetWorkAPI.addCommentSupport(comment): serverNetWorkAPI.addComment(comment);
+        Call<JsonObject> call = action.equals("getCommentSupport") ? serverNetWorkAPI.addCommentSupport(comment) : serverNetWorkAPI.addComment(comment);
         call.enqueue(new Callback<JsonObject>() {
 
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Util.LOGD("20_5", response.body().toString());
-                Log.v("test", response.body().toString());
                 try {
                     boolean status = response.body().get(Config.status_response).getAsBoolean();
                     if (!status) {
@@ -287,7 +277,6 @@ public class CommentActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.v("erro_create", t.toString());
 //                toastUtil.showToast(getString(R.string.txt_error_common));
                 return;
             }

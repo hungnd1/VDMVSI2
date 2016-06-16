@@ -83,7 +83,7 @@ public class CreateSupportActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             myObj = new SupportObj();
-            myObj.setCar_id(extras.getInt(Config.Project_id,0));
+            myObj.setId(extras.getInt(Config.Project_id,0));
             myObj.setUsername(extras.getString(Config.Username,""));
             myObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
             myObj.setTitle(extras.getString(Config.PROJECT_TITLE,""));
@@ -98,10 +98,15 @@ public class CreateSupportActivity extends AppCompatActivity {
         btnCreateNew = (Button) findViewById(R.id.btn_create_support);
         btn_comment = (ImageButton) findViewById(R.id.imb_send_comment);
         edt_comment = (EditText) findViewById(R.id.edt_chat_comment);
+        mRecyclerView = (RecyclerView)findViewById(R.id.recycleView);
         if (myObj != null) {
             btnCreateNew.setVisibility(View.INVISIBLE);
             edtTitle.setVisibility(View.INVISIBLE);
             showInfo();
+        }else{
+            mRecyclerView.setVisibility(View.INVISIBLE);
+            btn_comment.setVisibility(View.INVISIBLE);
+            edt_comment.setVisibility(View.INVISIBLE);
         }
         btnCreateNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +142,7 @@ public class CreateSupportActivity extends AppCompatActivity {
                         Map users = new HashMap();
                         if (myObj != null) {
                             users.put("username", myObj.getUsername());
-                            users.put("project_id", myObj.getCar_id() + "");
+                            users.put("project_id", myObj.getId() + "");
                             users.put("content", edt_comment.getText().toString().trim());
                         }
                         Log.v("username", users.get("content") + "");
@@ -164,7 +169,6 @@ public class CreateSupportActivity extends AppCompatActivity {
     }
 
     public void createNewSupport(Map users) {
-        Log.v("users1", users.toString());
         if (!validate())
             return;
         if (!UtilNetwork.checkInternet(this, getString(R.string.check_internet))) {
@@ -185,7 +189,7 @@ public class CreateSupportActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Util.LOGD("20_5", response.body().toString());
-                Log.v("test", response.body().toString());
+
                 try {
                     boolean status = response.body().get(Config.status_response).getAsBoolean();
                     if (!status) {
@@ -203,7 +207,6 @@ public class CreateSupportActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.v("erro_create", t.toString());
                 toastUtil.showToast(getString(R.string.txt_error_common));
                 return;
             }
@@ -225,11 +228,9 @@ public class CreateSupportActivity extends AppCompatActivity {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("publicKey", Config.PUBLIC_KEY);
         hashMap.put("action", "getCommentSupport");
-        hashMap.put("support_id", myObj.getCar_id() + "");
-        Log.v("1a", "3");
+        hashMap.put("support_id", myObj.getId() + "");
         Call<JsonObject> call = stackOverflowAPI.getCommentProject(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
-        Log.v("1a", call + "");
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -238,14 +239,12 @@ public class CreateSupportActivity extends AppCompatActivity {
                     if (response.body().has(Config.status_response)) {
 
                         boolean status = response.body().get(Config.status_response).getAsBoolean();
-                        Log.v("call", status + "");
                         if (!status) {
 //                            notifyDataSetChanged();
                             return;
                         }
                     }
                 } catch (Exception e) {
-                    Log.v("1a", "5");
                     toastUtil.showToast(getString(R.string.txt_error_common));
 //                    notifyDataSetChanged();
                     return;
@@ -266,7 +265,6 @@ public class CreateSupportActivity extends AppCompatActivity {
                                 comment.setContent(listNews.get(i).getContent());
                                 mUsers.add(comment);
                             }
-                            Log.v("check", mUsers + "");
 
                             mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
 
@@ -277,7 +275,6 @@ public class CreateSupportActivity extends AppCompatActivity {
                             mUserAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
                                 @Override
                                 public void onLoadMore() {
-                                    Log.e("haint", "Load More");
                                     mUsers.add(null);
                                     mUserAdapter.notifyItemInserted(mUsers.size() - 1);
 
@@ -285,7 +282,6 @@ public class CreateSupportActivity extends AppCompatActivity {
                                     new Handler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Log.e("haint", "Load More 2");
 
                                             //Remove loading item
                                             mUsers.remove(mUsers.size() - 1);
@@ -311,24 +307,19 @@ public class CreateSupportActivity extends AppCompatActivity {
                         }
                     });
                 } catch (Exception e) {
-                    Log.v("1a", "6");
                 }
 //                notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("CallBack", " Throwable is " + t);
-                Log.v("1a", "7");
 //                mpdl.hideLoading();
 //                notifyDataSetChanged();
             }
         });
-        Log.v("1a", "8");
     }
 
     public void addComment(Map comment, String action) {
-        Log.v("logcomment", "1");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_REGISTER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -340,7 +331,6 @@ public class CreateSupportActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Util.LOGD("20_5", response.body().toString());
-                Log.v("test", response.body().toString());
                 try {
                     boolean status = response.body().get(Config.status_response).getAsBoolean();
                     if (!status) {
@@ -357,7 +347,6 @@ public class CreateSupportActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.v("erro_create", t.toString());
 //                toastUtil.showToast(getString(R.string.txt_error_common));
                 return;
             }

@@ -121,15 +121,18 @@ public class ProjectDetailActivity extends AppCompatActivity {
                         users.put("project_id", myProjectObj.getCarId() + "");
                         users.put("content", edt_comment.getText().toString().trim());
                     }
-                    Log.v("username", users.get("content") + "");
                     addComment(users, "getCommentProject");
                 } else {
                     Toast.makeText(getBaseContext(), "Bạn chưa nhập bình luận", Toast.LENGTH_SHORT).show();
                 }
 
                 edt_comment.setText("");
-                mUserAdapter.notifyDataSetChanged();
-                mUserAdapter.setLoaded();
+                if(mUserAdapter != null){
+                    mUserAdapter.notifyDataSetChanged();
+                    mUserAdapter.setLoaded();
+                }else{
+//                    mUserAdapter.setLoaded();
+                }
             }
         });
     }
@@ -155,22 +158,18 @@ public class ProjectDetailActivity extends AppCompatActivity {
 
     public void runGetNews() {
 //        mpdl.showLoading(getString(R.string.txt_loading));
-        Log.v("1a", "1");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_GET)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        Log.v("1a", "2");
         // Khởi tạo các cuộc gọi cho Retrofit 2.0
         NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("publicKey", Config.PUBLIC_KEY);
         hashMap.put("action", "getCommentProject");
         hashMap.put("project_id", myProjectObj.getCarId() + "");
-        Log.v("1a", "3");
         Call<JsonObject> call = stackOverflowAPI.getCommentProject(hashMap);
         // Cuộc gọi bất đồng bọ (chạy dưới background)
-        Log.v("1a", call + "");
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -207,7 +206,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
                                 comment.setContent(listNews.get(i).getContent());
                                 mUsers.add(comment);
                             }
-                            Log.v("check", mUsers + "");
 
                             mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
 
@@ -218,7 +216,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
                             mUserAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
                                 @Override
                                 public void onLoadMore() {
-                                    Log.e("haint", "Load More");
                                     mUsers.add(null);
                                     mUserAdapter.notifyItemInserted(mUsers.size() - 1);
 
@@ -226,7 +223,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
                                     new Handler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Log.e("haint", "Load More 2");
 
                                             //Remove loading item
                                             mUsers.remove(mUsers.size() - 1);
@@ -252,7 +248,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
                         }
                     });
                 } catch (Exception e) {
-                    Log.v("1a", "6");
                 }
 //                notifyDataSetChanged();
             }
@@ -265,11 +260,9 @@ public class ProjectDetailActivity extends AppCompatActivity {
 //                notifyDataSetChanged();
             }
         });
-        Log.v("1a", "8");
     }
 
     public void addComment(Map comment, String action) {
-        Log.v("logcomment", "1");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_REGISTER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -281,7 +274,6 @@ public class ProjectDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Util.LOGD("20_5", response.body().toString());
-                Log.v("test", response.body().toString());
                 try {
                     boolean status = response.body().get(Config.status_response).getAsBoolean();
                     if (!status) {

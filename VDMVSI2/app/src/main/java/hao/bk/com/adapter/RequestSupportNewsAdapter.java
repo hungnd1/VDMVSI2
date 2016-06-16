@@ -121,7 +121,7 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
                         return;
                     Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
                     SupportObj pb = (SupportObj) listNews.get(index);
-                    intent.putExtra(Config.Project_id,pb.getCar_id());
+                    intent.putExtra(Config.Project_id,pb.getId());
                     intent.putExtra(Config.PROJECT_TITLE,pb.getTitle());
                     intent.putExtra(Config.ACTION_COMMENT,"getCommentSupport");
                     intent.putExtra(Config.Username,dataStoreApp.getUserName());
@@ -142,7 +142,7 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
             try {
                 Intent intent = new Intent(context, SuportDetailActivity.class);
                 SupportObj pb = (SupportObj) listNews.get(index);
-                intent.putExtra(Config.Project_id,pb.getCar_id());
+                intent.putExtra(Config.Project_id,pb.getId());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
