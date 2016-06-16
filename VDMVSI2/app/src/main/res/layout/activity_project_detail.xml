@@ -59,6 +59,7 @@
             android:id="@+id/ll_input_text"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white_full"
             android:layout_marginTop="@dimen/padding_item_medium"
             android:orientation="vertical"
             android:gravity="center">
@@ -119,6 +120,59 @@
                 android:textColor="@color/black_full"
                 android:background="@null"
                 android:drawablePadding="@dimen/padding_item" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/btn_like"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:drawableLeft="@drawable/ic_like_24"
+                    android:paddingLeft="@dimen/padding_item"
+                    android:drawablePadding="@dimen/padding_item_half"
+                    android:gravity="center_vertical|left"
+                    android:textColor="@color/dark_ness_hint"
+                    android:textSize="@dimen/font_small"
+                    android:background="@drawable/btn_selector_transperent_bkg"
+                    android:textAllCaps="false"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_care" />
+
+                <Button
+                    android:id="@+id/btn_comment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_comment_24"
+                    android:paddingLeft="@dimen/padding_item"
+                    android:drawablePadding="@dimen/padding_item_half"
+                    android:gravity="center_vertical|left"
+                    android:background="@drawable/btn_selector_transperent_bkg"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/font_normaless"
+                    android:textColor="@color/dark_ness_hint"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_comment" />
+
+
+                <Button
+                    android:id="@+id/btn_call"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/btn_selector_transperent_bkg"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_phone_24"
+                    android:paddingLeft="@dimen/padding_item"
+                    android:drawablePadding="@dimen/padding_item_half"
+                    android:gravity="center_vertical|left"
+                    android:textSize="@dimen/font_normaless"
+                    android:textColor="@color/dark_ness_hint"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_call" />
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider_small"
@@ -130,7 +184,7 @@
                 android:layout_below="@+id/scroll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/message_background" />
+                android:background="@color/white_full" />
         </LinearLayout>
 
     </ScrollView>

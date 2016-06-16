@@ -168,6 +168,7 @@ public class Config {
     public static final String PROJECT_EDATE = "projectEdate";
     public static final String PROJECT_CARID = "projectCarId";
     public static final String PROJECT_AVATAR = "projectAvatar";
+    public static final String PROJECT_PHONE = "projectPhone";
 
     //comment
     public static final String Project_id = "project_id";

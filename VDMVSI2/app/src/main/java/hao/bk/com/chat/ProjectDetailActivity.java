@@ -1,5 +1,9 @@
 package hao.bk.com.chat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
@@ -32,10 +36,12 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hao.bk.com.adapter.CircleTransform;
+import hao.bk.com.comment.CommentActivity;
 import hao.bk.com.common.DataStoreApp;
 import hao.bk.com.common.JsonCommon;
 import hao.bk.com.common.NetWorkServerApi;
 import hao.bk.com.common.ToastUtil;
+import hao.bk.com.common.UtilNetwork;
 import hao.bk.com.config.Config;
 import hao.bk.com.customview.ViewToolBar;
 import hao.bk.com.models.Comment;
@@ -43,6 +49,7 @@ import hao.bk.com.models.CoporateNewsObj;
 import hao.bk.com.models.NewsObj;
 import hao.bk.com.models.OnLoadMoreListener;
 import hao.bk.com.utils.HViewUtils;
+import hao.bk.com.utils.TextUtils;
 import hao.bk.com.utils.Util;
 import hao.bk.com.vdmvsi.R;
 import retrofit2.Call;
@@ -70,6 +77,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
     private static ArrayList<Comment> listNews = new ArrayList<>();
     ImageButton btn_comment;
     EditText edt_comment;
+    Button btnLike, btnComment, btnCall;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,6 +96,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
             myProjectObj.setFromDate(extras.getLong(Config.PROJECT_FDATE, 0));
             myProjectObj.setEndDate(extras.getLong(Config.PROJECT_EDATE, 0));
             myProjectObj.setUrlAvar(extras.getString(Config.PROJECT_AVATAR, ""));
+            myProjectObj.setPhoneNumber(extras.getString(Config.PROJECT_AVATAR, ""));
         }
         initViews();
     }
@@ -105,6 +114,25 @@ public class ProjectDetailActivity extends AppCompatActivity {
         viewRoot = (View) findViewById(R.id.container);
         vToolBar = new ViewToolBar(this, viewRoot);
         vToolBar.showButtonBack(true);
+        btnLike = (Button) findViewById(R.id.btn_like);
+        btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(HViewUtils.isFastDoubleClick())
+                    return;
+                likeNews();
+            }
+        });
+
+        btnCall = (Button) findViewById(R.id.btn_call);
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(HViewUtils.isFastDoubleClick())
+                    return;
+                callOwnerNews();
+            }
+        });
         showData();
         runGetNews();
         btn_comment.setOnClickListener(new View.OnClickListener() {
@@ -403,7 +431,81 @@ public class ProjectDetailActivity extends AppCompatActivity {
             isLoading = false;
         }
 
+    }
 
+    public void runCareProject(CoporateNewsObj obj, boolean flag){
+        if(!UtilNetwork.checkInternet(this,getString(R.string.txt_check_internet))){
+            return;
+        }
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.BASE_URL_GET)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        // Khởi tạo các cuộc gọi cho Retrofit 2.0
+        NetWorkServerApi stackOverflowAPI = retrofit.create(NetWorkServerApi.class);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("publicKey", Config.PUBLIC_KEY);
+        hashMap.put("action", flag ? Config.careProject : Config.cancelCareProject);
+        hashMap.put("project_id", obj.getId()+"");
+        hashMap.put("username", dataStoreApp.getUserName());
+
+        Call<JsonObject> call = stackOverflowAPI.runCareProject(hashMap);
+        // Cuộc gọi bất đồng bọ (chạy dưới background)
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Util.LOGD("20-5onResponse", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Util.LOGD("20-5onFailure", t.toString());
+            }
+        });
+    }
+    public void likeNews(){
+        if(getString(R.string.txt_care).equals(btnLike.getText().toString())) {
+            btnLike.setText(getString(R.string.txt_not_interest));
+            btnLike.setTextColor(getResources().getColor(R.color.PrimaryDarkColor));
+            // run code xử lý quan tâm tin này ở đây
+
+            runCareProject(myProjectObj, true);
+        } else {
+
+            if(HViewUtils.isFastDoubleClick())
+                return;
+            runCareProject(myProjectObj, false);
+            btnLike.setText(getString(R.string.txt_care));
+        }
+        // Xử lý like ở đây
+    }
+
+    public void callOwnerNews(){
+        // Xử lý goi ng dang tin
+        if (TextUtils.isEmpty(myProjectObj.getPhoneNumber())) {
+            toastUtil.showToast(getString(R.string.txt_not_phone_owner));
+        } else {
+            final String x = myProjectObj.getPhoneNumber();
+            AlertDialog.Builder alBuilder = new AlertDialog.Builder(
+                    this);
+            alBuilder.setMessage(getString(R.string.txt_message) + " " + myProjectObj.getPhoneNumber() + " " + getString(R.string.txt_no) + " ?");
+            final AlertDialog.Builder builder = alBuilder.setPositiveButton(R.string.txt_yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + x));
+                    getApplicationContext().startActivity(callIntent);
+                }
+            });
+            alBuilder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = alBuilder.create();
+            alertDialog.show();
+        }
     }
 
 }

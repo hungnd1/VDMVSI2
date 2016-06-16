@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="500dp"
     android:id="@+id/container_main"
-    android:background="@drawable/my_background"
-    android:paddingTop="1dp"
-    tools:context="hao.bk.com.vdmvsi.MainActivity">
+    android:background="@color/white_full">
 
     <include
         android:id="@+id/toolbar"
@@ -16,7 +13,7 @@
     <FrameLayout
         android:id="@+id/frm_main"
         android:layout_width="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"/>
 
 </RelativeLayout>

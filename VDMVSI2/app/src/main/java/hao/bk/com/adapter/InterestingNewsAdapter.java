@@ -151,22 +151,23 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                 }
             });
             btnComment = (Button)itemView.findViewById(R.id.btn_comment);
-            btnComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(HViewUtils.isFastDoubleClick())
-                        return;
-                    Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
-                    CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
-                    intent.putExtra(Config.Project_id,pb.getCarId());
-                    intent.putExtra(Config.ACTION_COMMENT,"getCommentProject");
-                    intent.putExtra(Config.Username,dataStoreApp.getUserName());
-                    context.startActivity(intent);
-//                    Log.v("index",index+"");
-//                    Log.v("index",pb.getCarId()+"");
-//                    toastUtil.showToast(index+"");
-                }
-            });
+            btnComment.setOnClickListener(this);
+//            btnComment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(HViewUtils.isFastDoubleClick())
+//                        return;
+//                    Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
+//                    CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+//                    intent.putExtra(Config.Project_id,pb.getCarId());
+//                    intent.putExtra(Config.ACTION_COMMENT,"getCommentProject");
+//                    intent.putExtra(Config.Username,dataStoreApp.getUserName());
+//                    context.startActivity(intent);
+////                    Log.v("index",index+"");
+////                    Log.v("index",pb.getCarId()+"");
+////                    toastUtil.showToast(index+"");
+//                }
+//            });
             btnCall = (Button)itemView.findViewById(R.id.btn_call);
             btnCall.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -220,6 +221,7 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                 intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
                 intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
                 intent.putExtra(Config.PROJECT_AVATAR, pb.getUrlAvar());
+                intent.putExtra(Config.PROJECT_PHONE, pb.getPhoneNumber());
                 context.startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();

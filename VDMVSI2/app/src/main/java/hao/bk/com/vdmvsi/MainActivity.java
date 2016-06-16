@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toastUtil = new ToastUtil(this);
         dataStoreApp = new DataStoreApp(this);
-        vToolBar = new ViewToolBar(this, (View)findViewById(R.id.container_main));
+        vToolBar = new ViewToolBar(this, (View)findViewById(R.id.toolbar));
         edtSearch = vToolBar.getEdtSearch();
         mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setTextAppearance(R.style.TextAppearance_baseText);
