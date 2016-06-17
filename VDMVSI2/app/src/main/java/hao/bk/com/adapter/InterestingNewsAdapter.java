@@ -136,16 +136,20 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
 
         ViewHolder(View itemView) {
             super(itemView);
-//            cv = (CardView)itemView.findViewById(R.id.cv_news);
-//            cv.setOnClickListener(this);
+            cv = (CardView)itemView.findViewById(R.id.cv_news);
+            cv.setOnClickListener(this);
             imageNews = (CircleImageView)itemView.findViewById(R.id.imv_profile);
+            imageNews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // vao trang ca nhan
+                }
+            });
             tvName = (TextView)itemView.findViewById(R.id.tv_name_user);
             tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDescription = (TextView)itemView.findViewById(R.id.tv_descript);
             btnLike = (Button)itemView.findViewById(R.id.btn_like);
-            tvName.setOnClickListener(this);
-            tvDescription.setOnClickListener(this);
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

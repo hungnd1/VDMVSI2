@@ -106,14 +106,19 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv_news);
             imageNews = (CircleImageView)itemView.findViewById(R.id.imv_profile);
+            imageNews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // vao trang ca nhan
+                }
+            });
             tvName = (TextView)itemView.findViewById(R.id.tv_name_user);
             tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDescription = (TextView)itemView.findViewById(R.id.tv_descript);
             btnEdit = (Button)itemView.findViewById(R.id.btn_edit);
             btnDel = (Button)itemView.findViewById(R.id.btn_del);
-            tvName.setOnClickListener(this);
-            tvDescription.setOnClickListener(this);
+            cv.setOnClickListener(this);
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

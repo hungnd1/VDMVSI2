@@ -170,13 +170,13 @@ public class FragmentCoporateNew extends Fragment{
     }
 
     public void runGetNews(String action){
-        if(!UtilNetwork.checkInternet(main,getString(R.string.txt_check_internet))){
-            showBtnRetry(getString(R.string.txt_check_internet));
+        if(!UtilNetwork.checkInternet(main,main.getString(R.string.txt_check_internet))){
+            showBtnRetry(main.getString(R.string.txt_check_internet));
             return;
         }
         lnlError.setVisibility(View.GONE);
         swipeRefreshLayout.setVisibility(View.VISIBLE);
-        //mpdl.showLoading(getString(R.string.txt_loading));
+        //mpdl.showLoading(main.getString(R.string.txt_loading));
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL_GET)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -203,7 +203,7 @@ public class FragmentCoporateNew extends Fragment{
                         }
                     }
                 }catch (Exception e){
-                    toastUtil.showToast(getString(R.string.txt_error_common));
+                    toastUtil.showToast(main.getString(R.string.txt_error_common));
                     notifyDataSetChanged();
                     return;
                 }
@@ -227,7 +227,7 @@ public class FragmentCoporateNew extends Fragment{
         ((IFilter)adapter).updateFilter();
         adapter.notifyDataSetChanged();
         if(listNews.size() == 0){
-            showBtnRetry(getString(R.string.txt_server_not_data));
+            showBtnRetry(main.getString(R.string.txt_server_not_data));
         }
     }
 

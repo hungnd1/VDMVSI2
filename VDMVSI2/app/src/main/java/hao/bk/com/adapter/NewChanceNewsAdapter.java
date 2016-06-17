@@ -128,9 +128,15 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
 
         ViewHolder(View itemView) {
             super(itemView);
-//            cv = (CardView) itemView.findViewById(R.id.cv_news);
-//            cv.setOnClickListener(this);
+            cv = (CardView) itemView.findViewById(R.id.cv_news);
+            cv.setOnClickListener(this);
             imageNews = (CircleImageView) itemView.findViewById(R.id.imv_profile);
+            imageNews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // vao trang ca nhan
+                }
+            });
             tvName = (TextView) itemView.findViewById(R.id.tv_name_user);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
@@ -143,16 +149,8 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
                 }
             });
             btnComment = (Button) itemView.findViewById(R.id.btn_comment);
-            tvName.setOnClickListener(this);
-            tvDescription.setOnClickListener(this);
             //hungnd invisiable button comment
             btnComment.setVisibility(View.GONE);
-//            btnComment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    toastUtil.showToast("Chức năng này sẽ ra mắt trong thời gian tới");
-//                }
-//            });
             btnCall = (Button) itemView.findViewById(R.id.btn_call);
             btnCall.setOnClickListener(new View.OnClickListener() {
                 @Override

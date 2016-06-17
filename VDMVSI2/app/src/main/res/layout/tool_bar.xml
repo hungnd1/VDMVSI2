@@ -9,7 +9,6 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent">
 
         <EditText
@@ -46,6 +45,7 @@
             android:textColor="@color/white_full"
             android:textSize="@dimen/font_normal"
             android:layout_centerVertical="true" />
+
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>
     <!--android:elevation="1dp", do cao, thap trong android L-->
