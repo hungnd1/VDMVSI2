@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,11 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
         } else {
             Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
         }
-        holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
+        if(obj.getFirstname() == "" || obj.getLastname() == ""){
+            holder.tvName.setText(obj.getNameUser() + " > " + obj.getTitle());
+        }else{
+            holder.tvName.setText(obj.getFirstname() + " " + obj.getLastname() + " > " + obj.getTitle());
+        }
         holder.tvTime.setText("Ngày "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTime.setText(HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
@@ -153,7 +158,6 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
             frmContainer.adapter.notifyDataSetChanged();
             // run code xử lý del này ở đây
         }
-
         @Override
         public void onClick(View v) {
             try {
@@ -161,6 +165,11 @@ public class MyProjectNewsAdapter extends  RecyclerView.Adapter<MyProjectNewsAda
                 CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
                 intent.putExtra(Config.Username,dataStoreApp.getUserName());
                 intent.putExtra(Config.Project_id,pb.getCarId());
+                intent.putExtra(Config.first_name,pb.getFirstname());
+                intent.putExtra(Config.status_response,1);
+                Log.v("statusaaaa",pb.getStatus()+"");
+                intent.putExtra(Config.last_name,pb.getLastname());
+                intent.putExtra(Config.PROJECT_PHONE,pb.getPhoneNumber());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());

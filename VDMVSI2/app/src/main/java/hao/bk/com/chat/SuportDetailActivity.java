@@ -77,6 +77,9 @@ public class SuportDetailActivity extends AppCompatActivity {
             myProjectObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
             myProjectObj.setcDate(extras.getLong(Config.PROJECT_CDATE, 0));
             myProjectObj.setId(extras.getInt(Config.Project_id, 0));
+            myProjectObj.setFirstname(extras.getString(Config.first_name, ""));
+            myProjectObj.setLastname(extras.getString(Config.last_name, ""));
+            myProjectObj.setUsername(extras.getString(Config.Username,""));
         }
         initViews();
     }
@@ -126,7 +129,11 @@ public class SuportDetailActivity extends AppCompatActivity {
     }
 
     private void showData() {
-        tvTitle.setText(Html.fromHtml(myProjectObj.getTitle()));
+        if(myProjectObj.getFirstname() == null || myProjectObj.getLastname() == null || myProjectObj.getFirstname() == "" || myProjectObj.getLastname() == ""){
+            tvTitle.setText(Html.fromHtml(myProjectObj.getUsername()+" > "+ myProjectObj.getTitle()));
+        }else{
+            tvTitle.setText(Html.fromHtml(myProjectObj.getFirstname()+" "+myProjectObj.getLastname()+" > "+ myProjectObj.getTitle()));
+        }
         tvContent.setText(Html.fromHtml(myProjectObj.getContent()));
         tvCdate.setText(Html.fromHtml("Ngày "+HViewUtils.getTimeViaMiliseconds(myProjectObj.getcDate())));
     }

@@ -1,148 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:gravity="center"
-    android:background="@color/PrimaryColor"
     android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:background="@color/PrimaryColor"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <!-- input email - pass -->
-    <LinearLayout
-        android:id="@+id/ll_input_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
 
-        <EditText
-            android:id="@+id/edt_username"
+
+        <LinearLayout
+            android:id="@+id/ll_input_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edt_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:layout_marginTop="@dimen/padding_item"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_username"
+                android:drawablePadding="@dimen/padding_item"
+                android:hint="@string/txt_username_hint"
+                android:imeOptions="actionNext"
+                android:textColor="@color/white_full"
+                android:textColorHint="@color/text_color_hint"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:textSize="@dimen/font_normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:background="@color/white_full" />
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:layout_marginTop="@dimen/padding_item"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_email_2"
+                android:drawablePadding="@dimen/padding_item"
+                android:hint="@string/txt_email_register_hint"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white_full"
+                android:textColorHint="@color/text_color_hint"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:textSize="@dimen/font_normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:background="@color/white_full" />
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_lock_q"
+                android:drawablePadding="@dimen/padding_item"
+                android:hint="@string/txt_password_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:textColor="@color/white_full"
+                android:textColorHint="@color/text_color_hint"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:textSize="@dimen/font_normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:background="@color/white_full" />
+
+            <EditText
+                android:id="@+id/edt_re_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawablePadding="@dimen/padding_item"
+                android:hint="@string/txt_repass_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:textColor="@color/white_full"
+                android:textColorHint="@color/text_color_hint"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:textSize="@dimen/font_normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="@dimen/padding_item"
+                android:layout_marginLeft="@dimen/padding_item"
+                android:layout_marginRight="@dimen/padding_item"
+                android:background="@color/white_full" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:drawableLeft="@drawable/ic_username"
-            android:drawablePadding="@dimen/padding_item"
-            android:hint="@string/txt_username_hint"
-            android:textColorHint="@color/text_color_hint"
-            android:layout_marginTop="@dimen/padding_item"
-            android:textSize="@dimen/font_normal"
-            android:textCursorDrawable="@drawable/cursor_edittext"
-            android:imeOptions="actionNext"
-            android:background="@null"
-            android:textColor="@color/white_full" />
+            android:layout_margin="@dimen/padding_item"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:background="@color/white_full"/>
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_selector_blue_bkg"
+                android:text="@string/txt_register"
+                android:textColor="@color/white_full"
+                android:textSize="@dimen/font_normal" />
 
-        <EditText
-            android:id="@+id/edt_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:drawableLeft="@drawable/ic_email_2"
-            android:drawablePadding="@dimen/padding_item"
-            android:hint="@string/txt_email_register_hint"
-            android:textColorHint="@color/text_color_hint"
-            android:layout_marginTop="@dimen/padding_item"
-            android:textSize="@dimen/font_normal"
-            android:inputType="textEmailAddress"
-            android:imeOptions="actionNext"
-            android:textCursorDrawable="@drawable/cursor_edittext"
-            android:background="@null"
-            android:textColor="@color/white_full" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:background="@color/white_full"/>
-
-        <EditText
-            android:id="@+id/edt_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/white_full"
-            android:hint="@string/txt_password_hint"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"
-            android:textColorHint="@color/text_color_hint"
-            android:drawableLeft="@drawable/ic_lock_q"
-            android:background="@null"
-            android:textCursorDrawable="@drawable/cursor_edittext"
-            android:drawablePadding="@dimen/padding_item" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:background="@color/white_full"/>
-
-        <EditText
-            android:id="@+id/edt_re_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:textSize="@dimen/font_normal"
-            android:textColor="@color/white_full"
-            android:hint="@string/txt_repass_hint"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"
-            android:textColorHint="@color/text_color_hint"
-            android:drawableLeft="@drawable/ic_lock"
-            android:background="@null"
-            android:textCursorDrawable="@drawable/cursor_edittext"
-            android:drawablePadding="@dimen/padding_item" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/padding_item"
-            android:layout_marginRight="@dimen/padding_item"
-            android:layout_marginBottom="@dimen/padding_item"
-            android:background="@color/white_full"/>
-
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_item"
-        android:orientation="vertical">
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_register"
-        android:textSize="@dimen/font_normal"
-        android:textColor="@color/white_full"
-        android:background="@drawable/btn_selector_blue_bkg"/>
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_item_half"
-        android:text="@string/txt_login"
-        android:textSize="@dimen/font_normal"
-        android:textColor="@color/white_full"
-        android:background="@drawable/btn_selector_blue_bkg"/>
-    </LinearLayout>
-
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_item_half"
+                android:background="@drawable/btn_selector_blue_bkg"
+                android:text="@string/txt_login"
+                android:textColor="@color/white_full"
+                android:textSize="@dimen/font_normal" />
+        </LinearLayout>
 </LinearLayout>
+</ScrollView>

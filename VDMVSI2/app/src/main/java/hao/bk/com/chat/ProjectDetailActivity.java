@@ -88,15 +88,18 @@ public class ProjectDetailActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         myProjectObj = new CoporateNewsObj();
         if (extras != null) {
-            myProjectObj.setNameUser(extras.getString(Config.Username,""));
+            myProjectObj.setLastname(extras.getString(Config.last_name,""));
+            myProjectObj.setFirstname(extras.getString(Config.first_name, ""));
+            myProjectObj.setNameUser(extras.getString(Config.Username, ""));
             myProjectObj.setCarId(extras.getInt(Config.Project_id, 0));
             myProjectObj.setTitle(extras.getString(Config.PROJECT_TITLE, ""));
             myProjectObj.setContent(extras.getString(Config.PROJECT_CONTENT, ""));
             myProjectObj.setcDate(extras.getLong(Config.PROJECT_CDATE, 0));
             myProjectObj.setFromDate(extras.getLong(Config.PROJECT_FDATE, 0));
             myProjectObj.setEndDate(extras.getLong(Config.PROJECT_EDATE, 0));
+            myProjectObj.setStatus(extras.getInt(Config.status_response,0));
             myProjectObj.setUrlAvar(extras.getString(Config.PROJECT_AVATAR, ""));
-            myProjectObj.setPhoneNumber(extras.getString(Config.PROJECT_AVATAR, ""));
+            myProjectObj.setPhoneNumber(extras.getString(Config.PROJECT_PHONE, ""));
         }
         initViews();
     }
@@ -115,6 +118,13 @@ public class ProjectDetailActivity extends AppCompatActivity {
         vToolBar = new ViewToolBar(this, viewRoot);
         vToolBar.showButtonBack(true);
         btnLike = (Button) findViewById(R.id.btn_like);
+        if(myProjectObj.getStatus() == 1){
+            btnLike.setText(getString(R.string.txt_ingnore_care));
+            btnLike.setTextColor(getResources().getColor(R.color.PrimaryDarkColor));
+        }else{
+            btnLike.setText(getString(R.string.txt_care));
+            btnLike.setTextColor(getResources().getColor(R.color.dark_ness_hint));
+        }
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +145,11 @@ public class ProjectDetailActivity extends AppCompatActivity {
         });
         showData();
         runGetNews();
+        if(myProjectObj.getStatus() != 1){
+            lnlChat.setVisibility(View.INVISIBLE);
+            edt_comment.setVisibility(View.INVISIBLE);
+            btn_comment.setVisibility(View.INVISIBLE);
+        }
         btn_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +187,11 @@ public class ProjectDetailActivity extends AppCompatActivity {
         } else {
             Picasso.with(getApplicationContext()).load(myProjectObj.getUrlAvar()).transform(new CircleTransform()).into(imageNews);
         }
-        tvTitle.setText(Html.fromHtml(myProjectObj.getTitle()));
+        if(myProjectObj.getFirstname() == "" || myProjectObj.getLastname() == ""){
+            tvTitle.setText(myProjectObj.getNameUser() + " > " + myProjectObj.getTitle());
+        }else{
+            tvTitle.setText(myProjectObj.getFirstname() + " " + myProjectObj.getLastname() + " > " + myProjectObj.getTitle());
+        }
         tvContent.setText(Html.fromHtml(myProjectObj.getContent()));
         tvCdate.setText(Html.fromHtml("Ngày "+HViewUtils.getTimeViaMiliseconds(myProjectObj.getcDate())));
 //        tvFromDate.setText(Html.fromHtml(getString(R.string.txt_start_date_pro) + "<br><font color='black'>"+HViewUtils.getTimeViaMiliseconds(myProjectObj.getFromDate())+"</font>"));
@@ -476,6 +495,7 @@ public class ProjectDetailActivity extends AppCompatActivity {
                 return;
             runCareProject(myProjectObj, false);
             btnLike.setText(getString(R.string.txt_care));
+            btnLike.setTextColor(getResources().getColor(R.color.dark_ness_hint));
         }
         // Xử lý like ở đây
     }

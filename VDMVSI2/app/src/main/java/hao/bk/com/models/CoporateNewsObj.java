@@ -11,6 +11,8 @@ public class CoporateNewsObj extends NewsObj {
     private String urlAvar;
     private String userName;
     private String phoneNumber;
+    private String firstname;
+    private String lastname;
     private int like;
     private int unlike;
     private long cDate;
@@ -19,6 +21,38 @@ public class CoporateNewsObj extends NewsObj {
     private int isActive;
     private int status;
     private String comment;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public int getUnlike() {
+        return unlike;
+    }
 
     @Override
     public void setContent(String content) {

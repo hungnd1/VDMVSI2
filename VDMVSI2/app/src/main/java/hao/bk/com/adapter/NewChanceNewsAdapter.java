@@ -84,7 +84,12 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
             holder.btnCare.setText(context.getString(R.string.txt_care));
             holder.btnCare.setTextColor(context.getResources().getColor(R.color.dark_ness_hint));
         }
-        holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
+        if(obj.getFirstname() == "" || obj.getLastname() == ""){
+            holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
+        }else{
+            holder.tvName.setText(obj.getFirstname()+" "+obj.getLastname()+" > "+ obj.getTitle());
+        }
+
         holder.tvTime.setText("Ngày "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = i;
         holder.tvTitle.setVisibility(View.GONE);
@@ -162,11 +167,15 @@ public class NewChanceNewsAdapter extends RecyclerView.Adapter<NewChanceNewsAdap
             try {
                 Intent intent = new Intent(context, ProjectDetailActivity.class);
                 CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                intent.putExtra(Config.first_name,pb.getFirstname());
+                intent.putExtra(Config.status_response,pb.getStatus());
+                intent.putExtra(Config.last_name,pb.getLastname());
                 intent.putExtra(Config.Username,dataStoreApp.getUserName());
                 intent.putExtra(Config.Project_id,pb.getCarId());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
+                intent.putExtra(Config.PROJECT_PHONE,pb.getPhoneNumber());
                 intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
                 intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
                 intent.putExtra(Config.PROJECT_AVATAR, pb.getUrlAvar());

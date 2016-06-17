@@ -21,7 +21,7 @@
             android:layout_marginLeft="@dimen/padding_item"
             android:layout_marginRight="@dimen/padding_item"
             android:layout_marginBottom="@dimen/padding_item"
-            android:drawableLeft="@drawable/ic_email_2"
+            android:drawableLeft="@drawable/ic_username"
             android:drawablePadding="@dimen/padding_item"
             android:hint="@string/hint_email_login"
             android:textColorHint="@color/text_color_hint"

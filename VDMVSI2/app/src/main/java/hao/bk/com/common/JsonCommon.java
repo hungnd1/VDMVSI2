@@ -130,6 +130,20 @@ public class JsonCommon {
                 } catch (Exception e) {
                 }
             }
+            if(object.has("first_name")){
+                try{
+                    newsObj.setFirstname(object.get("first_name").getAsString());
+                }catch (Exception e){
+
+                }
+            }
+            if(object.has("last_name")){
+                try{
+                    newsObj.setLastname(object.get("last_name").getAsString());
+                }catch (Exception e){
+
+                }
+            }
             list.add(newsObj);
         }
         return list;
@@ -642,6 +656,20 @@ public class JsonCommon {
                 try {
                     newsObj.setIsActive(object.get("isactive").getAsInt());
                 } catch (Exception e) {
+                }
+            }
+            if(object.has("firstname")){
+                try {
+                    newsObj.setFirstname(object.get("firstname").getAsString());
+                }catch (Exception e){
+
+                }
+            }
+            if(object.has("lastname")){
+                try {
+                    newsObj.setLastname(object.get("lastname").getAsString());
+                }catch (Exception e){
+
                 }
             }
             list.add(newsObj);

@@ -96,7 +96,11 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
             holder.btnLike.setText(context.getString(R.string.txt_care));
             holder.btnLike.setTextColor(context.getResources().getColor(R.color.dark_ness_hint));
         }
-        holder.tvName.setText(obj.getNameUser()+" > "+obj.getTitle());
+        if(obj.getFirstname() == "" || obj.getLastname() == ""){
+            holder.tvName.setText(obj.getNameUser()+" > "+ obj.getTitle());
+        }else{
+            holder.tvName.setText(obj.getFirstname()+" "+obj.getLastname()+" > "+ obj.getTitle());
+        }
         holder.tvTime.setText("Ngày "+HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.index = position;
         holder.tvTitle.setVisibility(View.GONE);
@@ -168,6 +172,33 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
 ////                    toastUtil.showToast(index+"");
 //                }
 //            });
+            btnComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(HViewUtils.isFastDoubleClick())
+                        return;
+                    Intent intent = new Intent(context.getApplicationContext(), ProjectDetailActivity.class);
+                    CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
+                    intent.putExtra(Config.Username,dataStoreApp.getUserName());
+                    intent.putExtra(Config.first_name,pb.getFirstname());
+                    intent.putExtra(Config.last_name,pb.getLastname());
+                    intent.putExtra(Config.Project_id,pb.getCarId());
+                    intent.putExtra(Config.status_response,pb.getStatus());
+                    intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                    intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                    intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
+                    intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
+                    intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
+                    intent.putExtra(Config.PROJECT_AVATAR, pb.getUrlAvar());
+                    intent.putExtra(Config.ACTION_COMMENT,"getCommentProject");
+                    intent.putExtra(Config.PROJECT_PHONE,pb.getPhoneNumber());
+                    intent.putExtra(Config.Username,dataStoreApp.getUserName());
+                    context.startActivity(intent);
+//                    Log.v("index",index+"");
+//                    Log.v("index",pb.getCarId()+"");
+//                    toastUtil.showToast(index+"");
+                }
+            });
             btnCall = (Button)itemView.findViewById(R.id.btn_call);
             btnCall.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -214,14 +245,19 @@ public class InterestingNewsAdapter  extends RecyclerView.Adapter<InterestingNew
                 Intent intent = new Intent(context, ProjectDetailActivity.class);
                 CoporateNewsObj pb = (CoporateNewsObj) listNews.get(index);
                 intent.putExtra(Config.Username,dataStoreApp.getUserName());
+                intent.putExtra(Config.first_name,pb.getFirstname());
+                intent.putExtra(Config.last_name,pb.getLastname());
                 intent.putExtra(Config.Project_id,pb.getCarId());
+                intent.putExtra(Config.status_response,pb.getStatus());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
                 intent.putExtra(Config.PROJECT_FDATE, pb.getFromDate());
                 intent.putExtra(Config.PROJECT_EDATE, pb.getEndDate());
                 intent.putExtra(Config.PROJECT_AVATAR, pb.getUrlAvar());
-                intent.putExtra(Config.PROJECT_PHONE, pb.getPhoneNumber());
+                intent.putExtra(Config.ACTION_COMMENT,"getCommentProject");
+                intent.putExtra(Config.PROJECT_PHONE,pb.getPhoneNumber());
+                intent.putExtra(Config.Username,dataStoreApp.getUserName());
                 context.startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();

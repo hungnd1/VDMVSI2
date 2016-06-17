@@ -174,7 +174,8 @@ public class Config {
     public static final String Project_id = "project_id";
     public static final String Username = "username";
     public static final String ACTION_COMMENT = "action";
-
+    public static final String first_name = "firstname";
+    public static final String last_name = "lastname";
     //product detail
     public static final String PRODUCT_NAME = "productName";
     public static final String PRODUCT_THUMB = "productThumb";

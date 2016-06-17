@@ -61,7 +61,12 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
 //        } else {
 //            Picasso.with(context.getApplicationContext()).load(obj.getUrlAvar()).transform(new CircleTransform()).into(holder.imageNews);
 //        }
-        holder.tvName.setText(obj.getUsername()+" > "+ obj.getTitle());
+
+        if(obj.getFirstname() == null || obj.getLastname() == null || obj.getFirstname() == "" || obj.getLastname() == ""){
+            holder.tvName.setText(obj.getUsername()+" > "+ obj.getTitle());
+        }else{
+            holder.tvName.setText(obj.getFirstname()+" "+obj.getLastname()+" > "+ obj.getTitle());
+        }
         holder.tvTime.setText("Ngày " + HViewUtils.getTimeViaMiliseconds(obj.getcDate()));
         holder.tvTitle.setVisibility(View.GONE);
         holder.index = position;
@@ -111,7 +116,7 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDescription = (TextView) itemView.findViewById(R.id.tv_descript);
-            tvTitle.setOnClickListener(this);
+            tvName.setOnClickListener(this);
             tvDescription.setOnClickListener(this);
             btn_comment_support = (Button) itemView.findViewById(R.id.btn_comment_support);
             btn_comment_support.setOnClickListener(new View.OnClickListener() {
@@ -119,11 +124,15 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
                 public void onClick(View v) {
                     if(HViewUtils.isFastDoubleClick())
                         return;
-                    Intent intent = new Intent(context.getApplicationContext(), CommentActivity.class);
+                    Intent intent = new Intent(context.getApplicationContext(), SuportDetailActivity.class);
                     SupportObj pb = (SupportObj) listNews.get(index);
                     intent.putExtra(Config.Project_id,pb.getId());
-                    intent.putExtra(Config.PROJECT_TITLE,pb.getTitle());
+                    intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                    intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                    intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
                     intent.putExtra(Config.ACTION_COMMENT,"getCommentSupport");
+                    intent.putExtra(Config.first_name,pb.getFirstname());
+                    intent.putExtra(Config.last_name,pb.getLastname());
                     intent.putExtra(Config.Username,dataStoreApp.getUserName());
                     context.startActivity(intent);
 
@@ -144,7 +153,10 @@ public class RequestSupportNewsAdapter extends RecyclerView.Adapter<RequestSuppo
                 SupportObj pb = (SupportObj) listNews.get(index);
                 intent.putExtra(Config.Project_id,pb.getId());
                 intent.putExtra(Config.PROJECT_TITLE, pb.getTitle());
+                intent.putExtra(Config.first_name,pb.getFirstname());
+                intent.putExtra(Config.last_name,pb.getLastname());
                 intent.putExtra(Config.PROJECT_CONTENT, pb.getContent());
+                intent.putExtra(Config.Username,dataStoreApp.getUserName());
                 intent.putExtra(Config.PROJECT_CDATE, pb.getcDate());
                 context.startActivity(intent);
             } catch (Exception e) {

@@ -12,9 +12,27 @@ public class SupportObj extends NewsObj {
     private int car_id;
     private int unlike;
     private long cDate;
+    private String firstname;
+    private String lastname;
     private int like;
     private int isActive;
     private String title;
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
     @Override
     public String getTitle() {
